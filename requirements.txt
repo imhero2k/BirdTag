@@ -1,0 +1,18 @@
+# Use the PyTorch CPU-only index for torch and torchvision
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+torch==2.2.2+cpu
+torchvision==0.17.2+cpu
+pillow==10.3.0
+
+ultralytics
+roboflow
+supervision
+opencv-python-headless
+matplotlib
+numpy<2
+requests
+python-multipart
+fastapi
+uvicorn
+boto3
