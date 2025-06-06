@@ -1,0 +1,311 @@
+import json
+import boto3
+from botocore.exceptions import ClientError
+from datetime import datetime, timezone
+import re
+
+def lambda_handler(event, context):
+    """
+    Delete files and thumbnails from S3 and remove database entries
+    UPDATED: Works with new S3 key-based database schema
+    Expects POST body: {"urls": ["url1", "url2", ...]}
+    URLs can be pre-signed URLs or regular S3 URLs - function extracts keys automatically
+    """
+    
+    headers = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type,Authorization',
+        'Access-Control-Allow-Methods': 'POST,OPTIONS'
+    }
+    
+    try:
+        # Handle CORS preflight
+        if event['httpMethod'] == 'OPTIONS':
+            return {
+                'statusCode': 200,
+                'headers': headers,
+                'body': ''
+            }
+        
+        # Parse request body
+        try:
+            body = json.loads(event['body'])
+        except (json.JSONDecodeError, TypeError):
+            return create_error_response(
+                400, 'INVALID_JSON', 'Request body must be valid JSON',
+                {'expected_format': '{"urls": ["url1", "url2", ...]}'}, headers
+            )
+        
+        urls = body.get('urls', [])
+        if not urls or not isinstance(urls, list):
+            return create_error_response(
+                400, 'INVALID_URLS', 'urls field must be a non-empty array',
+                {'provided': urls}, headers
+            )
+        
+        # Initialize AWS clients
+        s3_client = boto3.client('s3')
+        dynamodb = boto3.resource('dynamodb')
+        table = dynamodb.Table('BirdMediaMetadata')
+        
+        bucket_name = 'lambdatestbucket134'
+        deleted_files = []
+        errors = []
+        
+        for url in urls:
+            try:
+                # Extract S3 key from URL (handles pre-signed URLs too)
+                s3_key = extract_s3_key_from_url(url)
+                
+                if not s3_key:
+                    errors.append({
+                        'url': url,
+                        'error': 'Could not extract S3 key from URL',
+                        'details': 'URL format not recognized'
+                    })
+                    continue
+                
+                print(f"Extracted S3 key: {s3_key}")
+                
+                # Search database for record with this key (either original or thumbnail)
+                database_record = find_record_by_s3_key(table, s3_key)
+                
+                if not database_record:
+                    errors.append({
+                        'url': url,
+                        'error': 'File not found in database',
+                        'searched_key': s3_key
+                    })
+                    continue
+                
+                file_id = database_record['file_id']
+                print(f"Found database record for file_id: {file_id}")
+                
+                # Collect all S3 keys to delete from this record
+                keys_to_delete = []
+                
+                # Add original file key
+                original_key = database_record.get('original_s3_key', '')
+                if original_key:
+                    keys_to_delete.append({'Key': original_key})
+                
+                # Add thumbnail key if exists
+                thumbnail_key = database_record.get('thumbnail_s3_key', '')
+                if thumbnail_key and thumbnail_key.strip():
+                    keys_to_delete.append({'Key': thumbnail_key})
+                
+                # Add result key if exists (for AI processing results)
+                result_key = database_record.get('result_s3_key', '')
+                if result_key and result_key.strip():
+                    keys_to_delete.append({'Key': result_key})
+                
+                # Delete files from S3
+                if keys_to_delete:
+                    delete_response = s3_client.delete_objects(
+                        Bucket=bucket_name,
+                        Delete={
+                            'Objects': keys_to_delete,
+                            'Quiet': False
+                        }
+                    )
+                    
+                    # Check for S3 deletion errors
+                    s3_errors = delete_response.get('Errors', [])
+                    if s3_errors:
+                        errors.append({
+                            'url': url,
+                            'error': f"S3 deletion errors: {s3_errors}",
+                            'file_id': file_id
+                        })
+                        continue
+                
+                # Delete from DynamoDB
+                table.delete_item(Key={'file_id': file_id})
+                
+                # Prepare success response
+                deleted_files.append({
+                    'file_id': file_id,
+                    'original_key': original_key if original_key else None,
+                    'thumbnail_key': thumbnail_key if thumbnail_key.strip() else None,
+                    'result_key': result_key if result_key.strip() else None,
+                    'deleted_s3_objects': len(keys_to_delete),
+                    'deleted_keys': [obj['Key'] for obj in keys_to_delete]
+                })
+                
+                print(f"Successfully deleted file_id: {file_id}")
+                
+            except ClientError as e:
+                error_code = e.response.get('Error', {}).get('Code', 'Unknown')
+                errors.append({
+                    'url': url,
+                    'error': f"AWS error ({error_code}): {str(e)}"
+                })
+            except Exception as e:
+                errors.append({
+                    'url': url,
+                    'error': f"Unexpected error: {str(e)}"
+                })
+        
+        # Prepare response
+        response_data = {
+            'deleted_count': len(deleted_files),
+            'error_count': len(errors),
+            'deleted_files': deleted_files,
+            'errors': errors if errors else None,
+            'timestamp': datetime.now(timezone.utc).isoformat(),
+            'bucket': bucket_name
+        }
+        
+        status_code = 200 if not errors else 207  # 207 = Multi-Status
+        
+        return {
+            'statusCode': status_code,
+            'headers': headers,
+            'body': json.dumps(response_data)
+        }
+        
+    except Exception as e:
+        print(f"Unexpected error in delete handler: {str(e)}")
+        return create_error_response(
+            500, 'INTERNAL_SERVER_ERROR', 'An unexpected error occurred',
+            {'error_type': type(e).__name__, 'error_details': str(e)}, headers
+        )
+
+def extract_s3_key_from_url(url):
+    """
+    Extract S3 key from various URL formats including pre-signed URLs
+    Handles:
+    - https://bucket.s3.amazonaws.com/key?signature=...
+    - https://bucket.s3.amazonaws.com/key
+    - s3://bucket/key
+    - Just the key itself
+    """
+    if not url:
+        return None
+    
+    try:
+        # Handle HTTPS S3 URLs (including pre-signed)
+        if 'amazonaws.com/' in url:
+            parts = url.split('amazonaws.com/', 1)
+            if len(parts) == 2:
+                key_part = parts[1]
+                
+                # Remove query parameters from pre-signed URLs
+                if '?' in key_part:
+                    key_part = key_part.split('?')[0]
+                
+                return key_part
+        
+        # Handle S3 URI format: s3://bucket/key
+        elif url.startswith('s3://'):
+            parts = url.split('/', 3)
+            if len(parts) >= 4:
+                return parts[3]
+        
+        # If it's already just a key (no protocol)
+        elif not url.startswith(('http', 's3://')):
+            return url
+        
+        return None
+        
+    except Exception as e:
+        print(f"Error extracting S3 key from URL {url}: {e}")
+        return None
+
+def find_record_by_s3_key(table, s3_key):
+    """
+    Search database for record containing the S3 key
+    Checks both original_s3_key and thumbnail_s3_key fields
+    """
+    try:
+        print(f"Searching database for S3 key: {s3_key}")
+        
+        # First try searching by original_s3_key
+        response = table.scan(
+            FilterExpression='original_s3_key = :key',
+            ExpressionAttributeValues={':key': s3_key}
+        )
+        
+        items = response['Items']
+        
+        # Continue scanning if there are more items
+        while 'LastEvaluatedKey' in response:
+            response = table.scan(
+                FilterExpression='original_s3_key = :key',
+                ExpressionAttributeValues={':key': s3_key},
+                ExclusiveStartKey=response['LastEvaluatedKey']
+            )
+            items.extend(response['Items'])
+        
+        if items:
+            print(f"Found record by original_s3_key")
+            return items[0]
+        
+        # If not found by original key, try thumbnail_s3_key
+        response = table.scan(
+            FilterExpression='thumbnail_s3_key = :key',
+            ExpressionAttributeValues={':key': s3_key}
+        )
+        
+        items = response['Items']
+        
+        # Continue scanning if there are more items
+        while 'LastEvaluatedKey' in response:
+            response = table.scan(
+                FilterExpression='thumbnail_s3_key = :key',
+                ExpressionAttributeValues={':key': s3_key},
+                ExclusiveStartKey=response['LastEvaluatedKey']
+            )
+            items.extend(response['Items'])
+        
+        if items:
+            print(f"Found record by thumbnail_s3_key")
+            return items[0]
+        
+        # If not found by either key, try result_s3_key
+        response = table.scan(
+            FilterExpression='result_s3_key = :key',
+            ExpressionAttributeValues={':key': s3_key}
+        )
+        
+        items = response['Items']
+        
+        # Continue scanning if there are more items
+        while 'LastEvaluatedKey' in response:
+            response = table.scan(
+                FilterExpression='result_s3_key = :key',
+                ExpressionAttributeValues={':key': s3_key},
+                ExclusiveStartKey=response['LastEvaluatedKey']
+            )
+            items.extend(response['Items'])
+        
+        if items:
+            print(f"Found record by result_s3_key")
+            return items[0]
+        
+        print("No matching record found")
+        return None
+        
+    except ClientError as e:
+        print(f"DynamoDB error: {str(e)}")
+        return None
+    except Exception as e:
+        print(f"Error searching database: {str(e)}")
+        return None
+
+def create_error_response(status_code, error_code, message, details, headers):
+    """Create standardized error response"""
+    error_response = {
+        'error': message,
+        'code': error_code,
+        'details': details,
+        'timestamp': datetime.now(timezone.utc).isoformat(),
+        'status': status_code
+    }
+    
+    return {
+        'statusCode': status_code,
+        'headers': headers,
+        'body': json.dumps(error_response)
+    }

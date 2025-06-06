@@ -1,0 +1,237 @@
+import json
+import boto3
+from botocore.exceptions import ClientError, NoCredentialsError
+import uuid
+import os
+from datetime import datetime, timezone
+import re
+
+def lambda_handler(event, context):
+    """
+    Generate pre-signed URL for S3 upload with detailed error handling
+    NOW STORES S3 KEYS instead of full URLs in database
+    """
+    
+    headers = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type,Authorization',
+        'Access-Control-Allow-Methods': 'POST,OPTIONS'
+    }
+    
+    try:
+        # Handle CORS preflight
+        if event['httpMethod'] == 'OPTIONS':
+            return {
+                'statusCode': 200,
+                'headers': headers,
+                'body': ''
+            }
+        
+        # Parse and validate request body
+        try:
+            body = json.loads(event['body'])
+        except (json.JSONDecodeError, TypeError):
+            return create_error_response(
+                400, 'INVALID_JSON', 'Request body must be valid JSON',
+                {'received_body': event.get('body', '')}, headers
+            )
+        
+        # Extract and validate required fields
+        file_name = body.get('fileName')
+        file_type = body.get('fileType')
+        
+        if not file_name:
+            return create_error_response(
+                400, 'MISSING_FILENAME', 'fileName is required',
+                {'provided_fields': list(body.keys())}, headers
+            )
+        
+        if not file_type:
+            return create_error_response(
+                400, 'MISSING_FILETYPE', 'fileType is required',
+                {'provided_fields': list(body.keys())}, headers
+            )
+        
+        # Validate filename format
+        if not re.match(r'^[a-zA-Z0-9._-]+$', file_name):
+            return create_error_response(
+                400, 'INVALID_FILENAME', 'Filename contains invalid characters',
+                {'filename': file_name, 'allowed_chars': 'letters, numbers, dots, hyphens, underscores'}, headers
+            )
+        
+        # Validate file type
+        file_type_mapping = {
+            'image/jpeg': 'images', 'image/jpg': 'images', 'image/png': 'images', 
+            'image/gif': 'images', 'image/webp': 'images',
+            'video/mp4': 'videos', 'video/mov': 'videos', 'video/avi': 'videos',
+            'video/quicktime': 'videos', 'video/x-msvideo': 'videos',
+            'audio/mpeg': 'audio', 'audio/mp3': 'audio', 'audio/wav': 'audio',
+            'audio/ogg': 'audio', 'audio/m4a': 'audio'
+        }
+        
+        if file_type not in file_type_mapping:
+            return create_error_response(
+                400, 'UNSUPPORTED_FILETYPE', 'File type not supported',
+                {
+                    'provided_type': file_type,
+                    'supported_types': list(file_type_mapping.keys())
+                }, headers
+            )
+        
+        # Extract user information
+        user_id = extract_user_info(event)
+        
+        # Generate unique file identifiers
+        timestamp = datetime.now(timezone.utc)
+        timestamp_str = timestamp.strftime('%Y%m%d_%H%M%S')
+        unique_id = str(uuid.uuid4())[:12]
+        
+        # Clean filename and extract extension
+        clean_filename = re.sub(r'[^a-zA-Z0-9._-]', '_', file_name)
+        file_extension = clean_filename.split('.')[-1] if '.' in clean_filename else 'unknown'
+        
+        # KEY CHANGE: Create S3 keys (not full URLs)
+        file_id = f"{timestamp_str}_{unique_id}"
+        original_s3_key = f"{file_id}.{file_extension}"  # Just the key
+        thumbnail_s3_key = f"{file_id}_thumb.jpg"       # Just the key
+        
+        # S3 configuration
+        bucket_name = 'lambdatestbucket134'
+        
+        try:
+            # Generate pre-signed URL for upload
+            s3_client = boto3.client('s3')
+            
+            presigned_url = s3_client.generate_presigned_url(
+                'put_object',
+                Params={
+                    'Bucket': bucket_name,
+                    'Key': original_s3_key,  # Using key directly
+                    'ContentType': file_type,
+                    'Metadata': {
+                        'original-filename': clean_filename,
+                        'uploader': user_id,
+                        'upload-timestamp': timestamp.isoformat(),
+                        'file-type': file_type
+                    }
+                },
+                ExpiresIn=18000  # 5 hours = 18000 seconds
+            )
+            
+        except NoCredentialsError:
+            return create_error_response(
+                500, 'AWS_CREDENTIALS_ERROR', 'AWS credentials not configured',
+                {'service': 'S3'}, headers
+            )
+        except ClientError as e:
+            error_code = e.response.get('Error', {}).get('Code', 'Unknown')
+            return create_error_response(
+                500, 'S3_SERVICE_ERROR', 'Failed to generate upload URL',
+                {
+                    'aws_error_code': error_code,
+                    'aws_error_message': str(e),
+                    'bucket': bucket_name
+                }, headers
+            )
+        
+        # KEY CHANGE: Store S3 KEYS in database (not full URLs)
+        metadata_item = {
+            'file_id': file_id,
+            'original_filename': clean_filename,
+            'original_s3_key': original_s3_key,      # Changed from original_s3_path
+            'thumbnail_s3_key': thumbnail_s3_key,    # Changed from thumbnail_s3_path
+            'result_s3_key': '',                     # Changed from result_s3_path
+            'upload_time': timestamp.isoformat(),
+            'file_type': file_type,
+            'uploader': user_id,
+            'file_size_bytes': 0,
+            'tags': {},  # Will be populated by AI processing
+            'status': 'pending_upload',
+            'bucket_name': bucket_name  # NEW: Store bucket name for URL generation
+        }
+        
+        # # Store metadata in DynamoDB
+        # try:
+        #     dynamodb = boto3.resource('dynamodb')
+        #     table = dynamodb.Table('BirdMediaMetadata')
+            
+        #     table.put_item(Item=metadata_item)
+            
+        # except ClientError as e:
+        #     print(f"DynamoDB error: {str(e)}")
+        #     # Continue with response - can handle metadata later
+        
+        # KEY CHANGE: Response explains new workflow
+        response_data = {
+            'uploadUrl': presigned_url,  # Pre-signed upload URL (5 hours)
+            'fileId': file_id,
+            'originalKey': original_s3_key,     #  NEW: Return S3 keys
+            'thumbnailKey': thumbnail_s3_key,   #  NEW: Return S3 keys
+            'bucket': bucket_name,
+            'expiresIn': 18000,  # 5 hours
+            'metadata': {
+                'originalFilename': clean_filename,
+                'fileType': file_type,
+                'uploader': user_id,
+                'uploadTime': timestamp.isoformat(),
+                'estimatedProcessingTime': '30-60 seconds'
+            },
+            'workflow': {
+                'step1': 'Upload file using the provided uploadUrl',
+                'step2': 'File will be automatically processed for thumbnails and AI tagging',
+                'step3': 'Use search APIs to find files - they will return fresh pre-signed URLs',
+                'step4': 'All URLs expire after 5 hours for security'
+            }
+        }
+        
+        return {
+            'statusCode': 200,
+            'headers': headers,
+            'body': json.dumps(response_data)
+        }
+        
+    except Exception as e:
+        print(f"Unexpected error in upload handler: {str(e)}")
+        return create_error_response(
+            500, 'INTERNAL_SERVER_ERROR', 'An unexpected error occurred',
+            {'error_type': type(e).__name__, 'error_details': str(e)}, headers
+        )
+
+def create_error_response(status_code, error_code, message, details, headers):
+    """Create standardized error response"""
+    error_response = {
+        'error': message,
+        'code': error_code,
+        'details': details,
+        'timestamp': datetime.now(timezone.utc).isoformat(),
+        'status': status_code
+    }
+    
+    return {
+        'statusCode': status_code,
+        'headers': headers,
+        'body': json.dumps(error_response)
+    }
+
+def extract_user_info(event):
+    """Extract user information from request context"""
+    try:
+        request_context = event.get('requestContext', {})
+        authorizer = request_context.get('authorizer', {})
+        
+        if 'claims' in authorizer:
+            claims = authorizer['claims']
+            return claims.get('email', claims.get('username', 'authenticated_user'))
+        
+        headers = event.get('headers') or {}
+        auth_header = headers.get('Authorization') or headers.get('authorization', '')
+        
+        if auth_header and auth_header.startswith('Bearer '):
+            return 'token_authenticated_user'
+        
+        return 'anonymous_user'
+        
+    except Exception as e:
+        print(f"Error extracting user info: {e}")
+        return 'unknown_user'
