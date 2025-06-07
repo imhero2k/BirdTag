@@ -303,7 +303,7 @@ const Search = () => {
 
   const runDeleteFiles = () => {
     const urls = deleteUrls.split(',').map(u => u.trim());
-    sendPost(`${apiBase}/delete`, { url: urls });
+    sendPost(`${apiBase}/delete`, { urls: urls });
   };
 
   return (
