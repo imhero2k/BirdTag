@@ -292,7 +292,7 @@ const Search = () => {
   };
 
   const runThumbLookup = () => {
-    sendGet(`${apiBase}/search/by-thumbnail-url?url=${encodeURIComponent(thumbUrl)}`);
+    sendGet(`${apiBase}/search/by-thumbnail-url?thumbnail_url=${encodeURIComponent(thumbUrl)}`);
   };
 
   const runFileQuery = () => {
