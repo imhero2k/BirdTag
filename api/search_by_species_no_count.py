@@ -6,12 +6,8 @@ from decimal import Decimal
 
 def lambda_handler(event, context):
     """
-    Handle GET /search/by-species - Find files by bird species (no count requirement)
-    NEW: Generates fresh pre-signed URLs from stored S3 keys
-    Expected formats:
-    - GET: ?species1=crow&species2=pigeon
-    - GET: ?species=crow  (single species)
-    Returns all files containing at least one of the specified species
+    Handle GET /search/by-species
+    UPDATED: Works with existing database schema (original_s3_path, thumbnail_s3_path, result_s3_path)
     """
     
     headers = {
@@ -30,14 +26,13 @@ def lambda_handler(event, context):
                 'body': ''
             }
         
-        # Only allow GET method
         if event['httpMethod'] != 'GET':
             return create_error_response(
                 405, 'METHOD_NOT_ALLOWED', 'Only GET method is supported',
                 {'supported_methods': ['GET']}, headers
             )
         
-        # Parse and validate query parameters
+        # Parse species parameters
         species_list = parse_species_parameters(event)
         
         if not species_list:
@@ -45,15 +40,13 @@ def lambda_handler(event, context):
                 400, 'MISSING_PARAMETERS', 'No valid species parameters provided',
                 {
                     'expected_format': '?species1=crow&species2=pigeon',
-                    'single_format': '?species=crow',
-                    'example': '/search/by-species?species1=crow&species2=pigeon'
+                    'single_format': '?species=crow'
                 }, headers
             )
         
-        # Search database for files containing any of the species
+        # Search database and generate pre-signed URLs
         matching_files = search_by_species_with_presigned_urls(species_list)
         
-        # Format response according to assessment requirements
         response_data = {
             "links": matching_files,
             "url_info": {
@@ -76,17 +69,9 @@ def lambda_handler(event, context):
         )
 
 def parse_species_parameters(event):
-    """
-    Parse GET parameters for species search
-    Formats supported:
-    - ?species1=crow&species2=pigeon&species3=eagle
-    - ?species=crow (single species)
-    Returns: ['crow', 'pigeon', 'eagle']
-    """
+    """Parse GET parameters for species search"""
     query_params = event.get('queryStringParameters') or {}
     species_list = []
-    
-    print(f"Raw query parameters: {query_params}")
     
     # Handle single species parameter
     if 'species' in query_params:
@@ -94,15 +79,14 @@ def parse_species_parameters(event):
         if species_name:
             species_list.append(species_name)
     
-    # Handle numbered species parameters (species1, species2, etc.)
+    # Handle numbered species parameters
     species_numbers = set()
     for key in query_params.keys():
         if key.startswith('species') and key != 'species':
-            species_num = key[7:]  # Extract number from 'species1', 'species2', etc.
+            species_num = key[7:]
             if species_num.isdigit():
                 species_numbers.add(species_num)
     
-    # Extract species from numbered parameters
     for species_num in species_numbers:
         species_key = f'species{species_num}'
         if species_key in query_params:
@@ -110,129 +94,120 @@ def parse_species_parameters(event):
             if species_name and species_name not in species_list:
                 species_list.append(species_name)
     
-    print(f"Parsed species list: {species_list}")
     return species_list
 
 def search_by_species_with_presigned_urls(species_list):
     """
-    Search for files containing any of the specified species (OR logic)
-    NEW: Generate fresh pre-signed URLs from S3 keys
-    Uses at least one occurrence of any species (count >= 1)
+    Search for files containing any of the specified species
+    UPDATED: Uses existing database schema with S3 paths
     """
     try:
         dynamodb = boto3.resource('dynamodb')
         table = dynamodb.Table('BirdMediaMetadata')
-        s3_client = boto3.client('s3')  # For generating URLs
+        s3_client = boto3.client('s3')
         
-        print(f"Searching for species: {species_list}")
-        
-        # Scan table and filter results
+        # Scan table
         response = table.scan()
         items = response['Items']
         
-        # Continue scanning if there are more items
         while 'LastEvaluatedKey' in response:
             response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
             items.extend(response['Items'])
-        
-        print(f"Found {len(items)} total items in database")
         
         matching_files = []
         
         for item in items:
             file_tags = item.get('tags', {})
-            
-            # Convert DynamoDB format to simple format
             simple_tags = convert_dynamodb_tags(file_tags)
-            print(f"Item {item.get('file_id', 'unknown')}: {simple_tags}")
             
             # Check if file contains any of the required species (OR logic)
             contains_species = False
             for species in species_list:
                 species_count = simple_tags.get(species.lower(), 0)
-                if species_count >= 1:  # At least one occurrence
+                if species_count >= 1:
                     contains_species = True
-                    print(f"Found {species}: {species_count}")
                     break
             
-            # Generate fresh pre-signed URL if any species found
             if contains_species:
-                presigned_url = generate_appropriate_presigned_url(item, s3_client)
+                presigned_url = generate_presigned_url_from_paths(item, s3_client)
                 
                 if presigned_url and presigned_url not in matching_files:
                     matching_files.append(presigned_url)
-                    print(f"Added to results: {presigned_url[:50]}...")
-            else:
-                print(f"No matching species found")
         
-        print(f"Final matching files: {len(matching_files)} URLs generated")
         return matching_files
         
-    except ClientError as e:
-        print(f"DynamoDB error in species search: {str(e)}")
-        return []
     except Exception as e:
-        print(f"Unexpected error in database search: {str(e)}")
+        print(f"Error in species search: {str(e)}")
         return []
 
-def generate_appropriate_presigned_url(item, s3_client):
-    """
-    Generate appropriate pre-signed URL based on file type
-    For images: return thumbnail URL
-    For audio/video: return original URL
-    """
+def generate_presigned_url_from_paths(item, s3_client):
+    """Generate pre-signed URL by extracting S3 key from stored paths"""
     try:
         file_type = item.get('file_type', '')
-        bucket_name = item.get('bucket_name', 'lambdatestbucket134')
         
-        # Get S3 keys from database
-        original_key = item.get('original_s3_key', '')
-        thumbnail_key = item.get('thumbnail_s3_key', '')
+        # Get S3 paths from database
+        original_path = item.get('original_s3_path', '')
+        thumbnail_path = item.get('thumbnail_s3_path', '')
         
-        if file_type.startswith('image/') and thumbnail_key:
-            # For images: prefer thumbnail if available
-            s3_key = thumbnail_key
-        elif original_key:
-            # For audio/video or images without thumbnails: use original
-            s3_key = original_key
+        if file_type.startswith('image/') and thumbnail_path:
+            s3_path = thumbnail_path
+        elif original_path:
+            s3_path = original_path
         else:
-            print(f"Warning: No valid S3 key found for file_id: {item.get('file_id')}")
             return None
         
-        # Generate fresh pre-signed URL (5 hours expiration)
+        # Extract bucket and key from S3 path
+        bucket, key = extract_bucket_and_key(s3_path)
+        
+        if not bucket or not key:
+            return None
+        
+        # Generate fresh pre-signed URL
         presigned_url = s3_client.generate_presigned_url(
             'get_object',
             Params={
-                'Bucket': bucket_name,
-                'Key': s3_key
+                'Bucket': bucket,
+                'Key': key
             },
             ExpiresIn=18000  # 5 hours
         )
         
         return presigned_url
         
-    except ClientError as e:
+    except Exception as e:
         print(f"Error generating pre-signed URL: {str(e)}")
         return None
+
+def extract_bucket_and_key(s3_path):
+    """Extract bucket and key from S3 path: s3://bucket/key"""
+    if not s3_path or not s3_path.startswith('s3://'):
+        return None, None
+    
+    try:
+        path_without_prefix = s3_path[5:]  # Remove 's3://'
+        parts = path_without_prefix.split('/', 1)
+        
+        if len(parts) != 2:
+            return None, None
+        
+        bucket = parts[0]
+        key = parts[1]
+        
+        return bucket, key
+        
     except Exception as e:
-        print(f"Unexpected error generating URL: {str(e)}")
-        return None
+        print(f"Error extracting bucket/key from {s3_path}: {e}")
+        return None, None
 
 def convert_dynamodb_tags(file_tags):
-    """
-    Convert DynamoDB native format to simple format
-    Input:  {"Peacock": Decimal('1'), "Crow": {"N": "5"}}
-    Output: {"peacock": 1, "crow": 5}
-    """
+    """Convert DynamoDB format to simple format"""
     simple_tags = {}
     
     for tag_name, tag_value in file_tags.items():
         try:
             if isinstance(tag_value, Decimal):
-                # boto3 returns Decimals for DynamoDB numbers
                 simple_tags[tag_name.lower()] = int(tag_value)
             elif isinstance(tag_value, dict):
-                # DynamoDB native format
                 if 'N' in tag_value:
                     simple_tags[tag_name.lower()] = int(tag_value['N'])
                 elif 'S' in tag_value:
@@ -243,8 +218,7 @@ def convert_dynamodb_tags(file_tags):
                     simple_tags[tag_name.lower()] = int(tag_value)
                 elif isinstance(tag_value, int):
                     simple_tags[tag_name.lower()] = tag_value
-        except (ValueError, KeyError) as e:
-            print(f"Error converting tag {tag_name}: {tag_value}, error: {e}")
+        except (ValueError, KeyError):
             simple_tags[tag_name.lower()] = 0
     
     return simple_tags
