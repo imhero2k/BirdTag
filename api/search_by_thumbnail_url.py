@@ -3,14 +3,11 @@ import boto3
 from botocore.exceptions import ClientError
 from datetime import datetime, timezone
 from urllib.parse import unquote_plus
-import re
 
 def lambda_handler(event, context):
     """
-    Handle GET /search/by-thumbnail - Find full-size image from thumbnail URL
-    NEW: Works with S3 keys and generates fresh pre-signed URLs
-    Expected format: ?thumbnail_url=https://lambdatestbucket134.s3.amazonaws.com/20250605_104245_30bd546b-ebe_thumb.jpg
-    Returns the corresponding original/full-size image URL as a fresh pre-signed URL
+    Handle GET /search/by-thumbnail
+    UPDATED: Works with existing database schema (thumbnail_s3_path)
     """
     
     headers = {
@@ -29,14 +26,13 @@ def lambda_handler(event, context):
                 'body': ''
             }
         
-        # Only allow GET method
         if event['httpMethod'] != 'GET':
             return create_error_response(
                 405, 'METHOD_NOT_ALLOWED', 'Only GET method is supported',
                 {'supported_methods': ['GET']}, headers
             )
         
-        # Parse and validate query parameters
+        # Parse thumbnail URL parameter
         thumbnail_url = parse_thumbnail_parameter(event)
         
         if not thumbnail_url:
@@ -44,11 +40,11 @@ def lambda_handler(event, context):
                 400, 'MISSING_PARAMETERS', 'thumbnail_url parameter is required',
                 {
                     'expected_format': '?thumbnail_url=https://bucket.s3.amazonaws.com/file_thumb.jpg',
-                    'example': '/search/by-thumbnail?thumbnail_url=https://lambdatestbucket134.s3.amazonaws.com/20250605_104245_30bd546b-ebe_thumb.jpg'
+                    'example': '/search/by-thumbnail?thumbnail_url=https://thumbnailbucket134.s3.amazonaws.com/thumbnails/file_thumb.jpg'
                 }, headers
             )
         
-        # Extract S3 key from thumbnail URL and search database
+        # Search database and generate full-size URL
         full_image_url = search_by_thumbnail_and_generate_url(thumbnail_url)
         
         if not full_image_url:
@@ -57,7 +53,6 @@ def lambda_handler(event, context):
                 {'provided_thumbnail_url': thumbnail_url}, headers
             )
         
-        # Format response according to assessment requirements
         response_data = {
             "links": [full_image_url],
             "url_info": {
@@ -80,177 +75,167 @@ def lambda_handler(event, context):
         )
 
 def parse_thumbnail_parameter(event):
-    """
-    Parse thumbnail_url parameter from query string
-    Handles URL encoding and various formats
-    """
+    """Parse thumbnail_url parameter from query string"""
     query_params = event.get('queryStringParameters') or {}
-    
-    print(f"Raw query parameters: {query_params}")
-    
     thumbnail_url = query_params.get('thumbnail_url', '').strip()
     
     if not thumbnail_url:
         return None
     
-    # URL decode the parameter (handles %20, etc.)
+    # URL decode the parameter
     thumbnail_url = unquote_plus(thumbnail_url)
-    
-    print(f"Parsed thumbnail URL: {thumbnail_url}")
     return thumbnail_url
 
 def search_by_thumbnail_and_generate_url(thumbnail_url):
     """
-    NEW APPROACH: Extract S3 key from thumbnail URL, find database record, 
-    generate fresh pre-signed URL for full-size image
+    Find record by thumbnail URL and generate full-size image URL
+    UPDATED: Works with existing database schema
     """
     try:
-        # Extract S3 key from thumbnail URL
-        thumbnail_key = extract_s3_key_from_url(thumbnail_url)
+        # Extract S3 path from thumbnail URL
+        thumbnail_s3_path = convert_url_to_s3_path(thumbnail_url)
         
-        if not thumbnail_key:
-            print(f"Could not extract S3 key from URL: {thumbnail_url}")
+        if not thumbnail_s3_path:
+            print(f"Could not convert URL to S3 path: {thumbnail_url}")
             return None
         
-        print(f"Extracted thumbnail key: {thumbnail_key}")
+        print(f"Searching for thumbnail S3 path: {thumbnail_s3_path}")
         
-        # Search database for record with this thumbnail key
-        database_record = find_record_by_thumbnail_key(thumbnail_key)
+        # Search database for record with this thumbnail path
+        database_record = find_record_by_thumbnail_path(thumbnail_s3_path)
         
         if not database_record:
-            print(f"No database record found for thumbnail key: {thumbnail_key}")
+            print(f"No database record found for thumbnail path: {thumbnail_s3_path}")
             return None
         
-        # Generate fresh pre-signed URL for the original/full-size image
-        full_size_url = generate_full_size_presigned_url(database_record)
+        # Generate fresh pre-signed URL for the original image
+        full_size_url = generate_original_presigned_url(database_record)
         
-        if full_size_url:
-            print(f"Generated full-size URL: {full_size_url[:50]}...")
-            return full_size_url
-        else:
-            print("Failed to generate full-size URL")
-            return None
+        return full_size_url
         
     except Exception as e:
         print(f"Error in thumbnail search: {str(e)}")
         return None
 
-def extract_s3_key_from_url(url):
+def convert_url_to_s3_path(url):
     """
-    Extract S3 key from various URL formats:
-    - https://bucket.s3.amazonaws.com/key -> key
-    - Pre-signed URLs ->  extract key from path
-    - S3 URI format -> extract key
+    Convert various URL formats to S3 path format
+    Input: https://thumbnailbucket134.s3.amazonaws.com/thumbnails/file_thumb.jpg
+    Output: s3://thumbnailbucket134/thumbnails/file_thumb.jpg
     """
     if not url:
         return None
     
     try:
+        # If already S3 path format
+        if url.startswith('s3://'):
+            return url
+        
         # Handle HTTPS S3 URLs
         if 'amazonaws.com/' in url:
-            # Split by amazonaws.com/ and take the path part
-            parts = url.split('amazonaws.com/', 1)
+            # Extract bucket and key
+            parts = url.split('.s3.amazonaws.com/', 1)
             if len(parts) == 2:
+                bucket_part = parts[0].replace('https://', '').replace('http://', '')
                 key_part = parts[1]
                 
                 # Remove query parameters from pre-signed URLs
                 if '?' in key_part:
                     key_part = key_part.split('?')[0]
                 
-                return key_part
-        
-        # Handle S3 URI format: s3://bucket/key
-        elif url.startswith('s3://'):
-            parts = url.split('/', 3)
-            if len(parts) >= 4:
-                return parts[3]
-        
-        # If it's already just a key (no protocol)
-        elif not url.startswith(('http', 's3://')):
-            return url
+                return f"s3://{bucket_part}/{key_part}"
         
         return None
         
     except Exception as e:
-        print(f"Error extracting S3 key from URL: {e}")
+        print(f"Error converting URL to S3 path: {e}")
         return None
 
-def find_record_by_thumbnail_key(thumbnail_key):
-    """
-    Search database for record with matching thumbnail_s3_key
-    """
+def find_record_by_thumbnail_path(thumbnail_s3_path):
+    """Search database for record with matching thumbnail_s3_path"""
     try:
         dynamodb = boto3.resource('dynamodb')
         table = dynamodb.Table('BirdMediaMetadata')
         
-        print(f"Searching database for thumbnail key: {thumbnail_key}")
-        
-        # Scan table to find matching thumbnail key
+        # Scan table to find matching thumbnail path
         response = table.scan(
-            FilterExpression='thumbnail_s3_key = :thumb_key',
-            ExpressionAttributeValues={':thumb_key': thumbnail_key}
+            FilterExpression='thumbnail_s3_path = :thumb_path',
+            ExpressionAttributeValues={':thumb_path': thumbnail_s3_path}
         )
         
         items = response['Items']
         
-        # Continue scanning if there are more items
         while 'LastEvaluatedKey' in response:
             response = table.scan(
-                FilterExpression='thumbnail_s3_key = :thumb_key',
-                ExpressionAttributeValues={':thumb_key': thumbnail_key},
+                FilterExpression='thumbnail_s3_path = :thumb_path',
+                ExpressionAttributeValues={':thumb_path': thumbnail_s3_path},
                 ExclusiveStartKey=response['LastEvaluatedKey']
             )
             items.extend(response['Items'])
         
         if items:
             print(f"Found {len(items)} matching records")
-            return items[0]  # Return first match
+            return items[0]
         
         print("No matching records found")
         return None
         
-    except ClientError as e:
-        print(f"DynamoDB error: {str(e)}")
-        return None
     except Exception as e:
         print(f"Error searching database: {str(e)}")
         return None
 
-def generate_full_size_presigned_url(database_record):
-    """
-    Generate fresh pre-signed URL for the original/full-size image
-    """
+def generate_original_presigned_url(database_record):
+    """Generate fresh pre-signed URL for the original image"""
     try:
         s3_client = boto3.client('s3')
         
-        # Get original image key and bucket from database record
-        original_key = database_record.get('original_s3_key', '')
-        bucket_name = database_record.get('bucket_name', 'lambdatestbucket134')
+        # Get original S3 path from database
+        original_s3_path = database_record.get('original_s3_path', '')
         
-        if not original_key:
-            print("No original_s3_key found in database record")
+        if not original_s3_path:
+            print("No original_s3_path found in database record")
             return None
         
-        print(f"Generating pre-signed URL for: bucket={bucket_name}, key={original_key}")
+        # Extract bucket and key from S3 path
+        bucket, key = extract_bucket_and_key(original_s3_path)
         
-        # Generate fresh pre-signed URL (5 hours expiration)
+        if not bucket or not key:
+            print(f"Could not extract bucket/key from: {original_s3_path}")
+            return None
+        
+        # Generate fresh pre-signed URL
         presigned_url = s3_client.generate_presigned_url(
             'get_object',
             Params={
-                'Bucket': bucket_name,
-                'Key': original_key
+                'Bucket': bucket,
+                'Key': key
             },
             ExpiresIn=18000  # 5 hours
         )
         
         return presigned_url
         
-    except ClientError as e:
+    except Exception as e:
         print(f"Error generating pre-signed URL: {str(e)}")
         return None
+
+def extract_bucket_and_key(s3_path):
+    """Extract bucket and key from S3 path"""
+    if not s3_path or not s3_path.startswith('s3://'):
+        return None, None
+    
+    try:
+        path_without_prefix = s3_path[5:]  # Remove 's3://'
+        parts = path_without_prefix.split('/', 1)
+        
+        if len(parts) != 2:
+            return None, None
+        
+        return parts[0], parts[1]  # bucket, key
+        
     except Exception as e:
-        print(f"Unexpected error generating URL: {str(e)}")
-        return None
+        print(f"Error extracting bucket/key: {e}")
+        return None, None
 
 def create_error_response(status_code, error_code, message, details, headers):
     """Create standardized error response"""
