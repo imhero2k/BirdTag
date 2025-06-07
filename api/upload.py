@@ -8,8 +8,7 @@ import re
 
 def lambda_handler(event, context):
     """
-    Generate pre-signed URL for S3 upload with detailed error handling
-    NOW STORES S3 KEYS instead of full URLs in database
+    Simple function: Generate presigned URL for S3 upload
     """
     
     headers = {
@@ -91,10 +90,9 @@ def lambda_handler(event, context):
         clean_filename = re.sub(r'[^a-zA-Z0-9._-]', '_', file_name)
         file_extension = clean_filename.split('.')[-1] if '.' in clean_filename else 'unknown'
         
-        # KEY CHANGE: Create S3 keys (not full URLs)
+        # Generate S3 key for upload
         file_id = f"{timestamp_str}_{unique_id}"
-        original_s3_key = f"{file_id}.{file_extension}"  # Just the key
-        thumbnail_s3_key = f"{file_id}_thumb.jpg"       # Just the key
+        s3_key = f"{file_id}.{file_extension}"
         
         # S3 configuration
         bucket_name = 'lambdatestbucket134'
@@ -107,7 +105,7 @@ def lambda_handler(event, context):
                 'put_object',
                 Params={
                     'Bucket': bucket_name,
-                    'Key': original_s3_key,  # Using key directly
+                    'Key': s3_key,
                     'ContentType': file_type,
                     'Metadata': {
                         'original-filename': clean_filename,
@@ -116,7 +114,7 @@ def lambda_handler(event, context):
                         'file-type': file_type
                     }
                 },
-                ExpiresIn=18000  # 5 hours = 18000 seconds
+                ExpiresIn=3600  # 1 hour
             )
             
         except NoCredentialsError:
@@ -135,53 +133,18 @@ def lambda_handler(event, context):
                 }, headers
             )
         
-        # KEY CHANGE: Store S3 KEYS in database (not full URLs)
-        metadata_item = {
-            'file_id': file_id,
-            'original_filename': clean_filename,
-            'original_s3_key': original_s3_key,      # Changed from original_s3_path
-            'thumbnail_s3_key': thumbnail_s3_key,    # Changed from thumbnail_s3_path
-            'result_s3_key': '',                     # Changed from result_s3_path
-            'upload_time': timestamp.isoformat(),
-            'file_type': file_type,
-            'uploader': user_id,
-            'file_size_bytes': 0,
-            'tags': {},  # Will be populated by AI processing
-            'status': 'pending_upload',
-            'bucket_name': bucket_name  # NEW: Store bucket name for URL generation
-        }
-        
-        # # Store metadata in DynamoDB
-        # try:
-        #     dynamodb = boto3.resource('dynamodb')
-        #     table = dynamodb.Table('BirdMediaMetadata')
-            
-        #     table.put_item(Item=metadata_item)
-            
-        # except ClientError as e:
-        #     print(f"DynamoDB error: {str(e)}")
-        #     # Continue with response - can handle metadata later
-        
-        # KEY CHANGE: Response explains new workflow
+        # Return response with uploadUrl
         response_data = {
-            'uploadUrl': presigned_url,  # Pre-signed upload URL (5 hours)
+            'uploadUrl': presigned_url,  # for react
             'fileId': file_id,
-            'originalKey': original_s3_key,     #  NEW: Return S3 keys
-            'thumbnailKey': thumbnail_s3_key,   #  NEW: Return S3 keys
             'bucket': bucket_name,
-            'expiresIn': 18000,  # 5 hours
+            's3Key': s3_key,
+            'expiresIn': 3600,
             'metadata': {
                 'originalFilename': clean_filename,
                 'fileType': file_type,
                 'uploader': user_id,
-                'uploadTime': timestamp.isoformat(),
-                'estimatedProcessingTime': '30-60 seconds'
-            },
-            'workflow': {
-                'step1': 'Upload file using the provided uploadUrl',
-                'step2': 'File will be automatically processed for thumbnails and AI tagging',
-                'step3': 'Use search APIs to find files - they will return fresh pre-signed URLs',
-                'step4': 'All URLs expire after 5 hours for security'
+                'uploadTime': timestamp.isoformat()
             }
         }
         
@@ -192,7 +155,7 @@ def lambda_handler(event, context):
         }
         
     except Exception as e:
-        print(f"Unexpected error in upload handler: {str(e)}")
+        print(f"Unexpected error: {str(e)}")
         return create_error_response(
             500, 'INTERNAL_SERVER_ERROR', 'An unexpected error occurred',
             {'error_type': type(e).__name__, 'error_details': str(e)}, headers
@@ -220,10 +183,12 @@ def extract_user_info(event):
         request_context = event.get('requestContext', {})
         authorizer = request_context.get('authorizer', {})
         
+        # Check for Cognito claims
         if 'claims' in authorizer:
             claims = authorizer['claims']
             return claims.get('email', claims.get('username', 'authenticated_user'))
         
+        # Check for Authorization header
         headers = event.get('headers') or {}
         auth_header = headers.get('Authorization') or headers.get('authorization', '')
         
