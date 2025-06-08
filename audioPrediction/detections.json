@@ -1,0 +1,3482 @@
+[
+  {
+    "common_name": "Black-capped Chickadee",
+    "scientific_name": "Poecile atricapillus",
+    "start_time": 0.0,
+    "end_time": 3.0,
+    "confidence": 0.8140554428100586,
+    "label": "Poecile atricapillus_Black-capped Chickadee"
+  },
+  {
+    "common_name": "Tufted Titmouse",
+    "scientific_name": "Baeolophus bicolor",
+    "start_time": 0.0,
+    "end_time": 3.0,
+    "confidence": 0.09208764135837555,
+    "label": "Baeolophus bicolor_Tufted Titmouse"
+  },
+  {
+    "common_name": "White-winged Crossbill",
+    "scientific_name": "Loxia leucoptera",
+    "start_time": 0.0,
+    "end_time": 3.0,
+    "confidence": 0.045173339545726776,
+    "label": "Loxia leucoptera_White-winged Crossbill"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 0.0,
+    "end_time": 3.0,
+    "confidence": 0.02945513278245926,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "Mountain Chickadee",
+    "scientific_name": "Poecile gambeli",
+    "start_time": 0.0,
+    "end_time": 3.0,
+    "confidence": 0.02461187168955803,
+    "label": "Poecile gambeli_Mountain Chickadee"
+  },
+  {
+    "common_name": "American Crow",
+    "scientific_name": "Corvus brachyrhynchos",
+    "start_time": 0.0,
+    "end_time": 3.0,
+    "confidence": 0.02002979815006256,
+    "label": "Corvus brachyrhynchos_American Crow"
+  },
+  {
+    "common_name": "Song Sparrow",
+    "scientific_name": "Melospiza melodia",
+    "start_time": 0.0,
+    "end_time": 3.0,
+    "confidence": 0.019438907504081726,
+    "label": "Melospiza melodia_Song Sparrow"
+  },
+  {
+    "common_name": "Red Crossbill",
+    "scientific_name": "Loxia curvirostra",
+    "start_time": 0.0,
+    "end_time": 3.0,
+    "confidence": 0.018795758485794067,
+    "label": "Loxia curvirostra_Red Crossbill"
+  },
+  {
+    "common_name": "Downy Woodpecker",
+    "scientific_name": "Dryobates pubescens",
+    "start_time": 0.0,
+    "end_time": 3.0,
+    "confidence": 0.018036698922514915,
+    "label": "Dryobates pubescens_Downy Woodpecker"
+  },
+  {
+    "common_name": "Streaked Laughingthrush",
+    "scientific_name": "Trochalopteron lineatum",
+    "start_time": 0.0,
+    "end_time": 3.0,
+    "confidence": 0.013654195703566074,
+    "label": "Trochalopteron lineatum_Streaked Laughingthrush"
+  },
+  {
+    "common_name": "Common Yellowthroat",
+    "scientific_name": "Geothlypis trichas",
+    "start_time": 0.0,
+    "end_time": 3.0,
+    "confidence": 0.013393290340900421,
+    "label": "Geothlypis trichas_Common Yellowthroat"
+  },
+  {
+    "common_name": "Northern Cardinal",
+    "scientific_name": "Cardinalis cardinalis",
+    "start_time": 0.0,
+    "end_time": 3.0,
+    "confidence": 0.013188713230192661,
+    "label": "Cardinalis cardinalis_Northern Cardinal"
+  },
+  {
+    "common_name": "Pine Siskin",
+    "scientific_name": "Spinus pinus",
+    "start_time": 0.0,
+    "end_time": 3.0,
+    "confidence": 0.010454006493091583,
+    "label": "Spinus pinus_Pine Siskin"
+  },
+  {
+    "common_name": "Black-capped Chickadee",
+    "scientific_name": "Poecile atricapillus",
+    "start_time": 3.0,
+    "end_time": 6.0,
+    "confidence": 0.3082858622074127,
+    "label": "Poecile atricapillus_Black-capped Chickadee"
+  },
+  {
+    "common_name": "Mountain Chickadee",
+    "scientific_name": "Poecile gambeli",
+    "start_time": 3.0,
+    "end_time": 6.0,
+    "confidence": 0.08465573936700821,
+    "label": "Poecile gambeli_Mountain Chickadee"
+  },
+  {
+    "common_name": "Tufted Titmouse",
+    "scientific_name": "Baeolophus bicolor",
+    "start_time": 3.0,
+    "end_time": 6.0,
+    "confidence": 0.029574435204267502,
+    "label": "Baeolophus bicolor_Tufted Titmouse"
+  },
+  {
+    "common_name": "Pygmy Nuthatch",
+    "scientific_name": "Sitta pygmaea",
+    "start_time": 3.0,
+    "end_time": 6.0,
+    "confidence": 0.02269253320991993,
+    "label": "Sitta pygmaea_Pygmy Nuthatch"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 3.0,
+    "end_time": 6.0,
+    "confidence": 0.021565090864896774,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "Red-breasted Nuthatch",
+    "scientific_name": "Sitta canadensis",
+    "start_time": 3.0,
+    "end_time": 6.0,
+    "confidence": 0.015439381822943687,
+    "label": "Sitta canadensis_Red-breasted Nuthatch"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 3.0,
+    "end_time": 6.0,
+    "confidence": 0.013965918682515621,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "White-breasted Nuthatch",
+    "scientific_name": "Sitta carolinensis",
+    "start_time": 3.0,
+    "end_time": 6.0,
+    "confidence": 0.012511986307799816,
+    "label": "Sitta carolinensis_White-breasted Nuthatch"
+  },
+  {
+    "common_name": "Engine",
+    "scientific_name": "Engine",
+    "start_time": 3.0,
+    "end_time": 6.0,
+    "confidence": 0.011446010321378708,
+    "label": "Engine_Engine"
+  },
+  {
+    "common_name": "Tufted Titmouse",
+    "scientific_name": "Baeolophus bicolor",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.18643271923065186,
+    "label": "Baeolophus bicolor_Tufted Titmouse"
+  },
+  {
+    "common_name": "Song Thrush",
+    "scientific_name": "Turdus philomelos",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.08142763376235962,
+    "label": "Turdus philomelos_Song Thrush"
+  },
+  {
+    "common_name": "American Tree Sparrow",
+    "scientific_name": "Spizelloides arborea",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.07001489400863647,
+    "label": "Spizelloides arborea_American Tree Sparrow"
+  },
+  {
+    "common_name": "Rustic Bunting",
+    "scientific_name": "Emberiza rustica",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.05936196818947792,
+    "label": "Emberiza rustica_Rustic Bunting"
+  },
+  {
+    "common_name": "Purple Finch",
+    "scientific_name": "Haemorhous purpureus",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.045119378715753555,
+    "label": "Haemorhous purpureus_Purple Finch"
+  },
+  {
+    "common_name": "Rufous-capped Warbler",
+    "scientific_name": "Basileuterus rufifrons",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.04327123239636421,
+    "label": "Basileuterus rufifrons_Rufous-capped Warbler"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.038908518850803375,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "Orange-crowned Warbler",
+    "scientific_name": "Leiothlypis celata",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.031524743884801865,
+    "label": "Leiothlypis celata_Orange-crowned Warbler"
+  },
+  {
+    "common_name": "Cassin's Finch",
+    "scientific_name": "Haemorhous cassinii",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.030137361958622932,
+    "label": "Haemorhous cassinii_Cassin's Finch"
+  },
+  {
+    "common_name": "Northern Cardinal",
+    "scientific_name": "Cardinalis cardinalis",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.029492732137441635,
+    "label": "Cardinalis cardinalis_Northern Cardinal"
+  },
+  {
+    "common_name": "Lark Sparrow",
+    "scientific_name": "Chondestes grammacus",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.02778053842484951,
+    "label": "Chondestes grammacus_Lark Sparrow"
+  },
+  {
+    "common_name": "Black-crested Titmouse",
+    "scientific_name": "Baeolophus atricristatus",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.02641359530389309,
+    "label": "Baeolophus atricristatus_Black-crested Titmouse"
+  },
+  {
+    "common_name": "Song Sparrow",
+    "scientific_name": "Melospiza melodia",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.024493858218193054,
+    "label": "Melospiza melodia_Song Sparrow"
+  },
+  {
+    "common_name": "Black-capped Chickadee",
+    "scientific_name": "Poecile atricapillus",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.01825852319598198,
+    "label": "Poecile atricapillus_Black-capped Chickadee"
+  },
+  {
+    "common_name": "Chipping Sparrow",
+    "scientific_name": "Spizella passerina",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.017387358471751213,
+    "label": "Spizella passerina_Chipping Sparrow"
+  },
+  {
+    "common_name": "Common Yellowthroat",
+    "scientific_name": "Geothlypis trichas",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.016236282885074615,
+    "label": "Geothlypis trichas_Common Yellowthroat"
+  },
+  {
+    "common_name": "Sagebrush Sparrow",
+    "scientific_name": "Artemisiospiza nevadensis",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.015638098120689392,
+    "label": "Artemisiospiza nevadensis_Sagebrush Sparrow"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.014630860649049282,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "American Crow",
+    "scientific_name": "Corvus brachyrhynchos",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.013126959092915058,
+    "label": "Corvus brachyrhynchos_American Crow"
+  },
+  {
+    "common_name": "Buff-barred Warbler",
+    "scientific_name": "Phylloscopus pulcher",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.010782700963318348,
+    "label": "Phylloscopus pulcher_Buff-barred Warbler"
+  },
+  {
+    "common_name": "Black-throated Sparrow",
+    "scientific_name": "Amphispiza bilineata",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.010523052886128426,
+    "label": "Amphispiza bilineata_Black-throated Sparrow"
+  },
+  {
+    "common_name": "Pygmy Nuthatch",
+    "scientific_name": "Sitta pygmaea",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.010514194145798683,
+    "label": "Sitta pygmaea_Pygmy Nuthatch"
+  },
+  {
+    "common_name": "Virginia's Warbler",
+    "scientific_name": "Leiothlypis virginiae",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.010350270196795464,
+    "label": "Leiothlypis virginiae_Virginia's Warbler"
+  },
+  {
+    "common_name": "Brown Creeper",
+    "scientific_name": "Certhia americana",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.010216521099209785,
+    "label": "Certhia americana_Brown Creeper"
+  },
+  {
+    "common_name": "White-breasted Nuthatch",
+    "scientific_name": "Sitta carolinensis",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.010176874697208405,
+    "label": "Sitta carolinensis_White-breasted Nuthatch"
+  },
+  {
+    "common_name": "Nashville Warbler",
+    "scientific_name": "Leiothlypis ruficapilla",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.010074038989841938,
+    "label": "Leiothlypis ruficapilla_Nashville Warbler"
+  },
+  {
+    "common_name": "Yellow-eyed Junco",
+    "scientific_name": "Junco phaeonotus",
+    "start_time": 6.0,
+    "end_time": 9.0,
+    "confidence": 0.010047084651887417,
+    "label": "Junco phaeonotus_Yellow-eyed Junco"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 9.0,
+    "end_time": 12.0,
+    "confidence": 0.6393780708312988,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Golden-crowned Sparrow",
+    "scientific_name": "Zonotrichia atricapilla",
+    "start_time": 9.0,
+    "end_time": 12.0,
+    "confidence": 0.01633988879621029,
+    "label": "Zonotrichia atricapilla_Golden-crowned Sparrow"
+  },
+  {
+    "common_name": "Anna's Hummingbird",
+    "scientific_name": "Calypte anna",
+    "start_time": 9.0,
+    "end_time": 12.0,
+    "confidence": 0.013492504134774208,
+    "label": "Calypte anna_Anna's Hummingbird"
+  },
+  {
+    "common_name": "Nuttall's Woodpecker",
+    "scientific_name": "Dryobates nuttallii",
+    "start_time": 9.0,
+    "end_time": 12.0,
+    "confidence": 0.012157868593931198,
+    "label": "Dryobates nuttallii_Nuttall's Woodpecker"
+  },
+  {
+    "common_name": "Common Redpoll",
+    "scientific_name": "Acanthis flammea",
+    "start_time": 9.0,
+    "end_time": 12.0,
+    "confidence": 0.010093864053487778,
+    "label": "Acanthis flammea_Common Redpoll"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 12.0,
+    "end_time": 15.0,
+    "confidence": 0.08078742027282715,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Purple Finch",
+    "scientific_name": "Haemorhous purpureus",
+    "start_time": 12.0,
+    "end_time": 15.0,
+    "confidence": 0.06017207354307175,
+    "label": "Haemorhous purpureus_Purple Finch"
+  },
+  {
+    "common_name": "Engine",
+    "scientific_name": "Engine",
+    "start_time": 12.0,
+    "end_time": 15.0,
+    "confidence": 0.05009067803621292,
+    "label": "Engine_Engine"
+  },
+  {
+    "common_name": "Cassin's Finch",
+    "scientific_name": "Haemorhous cassinii",
+    "start_time": 12.0,
+    "end_time": 15.0,
+    "confidence": 0.04755646735429764,
+    "label": "Haemorhous cassinii_Cassin's Finch"
+  },
+  {
+    "common_name": "Bell's Vireo",
+    "scientific_name": "Vireo bellii",
+    "start_time": 12.0,
+    "end_time": 15.0,
+    "confidence": 0.030031530186533928,
+    "label": "Vireo bellii_Bell's Vireo"
+  },
+  {
+    "common_name": "Rustic Bunting",
+    "scientific_name": "Emberiza rustica",
+    "start_time": 12.0,
+    "end_time": 15.0,
+    "confidence": 0.02937447279691696,
+    "label": "Emberiza rustica_Rustic Bunting"
+  },
+  {
+    "common_name": "Say's Phoebe",
+    "scientific_name": "Sayornis saya",
+    "start_time": 12.0,
+    "end_time": 15.0,
+    "confidence": 0.017678754404187202,
+    "label": "Sayornis saya_Say's Phoebe"
+  },
+  {
+    "common_name": "Nuttall's Woodpecker",
+    "scientific_name": "Dryobates nuttallii",
+    "start_time": 12.0,
+    "end_time": 15.0,
+    "confidence": 0.014671490527689457,
+    "label": "Dryobates nuttallii_Nuttall's Woodpecker"
+  },
+  {
+    "common_name": "Common Yellowthroat",
+    "scientific_name": "Geothlypis trichas",
+    "start_time": 12.0,
+    "end_time": 15.0,
+    "confidence": 0.012193793430924416,
+    "label": "Geothlypis trichas_Common Yellowthroat"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 12.0,
+    "end_time": 15.0,
+    "confidence": 0.011453215964138508,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.06615300476551056,
+    "label": "Cyanocitta cristata_Blue Jay"
+  },
+  {
+    "common_name": "Rusty Blackbird",
+    "scientific_name": "Euphagus carolinus",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.05929742380976677,
+    "label": "Euphagus carolinus_Rusty Blackbird"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.03145323693752289,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "Eurasian Bullfinch",
+    "scientific_name": "Pyrrhula pyrrhula",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.030425233766436577,
+    "label": "Pyrrhula pyrrhula_Eurasian Bullfinch"
+  },
+  {
+    "common_name": "Coal Tit",
+    "scientific_name": "Periparus ater",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.02383873052895069,
+    "label": "Periparus ater_Coal Tit"
+  },
+  {
+    "common_name": "Common Grackle",
+    "scientific_name": "Quiscalus quiscula",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.023511279374361038,
+    "label": "Quiscalus quiscula_Common Grackle"
+  },
+  {
+    "common_name": "Ring-billed Gull",
+    "scientific_name": "Larus delawarensis",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.02338077500462532,
+    "label": "Larus delawarensis_Ring-billed Gull"
+  },
+  {
+    "common_name": "Great Tit",
+    "scientific_name": "Parus major",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.0215668473392725,
+    "label": "Parus major_Great Tit"
+  },
+  {
+    "common_name": "Northern Shrike",
+    "scientific_name": "Lanius borealis",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.020772909745573997,
+    "label": "Lanius borealis_Northern Shrike"
+  },
+  {
+    "common_name": "European Greenfinch",
+    "scientific_name": "Chloris chloris",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.019627409055829048,
+    "label": "Chloris chloris_European Greenfinch"
+  },
+  {
+    "common_name": "Tufted Titmouse",
+    "scientific_name": "Baeolophus bicolor",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.019543025642633438,
+    "label": "Baeolophus bicolor_Tufted Titmouse"
+  },
+  {
+    "common_name": "Eurasian Green Woodpecker",
+    "scientific_name": "Picus viridis",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.01904376968741417,
+    "label": "Picus viridis_Eurasian Green Woodpecker"
+  },
+  {
+    "common_name": "Hooded Crow",
+    "scientific_name": "Corvus cornix",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.017255468294024467,
+    "label": "Corvus cornix_Hooded Crow"
+  },
+  {
+    "common_name": "Red-winged Blackbird",
+    "scientific_name": "Agelaius phoeniceus",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.017047841101884842,
+    "label": "Agelaius phoeniceus_Red-winged Blackbird"
+  },
+  {
+    "common_name": "Gray-headed Woodpecker",
+    "scientific_name": "Picus canus",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.015614040195941925,
+    "label": "Picus canus_Gray-headed Woodpecker"
+  },
+  {
+    "common_name": "Purple Finch",
+    "scientific_name": "Haemorhous purpureus",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.015591373667120934,
+    "label": "Haemorhous purpureus_Purple Finch"
+  },
+  {
+    "common_name": "Song Sparrow",
+    "scientific_name": "Melospiza melodia",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.015169745311141014,
+    "label": "Melospiza melodia_Song Sparrow"
+  },
+  {
+    "common_name": "Bald Eagle",
+    "scientific_name": "Haliaeetus leucocephalus",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.015053278766572475,
+    "label": "Haliaeetus leucocephalus_Bald Eagle"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.012222740799188614,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Willow Tit",
+    "scientific_name": "Poecile montanus",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.011775683611631393,
+    "label": "Poecile montanus_Willow Tit"
+  },
+  {
+    "common_name": "Great-tailed Grackle",
+    "scientific_name": "Quiscalus mexicanus",
+    "start_time": 15.0,
+    "end_time": 18.0,
+    "confidence": 0.01101223099976778,
+    "label": "Quiscalus mexicanus_Great-tailed Grackle"
+  },
+  {
+    "common_name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "start_time": 18.0,
+    "end_time": 21.0,
+    "confidence": 0.43527090549468994,
+    "label": "Cyanocitta cristata_Blue Jay"
+  },
+  {
+    "common_name": "Chestnut-winged Cuckoo",
+    "scientific_name": "Clamator coromandus",
+    "start_time": 18.0,
+    "end_time": 21.0,
+    "confidence": 0.32258784770965576,
+    "label": "Clamator coromandus_Chestnut-winged Cuckoo"
+  },
+  {
+    "common_name": "Sharp-shinned Hawk",
+    "scientific_name": "Accipiter striatus",
+    "start_time": 18.0,
+    "end_time": 21.0,
+    "confidence": 0.03531982749700546,
+    "label": "Accipiter striatus_Sharp-shinned Hawk"
+  },
+  {
+    "common_name": "European Golden-Plover",
+    "scientific_name": "Pluvialis apricaria",
+    "start_time": 18.0,
+    "end_time": 21.0,
+    "confidence": 0.02310003899037838,
+    "label": "Pluvialis apricaria_European Golden-Plover"
+  },
+  {
+    "common_name": "Green Jay",
+    "scientific_name": "Cyanocorax yncas",
+    "start_time": 18.0,
+    "end_time": 21.0,
+    "confidence": 0.019573064520955086,
+    "label": "Cyanocorax yncas_Green Jay"
+  },
+  {
+    "common_name": "Long-eared Owl",
+    "scientific_name": "Asio otus",
+    "start_time": 18.0,
+    "end_time": 21.0,
+    "confidence": 0.01477524172514677,
+    "label": "Asio otus_Long-eared Owl"
+  },
+  {
+    "common_name": "Eurasian Bullfinch",
+    "scientific_name": "Pyrrhula pyrrhula",
+    "start_time": 18.0,
+    "end_time": 21.0,
+    "confidence": 0.012561044655740261,
+    "label": "Pyrrhula pyrrhula_Eurasian Bullfinch"
+  },
+  {
+    "common_name": "Tufted Titmouse",
+    "scientific_name": "Baeolophus bicolor",
+    "start_time": 18.0,
+    "end_time": 21.0,
+    "confidence": 0.011969728395342827,
+    "label": "Baeolophus bicolor_Tufted Titmouse"
+  },
+  {
+    "common_name": "Gray-headed Woodpecker",
+    "scientific_name": "Picus canus",
+    "start_time": 18.0,
+    "end_time": 21.0,
+    "confidence": 0.010577049106359482,
+    "label": "Picus canus_Gray-headed Woodpecker"
+  },
+  {
+    "common_name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "start_time": 21.0,
+    "end_time": 24.0,
+    "confidence": 0.3290855586528778,
+    "label": "Cyanocitta cristata_Blue Jay"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 21.0,
+    "end_time": 24.0,
+    "confidence": 0.1867215633392334,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Rusty Blackbird",
+    "scientific_name": "Euphagus carolinus",
+    "start_time": 21.0,
+    "end_time": 24.0,
+    "confidence": 0.03203646466135979,
+    "label": "Euphagus carolinus_Rusty Blackbird"
+  },
+  {
+    "common_name": "Steller's Jay",
+    "scientific_name": "Cyanocitta stelleri",
+    "start_time": 21.0,
+    "end_time": 24.0,
+    "confidence": 0.0316651314496994,
+    "label": "Cyanocitta stelleri_Steller's Jay"
+  },
+  {
+    "common_name": "Red-winged Blackbird",
+    "scientific_name": "Agelaius phoeniceus",
+    "start_time": 21.0,
+    "end_time": 24.0,
+    "confidence": 0.027817677706480026,
+    "label": "Agelaius phoeniceus_Red-winged Blackbird"
+  },
+  {
+    "common_name": "Common Grackle",
+    "scientific_name": "Quiscalus quiscula",
+    "start_time": 21.0,
+    "end_time": 24.0,
+    "confidence": 0.021515991538763046,
+    "label": "Quiscalus quiscula_Common Grackle"
+  },
+  {
+    "common_name": "Iiwi",
+    "scientific_name": "Drepanis coccinea",
+    "start_time": 21.0,
+    "end_time": 24.0,
+    "confidence": 0.02071031555533409,
+    "label": "Drepanis coccinea_Iiwi"
+  },
+  {
+    "common_name": "Red-tailed Hawk",
+    "scientific_name": "Buteo jamaicensis",
+    "start_time": 21.0,
+    "end_time": 24.0,
+    "confidence": 0.019201889634132385,
+    "label": "Buteo jamaicensis_Red-tailed Hawk"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 21.0,
+    "end_time": 24.0,
+    "confidence": 0.017740080133080482,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "Brewer's Blackbird",
+    "scientific_name": "Euphagus cyanocephalus",
+    "start_time": 21.0,
+    "end_time": 24.0,
+    "confidence": 0.014359474182128906,
+    "label": "Euphagus cyanocephalus_Brewer's Blackbird"
+  },
+  {
+    "common_name": "Bald Eagle",
+    "scientific_name": "Haliaeetus leucocephalus",
+    "start_time": 21.0,
+    "end_time": 24.0,
+    "confidence": 0.01030781026929617,
+    "label": "Haliaeetus leucocephalus_Bald Eagle"
+  },
+  {
+    "common_name": "Ring-billed Gull",
+    "scientific_name": "Larus delawarensis",
+    "start_time": 21.0,
+    "end_time": 24.0,
+    "confidence": 0.010185419581830502,
+    "label": "Larus delawarensis_Ring-billed Gull"
+  },
+  {
+    "common_name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "start_time": 24.0,
+    "end_time": 27.0,
+    "confidence": 0.17492017149925232,
+    "label": "Cyanocitta cristata_Blue Jay"
+  },
+  {
+    "common_name": "Merlin",
+    "scientific_name": "Falco columbarius",
+    "start_time": 24.0,
+    "end_time": 27.0,
+    "confidence": 0.0793476328253746,
+    "label": "Falco columbarius_Merlin"
+  },
+  {
+    "common_name": "Sharp-shinned Hawk",
+    "scientific_name": "Accipiter striatus",
+    "start_time": 24.0,
+    "end_time": 27.0,
+    "confidence": 0.02227037586271763,
+    "label": "Accipiter striatus_Sharp-shinned Hawk"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 24.0,
+    "end_time": 27.0,
+    "confidence": 0.02031531184911728,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Steller's Jay",
+    "scientific_name": "Cyanocitta stelleri",
+    "start_time": 24.0,
+    "end_time": 27.0,
+    "confidence": 0.01608632318675518,
+    "label": "Cyanocitta stelleri_Steller's Jay"
+  },
+  {
+    "common_name": "American Robin",
+    "scientific_name": "Turdus migratorius",
+    "start_time": 24.0,
+    "end_time": 27.0,
+    "confidence": 0.014147870242595673,
+    "label": "Turdus migratorius_American Robin"
+  },
+  {
+    "common_name": "Little Grebe",
+    "scientific_name": "Tachybaptus ruficollis",
+    "start_time": 24.0,
+    "end_time": 27.0,
+    "confidence": 0.012191508896648884,
+    "label": "Tachybaptus ruficollis_Little Grebe"
+  },
+  {
+    "common_name": "Purple Finch",
+    "scientific_name": "Haemorhous purpureus",
+    "start_time": 24.0,
+    "end_time": 27.0,
+    "confidence": 0.010424137115478516,
+    "label": "Haemorhous purpureus_Purple Finch"
+  },
+  {
+    "common_name": "Merlin",
+    "scientific_name": "Falco columbarius",
+    "start_time": 27.0,
+    "end_time": 30.0,
+    "confidence": 0.26565277576446533,
+    "label": "Falco columbarius_Merlin"
+  },
+  {
+    "common_name": "Dark-eyed Junco",
+    "scientific_name": "Junco hyemalis",
+    "start_time": 27.0,
+    "end_time": 30.0,
+    "confidence": 0.21865354478359222,
+    "label": "Junco hyemalis_Dark-eyed Junco"
+  },
+  {
+    "common_name": "White-winged Crossbill",
+    "scientific_name": "Loxia leucoptera",
+    "start_time": 27.0,
+    "end_time": 30.0,
+    "confidence": 0.05193185433745384,
+    "label": "Loxia leucoptera_White-winged Crossbill"
+  },
+  {
+    "common_name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "start_time": 27.0,
+    "end_time": 30.0,
+    "confidence": 0.0239906907081604,
+    "label": "Cyanocitta cristata_Blue Jay"
+  },
+  {
+    "common_name": "Sharp-shinned Hawk",
+    "scientific_name": "Accipiter striatus",
+    "start_time": 27.0,
+    "end_time": 30.0,
+    "confidence": 0.020707838237285614,
+    "label": "Accipiter striatus_Sharp-shinned Hawk"
+  },
+  {
+    "common_name": "White-breasted Nuthatch",
+    "scientific_name": "Sitta carolinensis",
+    "start_time": 27.0,
+    "end_time": 30.0,
+    "confidence": 0.020257312804460526,
+    "label": "Sitta carolinensis_White-breasted Nuthatch"
+  },
+  {
+    "common_name": "Gray-headed Woodpecker",
+    "scientific_name": "Picus canus",
+    "start_time": 27.0,
+    "end_time": 30.0,
+    "confidence": 0.018222620710730553,
+    "label": "Picus canus_Gray-headed Woodpecker"
+  },
+  {
+    "common_name": "Steller's Jay",
+    "scientific_name": "Cyanocitta stelleri",
+    "start_time": 27.0,
+    "end_time": 30.0,
+    "confidence": 0.015956269577145576,
+    "label": "Cyanocitta stelleri_Steller's Jay"
+  },
+  {
+    "common_name": "Pileated Woodpecker",
+    "scientific_name": "Dryocopus pileatus",
+    "start_time": 27.0,
+    "end_time": 30.0,
+    "confidence": 0.013499693013727665,
+    "label": "Dryocopus pileatus_Pileated Woodpecker"
+  },
+  {
+    "common_name": "Varied Thrush",
+    "scientific_name": "Ixoreus naevius",
+    "start_time": 27.0,
+    "end_time": 30.0,
+    "confidence": 0.01311470940709114,
+    "label": "Ixoreus naevius_Varied Thrush"
+  },
+  {
+    "common_name": "Ring-billed Gull",
+    "scientific_name": "Larus delawarensis",
+    "start_time": 27.0,
+    "end_time": 30.0,
+    "confidence": 0.012132394127547741,
+    "label": "Larus delawarensis_Ring-billed Gull"
+  },
+  {
+    "common_name": "Red-tailed Hawk",
+    "scientific_name": "Buteo jamaicensis",
+    "start_time": 27.0,
+    "end_time": 30.0,
+    "confidence": 0.010021279565989971,
+    "label": "Buteo jamaicensis_Red-tailed Hawk"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 30.0,
+    "end_time": 33.0,
+    "confidence": 0.050442758947610855,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Purple Finch",
+    "scientific_name": "Haemorhous purpureus",
+    "start_time": 30.0,
+    "end_time": 33.0,
+    "confidence": 0.04319043457508087,
+    "label": "Haemorhous purpureus_Purple Finch"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 30.0,
+    "end_time": 33.0,
+    "confidence": 0.0330793671309948,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "White-breasted Nuthatch",
+    "scientific_name": "Sitta carolinensis",
+    "start_time": 30.0,
+    "end_time": 33.0,
+    "confidence": 0.03149007633328438,
+    "label": "Sitta carolinensis_White-breasted Nuthatch"
+  },
+  {
+    "common_name": "Northern Cardinal",
+    "scientific_name": "Cardinalis cardinalis",
+    "start_time": 30.0,
+    "end_time": 33.0,
+    "confidence": 0.02082306332886219,
+    "label": "Cardinalis cardinalis_Northern Cardinal"
+  },
+  {
+    "common_name": "Northern Flicker",
+    "scientific_name": "Colaptes auratus",
+    "start_time": 30.0,
+    "end_time": 33.0,
+    "confidence": 0.018014447763562202,
+    "label": "Colaptes auratus_Northern Flicker"
+  },
+  {
+    "common_name": "White-winged Crossbill",
+    "scientific_name": "Loxia leucoptera",
+    "start_time": 30.0,
+    "end_time": 33.0,
+    "confidence": 0.016874214634299278,
+    "label": "Loxia leucoptera_White-winged Crossbill"
+  },
+  {
+    "common_name": "Tufted Titmouse",
+    "scientific_name": "Baeolophus bicolor",
+    "start_time": 30.0,
+    "end_time": 33.0,
+    "confidence": 0.015295276418328285,
+    "label": "Baeolophus bicolor_Tufted Titmouse"
+  },
+  {
+    "common_name": "Pygmy Nuthatch",
+    "scientific_name": "Sitta pygmaea",
+    "start_time": 30.0,
+    "end_time": 33.0,
+    "confidence": 0.014669477008283138,
+    "label": "Sitta pygmaea_Pygmy Nuthatch"
+  },
+  {
+    "common_name": "Song Sparrow",
+    "scientific_name": "Melospiza melodia",
+    "start_time": 30.0,
+    "end_time": 33.0,
+    "confidence": 0.014205200597643852,
+    "label": "Melospiza melodia_Song Sparrow"
+  },
+  {
+    "common_name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "start_time": 30.0,
+    "end_time": 33.0,
+    "confidence": 0.01338646188378334,
+    "label": "Cyanocitta cristata_Blue Jay"
+  },
+  {
+    "common_name": "Downy Woodpecker",
+    "scientific_name": "Dryobates pubescens",
+    "start_time": 30.0,
+    "end_time": 33.0,
+    "confidence": 0.011240310035645962,
+    "label": "Dryobates pubescens_Downy Woodpecker"
+  },
+  {
+    "common_name": "Common Yellowthroat",
+    "scientific_name": "Geothlypis trichas",
+    "start_time": 30.0,
+    "end_time": 33.0,
+    "confidence": 0.010931206867098808,
+    "label": "Geothlypis trichas_Common Yellowthroat"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 30.0,
+    "end_time": 33.0,
+    "confidence": 0.010491586290299892,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "Black-capped Chickadee",
+    "scientific_name": "Poecile atricapillus",
+    "start_time": 30.0,
+    "end_time": 33.0,
+    "confidence": 0.010410863906145096,
+    "label": "Poecile atricapillus_Black-capped Chickadee"
+  },
+  {
+    "common_name": "Dark-eyed Junco",
+    "scientific_name": "Junco hyemalis",
+    "start_time": 33.0,
+    "end_time": 36.0,
+    "confidence": 0.45906320214271545,
+    "label": "Junco hyemalis_Dark-eyed Junco"
+  },
+  {
+    "common_name": "American Tree Sparrow",
+    "scientific_name": "Spizelloides arborea",
+    "start_time": 33.0,
+    "end_time": 36.0,
+    "confidence": 0.021119246259331703,
+    "label": "Spizelloides arborea_American Tree Sparrow"
+  },
+  {
+    "common_name": "Red-winged Blackbird",
+    "scientific_name": "Agelaius phoeniceus",
+    "start_time": 33.0,
+    "end_time": 36.0,
+    "confidence": 0.015026791021227837,
+    "label": "Agelaius phoeniceus_Red-winged Blackbird"
+  },
+  {
+    "common_name": "Costa's Hummingbird",
+    "scientific_name": "Calypte costae",
+    "start_time": 33.0,
+    "end_time": 36.0,
+    "confidence": 0.012968756258487701,
+    "label": "Calypte costae_Costa's Hummingbird"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 33.0,
+    "end_time": 36.0,
+    "confidence": 0.01287566963583231,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "Purple Finch",
+    "scientific_name": "Haemorhous purpureus",
+    "start_time": 33.0,
+    "end_time": 36.0,
+    "confidence": 0.0118034603074193,
+    "label": "Haemorhous purpureus_Purple Finch"
+  },
+  {
+    "common_name": "Dark-eyed Junco",
+    "scientific_name": "Junco hyemalis",
+    "start_time": 36.0,
+    "end_time": 39.0,
+    "confidence": 0.3536849021911621,
+    "label": "Junco hyemalis_Dark-eyed Junco"
+  },
+  {
+    "common_name": "Merlin",
+    "scientific_name": "Falco columbarius",
+    "start_time": 36.0,
+    "end_time": 39.0,
+    "confidence": 0.14283166825771332,
+    "label": "Falco columbarius_Merlin"
+  },
+  {
+    "common_name": "Little Bunting",
+    "scientific_name": "Emberiza pusilla",
+    "start_time": 36.0,
+    "end_time": 39.0,
+    "confidence": 0.043704669922590256,
+    "label": "Emberiza pusilla_Little Bunting"
+  },
+  {
+    "common_name": "Costa's Hummingbird",
+    "scientific_name": "Calypte costae",
+    "start_time": 36.0,
+    "end_time": 39.0,
+    "confidence": 0.03496069833636284,
+    "label": "Calypte costae_Costa's Hummingbird"
+  },
+  {
+    "common_name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "start_time": 36.0,
+    "end_time": 39.0,
+    "confidence": 0.02000625617802143,
+    "label": "Cyanocitta cristata_Blue Jay"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 36.0,
+    "end_time": 39.0,
+    "confidence": 0.019777176901698112,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "American Tree Sparrow",
+    "scientific_name": "Spizelloides arborea",
+    "start_time": 36.0,
+    "end_time": 39.0,
+    "confidence": 0.01824357360601425,
+    "label": "Spizelloides arborea_American Tree Sparrow"
+  },
+  {
+    "common_name": "American Kestrel",
+    "scientific_name": "Falco sparverius",
+    "start_time": 36.0,
+    "end_time": 39.0,
+    "confidence": 0.016835132613778114,
+    "label": "Falco sparverius_American Kestrel"
+  },
+  {
+    "common_name": "Red-winged Blackbird",
+    "scientific_name": "Agelaius phoeniceus",
+    "start_time": 36.0,
+    "end_time": 39.0,
+    "confidence": 0.015876904129981995,
+    "label": "Agelaius phoeniceus_Red-winged Blackbird"
+  },
+  {
+    "common_name": "Sharp-shinned Hawk",
+    "scientific_name": "Accipiter striatus",
+    "start_time": 36.0,
+    "end_time": 39.0,
+    "confidence": 0.014776762574911118,
+    "label": "Accipiter striatus_Sharp-shinned Hawk"
+  },
+  {
+    "common_name": "Eurasian Hobby",
+    "scientific_name": "Falco subbuteo",
+    "start_time": 36.0,
+    "end_time": 39.0,
+    "confidence": 0.013831064105033875,
+    "label": "Falco subbuteo_Eurasian Hobby"
+  },
+  {
+    "common_name": "Song Sparrow",
+    "scientific_name": "Melospiza melodia",
+    "start_time": 36.0,
+    "end_time": 39.0,
+    "confidence": 0.013681984506547451,
+    "label": "Melospiza melodia_Song Sparrow"
+  },
+  {
+    "common_name": "Rusty Blackbird",
+    "scientific_name": "Euphagus carolinus",
+    "start_time": 36.0,
+    "end_time": 39.0,
+    "confidence": 0.012269224040210247,
+    "label": "Euphagus carolinus_Rusty Blackbird"
+  },
+  {
+    "common_name": "Common Green-Magpie",
+    "scientific_name": "Cissa chinensis",
+    "start_time": 36.0,
+    "end_time": 39.0,
+    "confidence": 0.010570190846920013,
+    "label": "Cissa chinensis_Common Green-Magpie"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.2532505393028259,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Purple Finch",
+    "scientific_name": "Haemorhous purpureus",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.09072264283895493,
+    "label": "Haemorhous purpureus_Purple Finch"
+  },
+  {
+    "common_name": "Cassin's Finch",
+    "scientific_name": "Haemorhous cassinii",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.06938712298870087,
+    "label": "Haemorhous cassinii_Cassin's Finch"
+  },
+  {
+    "common_name": "Lawrence's Goldfinch",
+    "scientific_name": "Spinus lawrencei",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.04404648393392563,
+    "label": "Spinus lawrencei_Lawrence's Goldfinch"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.026156170293688774,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "American Tree Sparrow",
+    "scientific_name": "Spizelloides arborea",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.02583615668118,
+    "label": "Spizelloides arborea_American Tree Sparrow"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.022623784840106964,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "Abert's Towhee",
+    "scientific_name": "Melozone aberti",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.0205317921936512,
+    "label": "Melozone aberti_Abert's Towhee"
+  },
+  {
+    "common_name": "Golden-crowned Sparrow",
+    "scientific_name": "Zonotrichia atricapilla",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.01634123921394348,
+    "label": "Zonotrichia atricapilla_Golden-crowned Sparrow"
+  },
+  {
+    "common_name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.01590040512382984,
+    "label": "Cyanocitta cristata_Blue Jay"
+  },
+  {
+    "common_name": "Northern Cardinal",
+    "scientific_name": "Cardinalis cardinalis",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.014052060432732105,
+    "label": "Cardinalis cardinalis_Northern Cardinal"
+  },
+  {
+    "common_name": "Wood Lark",
+    "scientific_name": "Lullula arborea",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.01253653597086668,
+    "label": "Lullula arborea_Wood Lark"
+  },
+  {
+    "common_name": "Song Sparrow",
+    "scientific_name": "Melospiza melodia",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.012494093738496304,
+    "label": "Melospiza melodia_Song Sparrow"
+  },
+  {
+    "common_name": "Black-capped Chickadee",
+    "scientific_name": "Poecile atricapillus",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.011884174309670925,
+    "label": "Poecile atricapillus_Black-capped Chickadee"
+  },
+  {
+    "common_name": "Anna's Hummingbird",
+    "scientific_name": "Calypte anna",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.01110511738806963,
+    "label": "Calypte anna_Anna's Hummingbird"
+  },
+  {
+    "common_name": "Tufted Titmouse",
+    "scientific_name": "Baeolophus bicolor",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.010659173130989075,
+    "label": "Baeolophus bicolor_Tufted Titmouse"
+  },
+  {
+    "common_name": "Nuttall's Woodpecker",
+    "scientific_name": "Dryobates nuttallii",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.0105693768709898,
+    "label": "Dryobates nuttallii_Nuttall's Woodpecker"
+  },
+  {
+    "common_name": "Pine Grosbeak",
+    "scientific_name": "Pinicola enucleator",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.010472065769135952,
+    "label": "Pinicola enucleator_Pine Grosbeak"
+  },
+  {
+    "common_name": "White-crowned Sparrow",
+    "scientific_name": "Zonotrichia leucophrys",
+    "start_time": 39.0,
+    "end_time": 42.0,
+    "confidence": 0.010007546283304691,
+    "label": "Zonotrichia leucophrys_White-crowned Sparrow"
+  },
+  {
+    "common_name": "Dark-eyed Junco",
+    "scientific_name": "Junco hyemalis",
+    "start_time": 42.0,
+    "end_time": 45.0,
+    "confidence": 0.7375434041023254,
+    "label": "Junco hyemalis_Dark-eyed Junco"
+  },
+  {
+    "common_name": "Rusty Blackbird",
+    "scientific_name": "Euphagus carolinus",
+    "start_time": 42.0,
+    "end_time": 45.0,
+    "confidence": 0.0802590548992157,
+    "label": "Euphagus carolinus_Rusty Blackbird"
+  },
+  {
+    "common_name": "Chipping Sparrow",
+    "scientific_name": "Spizella passerina",
+    "start_time": 42.0,
+    "end_time": 45.0,
+    "confidence": 0.06609108299016953,
+    "label": "Spizella passerina_Chipping Sparrow"
+  },
+  {
+    "common_name": "Field Sparrow",
+    "scientific_name": "Spizella pusilla",
+    "start_time": 42.0,
+    "end_time": 45.0,
+    "confidence": 0.021152900531888008,
+    "label": "Spizella pusilla_Field Sparrow"
+  },
+  {
+    "common_name": "American Tree Sparrow",
+    "scientific_name": "Spizelloides arborea",
+    "start_time": 42.0,
+    "end_time": 45.0,
+    "confidence": 0.016413390636444092,
+    "label": "Spizelloides arborea_American Tree Sparrow"
+  },
+  {
+    "common_name": "Merlin",
+    "scientific_name": "Falco columbarius",
+    "start_time": 42.0,
+    "end_time": 45.0,
+    "confidence": 0.014727755449712276,
+    "label": "Falco columbarius_Merlin"
+  },
+  {
+    "common_name": "Rustic Bunting",
+    "scientific_name": "Emberiza rustica",
+    "start_time": 42.0,
+    "end_time": 45.0,
+    "confidence": 0.01247216947376728,
+    "label": "Emberiza rustica_Rustic Bunting"
+  },
+  {
+    "common_name": "White-winged Crossbill",
+    "scientific_name": "Loxia leucoptera",
+    "start_time": 42.0,
+    "end_time": 45.0,
+    "confidence": 0.01171146146953106,
+    "label": "Loxia leucoptera_White-winged Crossbill"
+  },
+  {
+    "common_name": "Orange-crowned Warbler",
+    "scientific_name": "Leiothlypis celata",
+    "start_time": 42.0,
+    "end_time": 45.0,
+    "confidence": 0.010548791848123074,
+    "label": "Leiothlypis celata_Orange-crowned Warbler"
+  },
+  {
+    "common_name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "start_time": 45.0,
+    "end_time": 48.0,
+    "confidence": 0.03796615079045296,
+    "label": "Cyanocitta cristata_Blue Jay"
+  },
+  {
+    "common_name": "Dark-eyed Junco",
+    "scientific_name": "Junco hyemalis",
+    "start_time": 45.0,
+    "end_time": 48.0,
+    "confidence": 0.019881071522831917,
+    "label": "Junco hyemalis_Dark-eyed Junco"
+  },
+  {
+    "common_name": "Eurasian Bullfinch",
+    "scientific_name": "Pyrrhula pyrrhula",
+    "start_time": 45.0,
+    "end_time": 48.0,
+    "confidence": 0.01914324425160885,
+    "label": "Pyrrhula pyrrhula_Eurasian Bullfinch"
+  },
+  {
+    "common_name": "Tufted Titmouse",
+    "scientific_name": "Baeolophus bicolor",
+    "start_time": 45.0,
+    "end_time": 48.0,
+    "confidence": 0.015215840190649033,
+    "label": "Baeolophus bicolor_Tufted Titmouse"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 45.0,
+    "end_time": 48.0,
+    "confidence": 0.01294055674225092,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Common Grackle",
+    "scientific_name": "Quiscalus quiscula",
+    "start_time": 45.0,
+    "end_time": 48.0,
+    "confidence": 0.012819276191294193,
+    "label": "Quiscalus quiscula_Common Grackle"
+  },
+  {
+    "common_name": "Rusty Blackbird",
+    "scientific_name": "Euphagus carolinus",
+    "start_time": 45.0,
+    "end_time": 48.0,
+    "confidence": 0.0123881371691823,
+    "label": "Euphagus carolinus_Rusty Blackbird"
+  },
+  {
+    "common_name": "Downy Woodpecker",
+    "scientific_name": "Dryobates pubescens",
+    "start_time": 45.0,
+    "end_time": 48.0,
+    "confidence": 0.01236850954592228,
+    "label": "Dryobates pubescens_Downy Woodpecker"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 45.0,
+    "end_time": 48.0,
+    "confidence": 0.011889713816344738,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "Purple Finch",
+    "scientific_name": "Haemorhous purpureus",
+    "start_time": 45.0,
+    "end_time": 48.0,
+    "confidence": 0.011440666392445564,
+    "label": "Haemorhous purpureus_Purple Finch"
+  },
+  {
+    "common_name": "Engine",
+    "scientific_name": "Engine",
+    "start_time": 45.0,
+    "end_time": 48.0,
+    "confidence": 0.010279186069965363,
+    "label": "Engine_Engine"
+  },
+  {
+    "common_name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "start_time": 48.0,
+    "end_time": 51.0,
+    "confidence": 0.12934789061546326,
+    "label": "Cyanocitta cristata_Blue Jay"
+  },
+  {
+    "common_name": "Great-tailed Grackle",
+    "scientific_name": "Quiscalus mexicanus",
+    "start_time": 48.0,
+    "end_time": 51.0,
+    "confidence": 0.07174272835254669,
+    "label": "Quiscalus mexicanus_Great-tailed Grackle"
+  },
+  {
+    "common_name": "Gray-headed Woodpecker",
+    "scientific_name": "Picus canus",
+    "start_time": 48.0,
+    "end_time": 51.0,
+    "confidence": 0.02865559048950672,
+    "label": "Picus canus_Gray-headed Woodpecker"
+  },
+  {
+    "common_name": "White-throated Sparrow",
+    "scientific_name": "Zonotrichia albicollis",
+    "start_time": 48.0,
+    "end_time": 51.0,
+    "confidence": 0.02330838143825531,
+    "label": "Zonotrichia albicollis_White-throated Sparrow"
+  },
+  {
+    "common_name": "Red-winged Blackbird",
+    "scientific_name": "Agelaius phoeniceus",
+    "start_time": 48.0,
+    "end_time": 51.0,
+    "confidence": 0.021777905523777008,
+    "label": "Agelaius phoeniceus_Red-winged Blackbird"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 48.0,
+    "end_time": 51.0,
+    "confidence": 0.0200500451028347,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "Rusty Blackbird",
+    "scientific_name": "Euphagus carolinus",
+    "start_time": 48.0,
+    "end_time": 51.0,
+    "confidence": 0.019209224730730057,
+    "label": "Euphagus carolinus_Rusty Blackbird"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 48.0,
+    "end_time": 51.0,
+    "confidence": 0.01773829199373722,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "Song Sparrow",
+    "scientific_name": "Melospiza melodia",
+    "start_time": 48.0,
+    "end_time": 51.0,
+    "confidence": 0.012922145426273346,
+    "label": "Melospiza melodia_Song Sparrow"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 51.0,
+    "end_time": 54.0,
+    "confidence": 0.2564050555229187,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Common Redpoll",
+    "scientific_name": "Acanthis flammea",
+    "start_time": 51.0,
+    "end_time": 54.0,
+    "confidence": 0.033390216529369354,
+    "label": "Acanthis flammea_Common Redpoll"
+  },
+  {
+    "common_name": "White-breasted Nuthatch",
+    "scientific_name": "Sitta carolinensis",
+    "start_time": 51.0,
+    "end_time": 54.0,
+    "confidence": 0.01995968259871006,
+    "label": "Sitta carolinensis_White-breasted Nuthatch"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 51.0,
+    "end_time": 54.0,
+    "confidence": 0.01773892529308796,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "Cassin's Kingbird",
+    "scientific_name": "Tyrannus vociferans",
+    "start_time": 51.0,
+    "end_time": 54.0,
+    "confidence": 0.014559807255864143,
+    "label": "Tyrannus vociferans_Cassin's Kingbird"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 51.0,
+    "end_time": 54.0,
+    "confidence": 0.013165642507374287,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "Pine Siskin",
+    "scientific_name": "Spinus pinus",
+    "start_time": 51.0,
+    "end_time": 54.0,
+    "confidence": 0.011978761292994022,
+    "label": "Spinus pinus_Pine Siskin"
+  },
+  {
+    "common_name": "Northern Flicker",
+    "scientific_name": "Colaptes auratus",
+    "start_time": 51.0,
+    "end_time": 54.0,
+    "confidence": 0.011781101115047932,
+    "label": "Colaptes auratus_Northern Flicker"
+  },
+  {
+    "common_name": "Purple Finch",
+    "scientific_name": "Haemorhous purpureus",
+    "start_time": 51.0,
+    "end_time": 54.0,
+    "confidence": 0.0110301049426198,
+    "label": "Haemorhous purpureus_Purple Finch"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 54.0,
+    "end_time": 57.0,
+    "confidence": 0.607065737247467,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Bullock's Oriole",
+    "scientific_name": "Icterus bullockii",
+    "start_time": 54.0,
+    "end_time": 57.0,
+    "confidence": 0.053192753344774246,
+    "label": "Icterus bullockii_Bullock's Oriole"
+  },
+  {
+    "common_name": "Mountain Chickadee",
+    "scientific_name": "Poecile gambeli",
+    "start_time": 54.0,
+    "end_time": 57.0,
+    "confidence": 0.03151347115635872,
+    "label": "Poecile gambeli_Mountain Chickadee"
+  },
+  {
+    "common_name": "Black-capped Chickadee",
+    "scientific_name": "Poecile atricapillus",
+    "start_time": 54.0,
+    "end_time": 57.0,
+    "confidence": 0.028241824358701706,
+    "label": "Poecile atricapillus_Black-capped Chickadee"
+  },
+  {
+    "common_name": "Cassin's Finch",
+    "scientific_name": "Haemorhous cassinii",
+    "start_time": 54.0,
+    "end_time": 57.0,
+    "confidence": 0.02579488418996334,
+    "label": "Haemorhous cassinii_Cassin's Finch"
+  },
+  {
+    "common_name": "Ruby-crowned Kinglet",
+    "scientific_name": "Corthylio calendula",
+    "start_time": 54.0,
+    "end_time": 57.0,
+    "confidence": 0.024853115901350975,
+    "label": "Corthylio calendula_Ruby-crowned Kinglet"
+  },
+  {
+    "common_name": "Cassin's Kingbird",
+    "scientific_name": "Tyrannus vociferans",
+    "start_time": 54.0,
+    "end_time": 57.0,
+    "confidence": 0.023075399920344353,
+    "label": "Tyrannus vociferans_Cassin's Kingbird"
+  },
+  {
+    "common_name": "Nuttall's Woodpecker",
+    "scientific_name": "Dryobates nuttallii",
+    "start_time": 54.0,
+    "end_time": 57.0,
+    "confidence": 0.018580209463834763,
+    "label": "Dryobates nuttallii_Nuttall's Woodpecker"
+  },
+  {
+    "common_name": "Hooded Oriole",
+    "scientific_name": "Icterus cucullatus",
+    "start_time": 54.0,
+    "end_time": 57.0,
+    "confidence": 0.01814526878297329,
+    "label": "Icterus cucullatus_Hooded Oriole"
+  },
+  {
+    "common_name": "Pygmy Nuthatch",
+    "scientific_name": "Sitta pygmaea",
+    "start_time": 54.0,
+    "end_time": 57.0,
+    "confidence": 0.01724301278591156,
+    "label": "Sitta pygmaea_Pygmy Nuthatch"
+  },
+  {
+    "common_name": "Hutton's Vireo",
+    "scientific_name": "Vireo huttoni",
+    "start_time": 54.0,
+    "end_time": 57.0,
+    "confidence": 0.013325581327080727,
+    "label": "Vireo huttoni_Hutton's Vireo"
+  },
+  {
+    "common_name": "Lesser Goldfinch",
+    "scientific_name": "Spinus psaltria",
+    "start_time": 54.0,
+    "end_time": 57.0,
+    "confidence": 0.013247215189039707,
+    "label": "Spinus psaltria_Lesser Goldfinch"
+  },
+  {
+    "common_name": "Chestnut-backed Chickadee",
+    "scientific_name": "Poecile rufescens",
+    "start_time": 54.0,
+    "end_time": 57.0,
+    "confidence": 0.012689543887972832,
+    "label": "Poecile rufescens_Chestnut-backed Chickadee"
+  },
+  {
+    "common_name": "Purple Finch",
+    "scientific_name": "Haemorhous purpureus",
+    "start_time": 54.0,
+    "end_time": 57.0,
+    "confidence": 0.012379084713757038,
+    "label": "Haemorhous purpureus_Purple Finch"
+  },
+  {
+    "common_name": "White-breasted Nuthatch",
+    "scientific_name": "Sitta carolinensis",
+    "start_time": 54.0,
+    "end_time": 57.0,
+    "confidence": 0.012377132661640644,
+    "label": "Sitta carolinensis_White-breasted Nuthatch"
+  },
+  {
+    "common_name": "Western Bluebird",
+    "scientific_name": "Sialia mexicana",
+    "start_time": 54.0,
+    "end_time": 57.0,
+    "confidence": 0.01183667965233326,
+    "label": "Sialia mexicana_Western Bluebird"
+  },
+  {
+    "common_name": "Red-breasted Nuthatch",
+    "scientific_name": "Sitta canadensis",
+    "start_time": 54.0,
+    "end_time": 57.0,
+    "confidence": 0.011015139520168304,
+    "label": "Sitta canadensis_Red-breasted Nuthatch"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 57.0,
+    "end_time": 60.0,
+    "confidence": 0.1615467220544815,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Eurasian Blackcap",
+    "scientific_name": "Sylvia atricapilla",
+    "start_time": 57.0,
+    "end_time": 60.0,
+    "confidence": 0.04628618806600571,
+    "label": "Sylvia atricapilla_Eurasian Blackcap"
+  },
+  {
+    "common_name": "Gray-headed Woodpecker",
+    "scientific_name": "Picus canus",
+    "start_time": 57.0,
+    "end_time": 60.0,
+    "confidence": 0.02770053595304489,
+    "label": "Picus canus_Gray-headed Woodpecker"
+  },
+  {
+    "common_name": "Eurasian Wryneck",
+    "scientific_name": "Jynx torquilla",
+    "start_time": 57.0,
+    "end_time": 60.0,
+    "confidence": 0.02538379654288292,
+    "label": "Jynx torquilla_Eurasian Wryneck"
+  },
+  {
+    "common_name": "Purple Finch",
+    "scientific_name": "Haemorhous purpureus",
+    "start_time": 57.0,
+    "end_time": 60.0,
+    "confidence": 0.02106788381934166,
+    "label": "Haemorhous purpureus_Purple Finch"
+  },
+  {
+    "common_name": "Eurasian Green Woodpecker",
+    "scientific_name": "Picus viridis",
+    "start_time": 57.0,
+    "end_time": 60.0,
+    "confidence": 0.01738753914833069,
+    "label": "Picus viridis_Eurasian Green Woodpecker"
+  },
+  {
+    "common_name": "Great Tit",
+    "scientific_name": "Parus major",
+    "start_time": 57.0,
+    "end_time": 60.0,
+    "confidence": 0.014804326929152012,
+    "label": "Parus major_Great Tit"
+  },
+  {
+    "common_name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "start_time": 57.0,
+    "end_time": 60.0,
+    "confidence": 0.013642750680446625,
+    "label": "Cyanocitta cristata_Blue Jay"
+  },
+  {
+    "common_name": "Eurasian Golden Oriole",
+    "scientific_name": "Oriolus oriolus",
+    "start_time": 57.0,
+    "end_time": 60.0,
+    "confidence": 0.011973918415606022,
+    "label": "Oriolus oriolus_Eurasian Golden Oriole"
+  },
+  {
+    "common_name": "Eurasian Bullfinch",
+    "scientific_name": "Pyrrhula pyrrhula",
+    "start_time": 57.0,
+    "end_time": 60.0,
+    "confidence": 0.010553078725934029,
+    "label": "Pyrrhula pyrrhula_Eurasian Bullfinch"
+  },
+  {
+    "common_name": "Dark-eyed Junco",
+    "scientific_name": "Junco hyemalis",
+    "start_time": 60.0,
+    "end_time": 63.0,
+    "confidence": 0.554988443851471,
+    "label": "Junco hyemalis_Dark-eyed Junco"
+  },
+  {
+    "common_name": "Gray-headed Woodpecker",
+    "scientific_name": "Picus canus",
+    "start_time": 60.0,
+    "end_time": 63.0,
+    "confidence": 0.062023427337408066,
+    "label": "Picus canus_Gray-headed Woodpecker"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 60.0,
+    "end_time": 63.0,
+    "confidence": 0.057354941964149475,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Rusty Blackbird",
+    "scientific_name": "Euphagus carolinus",
+    "start_time": 60.0,
+    "end_time": 63.0,
+    "confidence": 0.04040275886654854,
+    "label": "Euphagus carolinus_Rusty Blackbird"
+  },
+  {
+    "common_name": "European Robin",
+    "scientific_name": "Erithacus rubecula",
+    "start_time": 60.0,
+    "end_time": 63.0,
+    "confidence": 0.03462521359324455,
+    "label": "Erithacus rubecula_European Robin"
+  },
+  {
+    "common_name": "Song Thrush",
+    "scientific_name": "Turdus philomelos",
+    "start_time": 60.0,
+    "end_time": 63.0,
+    "confidence": 0.033952075988054276,
+    "label": "Turdus philomelos_Song Thrush"
+  },
+  {
+    "common_name": "Common Redpoll",
+    "scientific_name": "Acanthis flammea",
+    "start_time": 60.0,
+    "end_time": 63.0,
+    "confidence": 0.02649625390768051,
+    "label": "Acanthis flammea_Common Redpoll"
+  },
+  {
+    "common_name": "American Tree Sparrow",
+    "scientific_name": "Spizelloides arborea",
+    "start_time": 60.0,
+    "end_time": 63.0,
+    "confidence": 0.02444099634885788,
+    "label": "Spizelloides arborea_American Tree Sparrow"
+  },
+  {
+    "common_name": "Purple Finch",
+    "scientific_name": "Haemorhous purpureus",
+    "start_time": 60.0,
+    "end_time": 63.0,
+    "confidence": 0.02419532835483551,
+    "label": "Haemorhous purpureus_Purple Finch"
+  },
+  {
+    "common_name": "Eurasian Blackbird",
+    "scientific_name": "Turdus merula",
+    "start_time": 60.0,
+    "end_time": 63.0,
+    "confidence": 0.023337500169873238,
+    "label": "Turdus merula_Eurasian Blackbird"
+  },
+  {
+    "common_name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "start_time": 60.0,
+    "end_time": 63.0,
+    "confidence": 0.022821838036179543,
+    "label": "Cyanocitta cristata_Blue Jay"
+  },
+  {
+    "common_name": "Rustic Bunting",
+    "scientific_name": "Emberiza rustica",
+    "start_time": 60.0,
+    "end_time": 63.0,
+    "confidence": 0.019028879702091217,
+    "label": "Emberiza rustica_Rustic Bunting"
+  },
+  {
+    "common_name": "Great Tit",
+    "scientific_name": "Parus major",
+    "start_time": 60.0,
+    "end_time": 63.0,
+    "confidence": 0.013697566464543343,
+    "label": "Parus major_Great Tit"
+  },
+  {
+    "common_name": "Mountain Chickadee",
+    "scientific_name": "Poecile gambeli",
+    "start_time": 60.0,
+    "end_time": 63.0,
+    "confidence": 0.013411398977041245,
+    "label": "Poecile gambeli_Mountain Chickadee"
+  },
+  {
+    "common_name": "Song Sparrow",
+    "scientific_name": "Melospiza melodia",
+    "start_time": 60.0,
+    "end_time": 63.0,
+    "confidence": 0.010584676638245583,
+    "label": "Melospiza melodia_Song Sparrow"
+  },
+  {
+    "common_name": "Pygmy Nuthatch",
+    "scientific_name": "Sitta pygmaea",
+    "start_time": 63.0,
+    "end_time": 66.0,
+    "confidence": 0.109395332634449,
+    "label": "Sitta pygmaea_Pygmy Nuthatch"
+  },
+  {
+    "common_name": "Lawrence's Goldfinch",
+    "scientific_name": "Spinus lawrencei",
+    "start_time": 63.0,
+    "end_time": 66.0,
+    "confidence": 0.06254574656486511,
+    "label": "Spinus lawrencei_Lawrence's Goldfinch"
+  },
+  {
+    "common_name": "Engine",
+    "scientific_name": "Engine",
+    "start_time": 63.0,
+    "end_time": 66.0,
+    "confidence": 0.05375000089406967,
+    "label": "Engine_Engine"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 63.0,
+    "end_time": 66.0,
+    "confidence": 0.032518815249204636,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Dark-eyed Junco",
+    "scientific_name": "Junco hyemalis",
+    "start_time": 63.0,
+    "end_time": 66.0,
+    "confidence": 0.027057074010372162,
+    "label": "Junco hyemalis_Dark-eyed Junco"
+  },
+  {
+    "common_name": "White-breasted Nuthatch",
+    "scientific_name": "Sitta carolinensis",
+    "start_time": 63.0,
+    "end_time": 66.0,
+    "confidence": 0.01880279928445816,
+    "label": "Sitta carolinensis_White-breasted Nuthatch"
+  },
+  {
+    "common_name": "Common Grackle",
+    "scientific_name": "Quiscalus quiscula",
+    "start_time": 63.0,
+    "end_time": 66.0,
+    "confidence": 0.013508318923413754,
+    "label": "Quiscalus quiscula_Common Grackle"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 63.0,
+    "end_time": 66.0,
+    "confidence": 0.011138050816953182,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "Engine",
+    "scientific_name": "Engine",
+    "start_time": 66.0,
+    "end_time": 69.0,
+    "confidence": 0.08610302954912186,
+    "label": "Engine_Engine"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 66.0,
+    "end_time": 69.0,
+    "confidence": 0.07512181997299194,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "Common Yellowthroat",
+    "scientific_name": "Geothlypis trichas",
+    "start_time": 66.0,
+    "end_time": 69.0,
+    "confidence": 0.05271788313984871,
+    "label": "Geothlypis trichas_Common Yellowthroat"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 66.0,
+    "end_time": 69.0,
+    "confidence": 0.03234296664595604,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Painted Bunting",
+    "scientific_name": "Passerina ciris",
+    "start_time": 66.0,
+    "end_time": 69.0,
+    "confidence": 0.026768002659082413,
+    "label": "Passerina ciris_Painted Bunting"
+  },
+  {
+    "common_name": "Warbling Vireo",
+    "scientific_name": "Vireo gilvus",
+    "start_time": 66.0,
+    "end_time": 69.0,
+    "confidence": 0.02214505709707737,
+    "label": "Vireo gilvus_Warbling Vireo"
+  },
+  {
+    "common_name": "Purple Finch",
+    "scientific_name": "Haemorhous purpureus",
+    "start_time": 66.0,
+    "end_time": 69.0,
+    "confidence": 0.015802549198269844,
+    "label": "Haemorhous purpureus_Purple Finch"
+  },
+  {
+    "common_name": "European Robin",
+    "scientific_name": "Erithacus rubecula",
+    "start_time": 66.0,
+    "end_time": 69.0,
+    "confidence": 0.015620237216353416,
+    "label": "Erithacus rubecula_European Robin"
+  },
+  {
+    "common_name": "Hooded Warbler",
+    "scientific_name": "Setophaga citrina",
+    "start_time": 66.0,
+    "end_time": 69.0,
+    "confidence": 0.011093472130596638,
+    "label": "Setophaga citrina_Hooded Warbler"
+  },
+  {
+    "common_name": "Sulawesi Leaf Warbler",
+    "scientific_name": "Phylloscopus sarasinorum",
+    "start_time": 66.0,
+    "end_time": 69.0,
+    "confidence": 0.01018563937395811,
+    "label": "Phylloscopus sarasinorum_Sulawesi Leaf Warbler"
+  },
+  {
+    "common_name": "Black-capped Chickadee",
+    "scientific_name": "Poecile atricapillus",
+    "start_time": 66.0,
+    "end_time": 69.0,
+    "confidence": 0.01005276758223772,
+    "label": "Poecile atricapillus_Black-capped Chickadee"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 69.0,
+    "end_time": 72.0,
+    "confidence": 0.29147282242774963,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Red Crossbill",
+    "scientific_name": "Loxia curvirostra",
+    "start_time": 69.0,
+    "end_time": 72.0,
+    "confidence": 0.01881091296672821,
+    "label": "Loxia curvirostra_Red Crossbill"
+  },
+  {
+    "common_name": "European Goldfinch",
+    "scientific_name": "Carduelis carduelis",
+    "start_time": 69.0,
+    "end_time": 72.0,
+    "confidence": 0.012907702475786209,
+    "label": "Carduelis carduelis_European Goldfinch"
+  },
+  {
+    "common_name": "House Sparrow",
+    "scientific_name": "Passer domesticus",
+    "start_time": 69.0,
+    "end_time": 72.0,
+    "confidence": 0.012799957767128944,
+    "label": "Passer domesticus_House Sparrow"
+  },
+  {
+    "common_name": "Engine",
+    "scientific_name": "Engine",
+    "start_time": 69.0,
+    "end_time": 72.0,
+    "confidence": 0.012311016209423542,
+    "label": "Engine_Engine"
+  },
+  {
+    "common_name": "Western Kingbird",
+    "scientific_name": "Tyrannus verticalis",
+    "start_time": 69.0,
+    "end_time": 72.0,
+    "confidence": 0.011506088078022003,
+    "label": "Tyrannus verticalis_Western Kingbird"
+  },
+  {
+    "common_name": "Cooper's Hawk",
+    "scientific_name": "Accipiter cooperii",
+    "start_time": 69.0,
+    "end_time": 72.0,
+    "confidence": 0.010782243683934212,
+    "label": "Accipiter cooperii_Cooper's Hawk"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 72.0,
+    "end_time": 75.0,
+    "confidence": 0.5638453364372253,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 72.0,
+    "end_time": 75.0,
+    "confidence": 0.05053648725152016,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "Purple Finch",
+    "scientific_name": "Haemorhous purpureus",
+    "start_time": 72.0,
+    "end_time": 75.0,
+    "confidence": 0.0446908138692379,
+    "label": "Haemorhous purpureus_Purple Finch"
+  },
+  {
+    "common_name": "European Robin",
+    "scientific_name": "Erithacus rubecula",
+    "start_time": 72.0,
+    "end_time": 75.0,
+    "confidence": 0.021368052810430527,
+    "label": "Erithacus rubecula_European Robin"
+  },
+  {
+    "common_name": "Black-capped Chickadee",
+    "scientific_name": "Poecile atricapillus",
+    "start_time": 72.0,
+    "end_time": 75.0,
+    "confidence": 0.02008766494691372,
+    "label": "Poecile atricapillus_Black-capped Chickadee"
+  },
+  {
+    "common_name": "Tufted Titmouse",
+    "scientific_name": "Baeolophus bicolor",
+    "start_time": 72.0,
+    "end_time": 75.0,
+    "confidence": 0.01875261217355728,
+    "label": "Baeolophus bicolor_Tufted Titmouse"
+  },
+  {
+    "common_name": "Anna's Hummingbird",
+    "scientific_name": "Calypte anna",
+    "start_time": 72.0,
+    "end_time": 75.0,
+    "confidence": 0.018380699679255486,
+    "label": "Calypte anna_Anna's Hummingbird"
+  },
+  {
+    "common_name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "start_time": 72.0,
+    "end_time": 75.0,
+    "confidence": 0.01799112930893898,
+    "label": "Cyanocitta cristata_Blue Jay"
+  },
+  {
+    "common_name": "Common Yellowthroat",
+    "scientific_name": "Geothlypis trichas",
+    "start_time": 72.0,
+    "end_time": 75.0,
+    "confidence": 0.015307857654988766,
+    "label": "Geothlypis trichas_Common Yellowthroat"
+  },
+  {
+    "common_name": "Northern Cardinal",
+    "scientific_name": "Cardinalis cardinalis",
+    "start_time": 72.0,
+    "end_time": 75.0,
+    "confidence": 0.015258491970598698,
+    "label": "Cardinalis cardinalis_Northern Cardinal"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 72.0,
+    "end_time": 75.0,
+    "confidence": 0.015039950609207153,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "Pygmy Nuthatch",
+    "scientific_name": "Sitta pygmaea",
+    "start_time": 72.0,
+    "end_time": 75.0,
+    "confidence": 0.010700151324272156,
+    "label": "Sitta pygmaea_Pygmy Nuthatch"
+  },
+  {
+    "common_name": "Common Grackle",
+    "scientific_name": "Quiscalus quiscula",
+    "start_time": 72.0,
+    "end_time": 75.0,
+    "confidence": 0.010248414240777493,
+    "label": "Quiscalus quiscula_Common Grackle"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 75.0,
+    "end_time": 78.0,
+    "confidence": 0.03823384642601013,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 75.0,
+    "end_time": 78.0,
+    "confidence": 0.02702319249510765,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 75.0,
+    "end_time": 78.0,
+    "confidence": 0.02312084659934044,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "Pine Grosbeak",
+    "scientific_name": "Pinicola enucleator",
+    "start_time": 75.0,
+    "end_time": 78.0,
+    "confidence": 0.017768494784832,
+    "label": "Pinicola enucleator_Pine Grosbeak"
+  },
+  {
+    "common_name": "Rusty Blackbird",
+    "scientific_name": "Euphagus carolinus",
+    "start_time": 75.0,
+    "end_time": 78.0,
+    "confidence": 0.0171048603951931,
+    "label": "Euphagus carolinus_Rusty Blackbird"
+  },
+  {
+    "common_name": "European Greenfinch",
+    "scientific_name": "Chloris chloris",
+    "start_time": 75.0,
+    "end_time": 78.0,
+    "confidence": 0.015095730312168598,
+    "label": "Chloris chloris_European Greenfinch"
+  },
+  {
+    "common_name": "Pygmy Nuthatch",
+    "scientific_name": "Sitta pygmaea",
+    "start_time": 75.0,
+    "end_time": 78.0,
+    "confidence": 0.014813336543738842,
+    "label": "Sitta pygmaea_Pygmy Nuthatch"
+  },
+  {
+    "common_name": "Common Grackle",
+    "scientific_name": "Quiscalus quiscula",
+    "start_time": 75.0,
+    "end_time": 78.0,
+    "confidence": 0.013146158307790756,
+    "label": "Quiscalus quiscula_Common Grackle"
+  },
+  {
+    "common_name": "Engine",
+    "scientific_name": "Engine",
+    "start_time": 75.0,
+    "end_time": 78.0,
+    "confidence": 0.012108123861253262,
+    "label": "Engine_Engine"
+  },
+  {
+    "common_name": "Redwing",
+    "scientific_name": "Turdus iliacus",
+    "start_time": 75.0,
+    "end_time": 78.0,
+    "confidence": 0.010484687052667141,
+    "label": "Turdus iliacus_Redwing"
+  },
+  {
+    "common_name": "House Sparrow",
+    "scientific_name": "Passer domesticus",
+    "start_time": 75.0,
+    "end_time": 78.0,
+    "confidence": 0.010401014238595963,
+    "label": "Passer domesticus_House Sparrow"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 78.0,
+    "end_time": 81.0,
+    "confidence": 0.25606900453567505,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 78.0,
+    "end_time": 81.0,
+    "confidence": 0.01799425110220909,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "Engine",
+    "scientific_name": "Engine",
+    "start_time": 78.0,
+    "end_time": 81.0,
+    "confidence": 0.012145430780947208,
+    "label": "Engine_Engine"
+  },
+  {
+    "common_name": "Hawfinch",
+    "scientific_name": "Coccothraustes coccothraustes",
+    "start_time": 81.0,
+    "end_time": 84.0,
+    "confidence": 0.28036290407180786,
+    "label": "Coccothraustes coccothraustes_Hawfinch"
+  },
+  {
+    "common_name": "Northern Cardinal",
+    "scientific_name": "Cardinalis cardinalis",
+    "start_time": 81.0,
+    "end_time": 84.0,
+    "confidence": 0.07393106818199158,
+    "label": "Cardinalis cardinalis_Northern Cardinal"
+  },
+  {
+    "common_name": "Pyrrhuloxia",
+    "scientific_name": "Cardinalis sinuatus",
+    "start_time": 81.0,
+    "end_time": 84.0,
+    "confidence": 0.025939831510186195,
+    "label": "Cardinalis sinuatus_Pyrrhuloxia"
+  },
+  {
+    "common_name": "Little Bunting",
+    "scientific_name": "Emberiza pusilla",
+    "start_time": 81.0,
+    "end_time": 84.0,
+    "confidence": 0.010930444113910198,
+    "label": "Emberiza pusilla_Little Bunting"
+  },
+  {
+    "common_name": "Greater Roadrunner",
+    "scientific_name": "Geococcyx californianus",
+    "start_time": 81.0,
+    "end_time": 84.0,
+    "confidence": 0.010600813664495945,
+    "label": "Geococcyx californianus_Greater Roadrunner"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 84.0,
+    "end_time": 87.0,
+    "confidence": 0.28010085225105286,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "European Goldfinch",
+    "scientific_name": "Carduelis carduelis",
+    "start_time": 84.0,
+    "end_time": 87.0,
+    "confidence": 0.014484800398349762,
+    "label": "Carduelis carduelis_European Goldfinch"
+  },
+  {
+    "common_name": "White-breasted Nuthatch",
+    "scientific_name": "Sitta carolinensis",
+    "start_time": 84.0,
+    "end_time": 87.0,
+    "confidence": 0.012111830525100231,
+    "label": "Sitta carolinensis_White-breasted Nuthatch"
+  },
+  {
+    "common_name": "Golden-crowned Sparrow",
+    "scientific_name": "Zonotrichia atricapilla",
+    "start_time": 84.0,
+    "end_time": 87.0,
+    "confidence": 0.011399735696613789,
+    "label": "Zonotrichia atricapilla_Golden-crowned Sparrow"
+  },
+  {
+    "common_name": "Curve-billed Thrasher",
+    "scientific_name": "Toxostoma curvirostre",
+    "start_time": 84.0,
+    "end_time": 87.0,
+    "confidence": 0.010613800026476383,
+    "label": "Toxostoma curvirostre_Curve-billed Thrasher"
+  },
+  {
+    "common_name": "Engine",
+    "scientific_name": "Engine",
+    "start_time": 87.0,
+    "end_time": 90.0,
+    "confidence": 0.05767156556248665,
+    "label": "Engine_Engine"
+  },
+  {
+    "common_name": "White-breasted Nuthatch",
+    "scientific_name": "Sitta carolinensis",
+    "start_time": 87.0,
+    "end_time": 90.0,
+    "confidence": 0.04888274148106575,
+    "label": "Sitta carolinensis_White-breasted Nuthatch"
+  },
+  {
+    "common_name": "Eurasian Coot",
+    "scientific_name": "Fulica atra",
+    "start_time": 87.0,
+    "end_time": 90.0,
+    "confidence": 0.04846560209989548,
+    "label": "Fulica atra_Eurasian Coot"
+  },
+  {
+    "common_name": "Redwing",
+    "scientific_name": "Turdus iliacus",
+    "start_time": 87.0,
+    "end_time": 90.0,
+    "confidence": 0.04005773365497589,
+    "label": "Turdus iliacus_Redwing"
+  },
+  {
+    "common_name": "Pileated Woodpecker",
+    "scientific_name": "Dryocopus pileatus",
+    "start_time": 87.0,
+    "end_time": 90.0,
+    "confidence": 0.024067090824246407,
+    "label": "Dryocopus pileatus_Pileated Woodpecker"
+  },
+  {
+    "common_name": "Northern Flicker",
+    "scientific_name": "Colaptes auratus",
+    "start_time": 87.0,
+    "end_time": 90.0,
+    "confidence": 0.021745802834630013,
+    "label": "Colaptes auratus_Northern Flicker"
+  },
+  {
+    "common_name": "Common Goldeneye",
+    "scientific_name": "Bucephala clangula",
+    "start_time": 87.0,
+    "end_time": 90.0,
+    "confidence": 0.020005274564027786,
+    "label": "Bucephala clangula_Common Goldeneye"
+  },
+  {
+    "common_name": "Eurasian Moorhen",
+    "scientific_name": "Gallinula chloropus",
+    "start_time": 87.0,
+    "end_time": 90.0,
+    "confidence": 0.01430952362716198,
+    "label": "Gallinula chloropus_Eurasian Moorhen"
+  },
+  {
+    "common_name": "Downy Woodpecker",
+    "scientific_name": "Dryobates pubescens",
+    "start_time": 87.0,
+    "end_time": 90.0,
+    "confidence": 0.011171449907124043,
+    "label": "Dryobates pubescens_Downy Woodpecker"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 90.0,
+    "end_time": 93.0,
+    "confidence": 0.41903600096702576,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "European Greenfinch",
+    "scientific_name": "Chloris chloris",
+    "start_time": 90.0,
+    "end_time": 93.0,
+    "confidence": 0.022634495049715042,
+    "label": "Chloris chloris_European Greenfinch"
+  },
+  {
+    "common_name": "Red Crossbill",
+    "scientific_name": "Loxia curvirostra",
+    "start_time": 90.0,
+    "end_time": 93.0,
+    "confidence": 0.01074090227484703,
+    "label": "Loxia curvirostra_Red Crossbill"
+  },
+  {
+    "common_name": "Downy Woodpecker",
+    "scientific_name": "Dryobates pubescens",
+    "start_time": 90.0,
+    "end_time": 93.0,
+    "confidence": 0.010670382529497147,
+    "label": "Dryobates pubescens_Downy Woodpecker"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 93.0,
+    "end_time": 96.0,
+    "confidence": 0.3168351352214813,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 93.0,
+    "end_time": 96.0,
+    "confidence": 0.03830161318182945,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "Common Redpoll",
+    "scientific_name": "Acanthis flammea",
+    "start_time": 93.0,
+    "end_time": 96.0,
+    "confidence": 0.017907513305544853,
+    "label": "Acanthis flammea_Common Redpoll"
+  },
+  {
+    "common_name": "Engine",
+    "scientific_name": "Engine",
+    "start_time": 93.0,
+    "end_time": 96.0,
+    "confidence": 0.0169773418456316,
+    "label": "Engine_Engine"
+  },
+  {
+    "common_name": "Anna's Hummingbird",
+    "scientific_name": "Calypte anna",
+    "start_time": 93.0,
+    "end_time": 96.0,
+    "confidence": 0.014071470126509666,
+    "label": "Calypte anna_Anna's Hummingbird"
+  },
+  {
+    "common_name": "Pine Siskin",
+    "scientific_name": "Spinus pinus",
+    "start_time": 93.0,
+    "end_time": 96.0,
+    "confidence": 0.011342667043209076,
+    "label": "Spinus pinus_Pine Siskin"
+  },
+  {
+    "common_name": "Western Tanager",
+    "scientific_name": "Piranga ludoviciana",
+    "start_time": 93.0,
+    "end_time": 96.0,
+    "confidence": 0.011140125803649426,
+    "label": "Piranga ludoviciana_Western Tanager"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 96.0,
+    "end_time": 99.0,
+    "confidence": 0.4765159785747528,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "Common Grackle",
+    "scientific_name": "Quiscalus quiscula",
+    "start_time": 96.0,
+    "end_time": 99.0,
+    "confidence": 0.08570411056280136,
+    "label": "Quiscalus quiscula_Common Grackle"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 96.0,
+    "end_time": 99.0,
+    "confidence": 0.03760462626814842,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "Common Redpoll",
+    "scientific_name": "Acanthis flammea",
+    "start_time": 96.0,
+    "end_time": 99.0,
+    "confidence": 0.0354325994849205,
+    "label": "Acanthis flammea_Common Redpoll"
+  },
+  {
+    "common_name": "Red-winged Blackbird",
+    "scientific_name": "Agelaius phoeniceus",
+    "start_time": 96.0,
+    "end_time": 99.0,
+    "confidence": 0.03381837159395218,
+    "label": "Agelaius phoeniceus_Red-winged Blackbird"
+  },
+  {
+    "common_name": "Rusty Blackbird",
+    "scientific_name": "Euphagus carolinus",
+    "start_time": 96.0,
+    "end_time": 99.0,
+    "confidence": 0.025517551228404045,
+    "label": "Euphagus carolinus_Rusty Blackbird"
+  },
+  {
+    "common_name": "Oriental Greenfinch",
+    "scientific_name": "Chloris sinica",
+    "start_time": 96.0,
+    "end_time": 99.0,
+    "confidence": 0.021811870858073235,
+    "label": "Chloris sinica_Oriental Greenfinch"
+  },
+  {
+    "common_name": "Eastern Phoebe",
+    "scientific_name": "Sayornis phoebe",
+    "start_time": 96.0,
+    "end_time": 99.0,
+    "confidence": 0.016360566020011902,
+    "label": "Sayornis phoebe_Eastern Phoebe"
+  },
+  {
+    "common_name": "Gray-crowned Rosy-Finch",
+    "scientific_name": "Leucosticte tephrocotis",
+    "start_time": 96.0,
+    "end_time": 99.0,
+    "confidence": 0.013570776209235191,
+    "label": "Leucosticte tephrocotis_Gray-crowned Rosy-Finch"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 96.0,
+    "end_time": 99.0,
+    "confidence": 0.012660234235227108,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Song Sparrow",
+    "scientific_name": "Melospiza melodia",
+    "start_time": 96.0,
+    "end_time": 99.0,
+    "confidence": 0.01214615162461996,
+    "label": "Melospiza melodia_Song Sparrow"
+  },
+  {
+    "common_name": "Spotted Crake",
+    "scientific_name": "Porzana porzana",
+    "start_time": 96.0,
+    "end_time": 99.0,
+    "confidence": 0.010626005008816719,
+    "label": "Porzana porzana_Spotted Crake"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 99.0,
+    "end_time": 102.0,
+    "confidence": 0.1573743224143982,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Tufted Titmouse",
+    "scientific_name": "Baeolophus bicolor",
+    "start_time": 99.0,
+    "end_time": 102.0,
+    "confidence": 0.026049209758639336,
+    "label": "Baeolophus bicolor_Tufted Titmouse"
+  },
+  {
+    "common_name": "Harris's Sparrow",
+    "scientific_name": "Zonotrichia querula",
+    "start_time": 99.0,
+    "end_time": 102.0,
+    "confidence": 0.022933270782232285,
+    "label": "Zonotrichia querula_Harris's Sparrow"
+  },
+  {
+    "common_name": "Gray-crowned Rosy-Finch",
+    "scientific_name": "Leucosticte tephrocotis",
+    "start_time": 99.0,
+    "end_time": 102.0,
+    "confidence": 0.020733943209052086,
+    "label": "Leucosticte tephrocotis_Gray-crowned Rosy-Finch"
+  },
+  {
+    "common_name": "Common Redpoll",
+    "scientific_name": "Acanthis flammea",
+    "start_time": 99.0,
+    "end_time": 102.0,
+    "confidence": 0.016108587384223938,
+    "label": "Acanthis flammea_Common Redpoll"
+  },
+  {
+    "common_name": "Hooded Oriole",
+    "scientific_name": "Icterus cucullatus",
+    "start_time": 99.0,
+    "end_time": 102.0,
+    "confidence": 0.01498335599899292,
+    "label": "Icterus cucullatus_Hooded Oriole"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 99.0,
+    "end_time": 102.0,
+    "confidence": 0.01293910015374422,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "Engine",
+    "scientific_name": "Engine",
+    "start_time": 99.0,
+    "end_time": 102.0,
+    "confidence": 0.012847831472754478,
+    "label": "Engine_Engine"
+  },
+  {
+    "common_name": "Western Bluebird",
+    "scientific_name": "Sialia mexicana",
+    "start_time": 99.0,
+    "end_time": 102.0,
+    "confidence": 0.01217641495168209,
+    "label": "Sialia mexicana_Western Bluebird"
+  },
+  {
+    "common_name": "White-crowned Sparrow",
+    "scientific_name": "Zonotrichia leucophrys",
+    "start_time": 99.0,
+    "end_time": 102.0,
+    "confidence": 0.011804278008639812,
+    "label": "Zonotrichia leucophrys_White-crowned Sparrow"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 102.0,
+    "end_time": 105.0,
+    "confidence": 0.44589266180992126,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 102.0,
+    "end_time": 105.0,
+    "confidence": 0.060859013348817825,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "Tufted Titmouse",
+    "scientific_name": "Baeolophus bicolor",
+    "start_time": 102.0,
+    "end_time": 105.0,
+    "confidence": 0.03564772009849548,
+    "label": "Baeolophus bicolor_Tufted Titmouse"
+  },
+  {
+    "common_name": "Red-winged Blackbird",
+    "scientific_name": "Agelaius phoeniceus",
+    "start_time": 102.0,
+    "end_time": 105.0,
+    "confidence": 0.03346133977174759,
+    "label": "Agelaius phoeniceus_Red-winged Blackbird"
+  },
+  {
+    "common_name": "Common Grackle",
+    "scientific_name": "Quiscalus quiscula",
+    "start_time": 102.0,
+    "end_time": 105.0,
+    "confidence": 0.02296619676053524,
+    "label": "Quiscalus quiscula_Common Grackle"
+  },
+  {
+    "common_name": "Nuttall's Woodpecker",
+    "scientific_name": "Dryobates nuttallii",
+    "start_time": 102.0,
+    "end_time": 105.0,
+    "confidence": 0.02058418095111847,
+    "label": "Dryobates nuttallii_Nuttall's Woodpecker"
+  },
+  {
+    "common_name": "Northern Flicker",
+    "scientific_name": "Colaptes auratus",
+    "start_time": 102.0,
+    "end_time": 105.0,
+    "confidence": 0.020097879692912102,
+    "label": "Colaptes auratus_Northern Flicker"
+  },
+  {
+    "common_name": "Cassin's Kingbird",
+    "scientific_name": "Tyrannus vociferans",
+    "start_time": 102.0,
+    "end_time": 105.0,
+    "confidence": 0.01754910871386528,
+    "label": "Tyrannus vociferans_Cassin's Kingbird"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 102.0,
+    "end_time": 105.0,
+    "confidence": 0.014028655365109444,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "start_time": 102.0,
+    "end_time": 105.0,
+    "confidence": 0.012361899949610233,
+    "label": "Cyanocitta cristata_Blue Jay"
+  },
+  {
+    "common_name": "Northern Cardinal",
+    "scientific_name": "Cardinalis cardinalis",
+    "start_time": 102.0,
+    "end_time": 105.0,
+    "confidence": 0.012250630185008049,
+    "label": "Cardinalis cardinalis_Northern Cardinal"
+  },
+  {
+    "common_name": "Song Sparrow",
+    "scientific_name": "Melospiza melodia",
+    "start_time": 102.0,
+    "end_time": 105.0,
+    "confidence": 0.011752335354685783,
+    "label": "Melospiza melodia_Song Sparrow"
+  },
+  {
+    "common_name": "American Crow",
+    "scientific_name": "Corvus brachyrhynchos",
+    "start_time": 102.0,
+    "end_time": 105.0,
+    "confidence": 0.011318325996398926,
+    "label": "Corvus brachyrhynchos_American Crow"
+  },
+  {
+    "common_name": "Pygmy Nuthatch",
+    "scientific_name": "Sitta pygmaea",
+    "start_time": 102.0,
+    "end_time": 105.0,
+    "confidence": 0.011035057716071606,
+    "label": "Sitta pygmaea_Pygmy Nuthatch"
+  },
+  {
+    "common_name": "White-breasted Nuthatch",
+    "scientific_name": "Sitta carolinensis",
+    "start_time": 102.0,
+    "end_time": 105.0,
+    "confidence": 0.010084730572998524,
+    "label": "Sitta carolinensis_White-breasted Nuthatch"
+  },
+  {
+    "common_name": "Black-capped Chickadee",
+    "scientific_name": "Poecile atricapillus",
+    "start_time": 105.0,
+    "end_time": 108.0,
+    "confidence": 0.17900335788726807,
+    "label": "Poecile atricapillus_Black-capped Chickadee"
+  },
+  {
+    "common_name": "Purple Finch",
+    "scientific_name": "Haemorhous purpureus",
+    "start_time": 105.0,
+    "end_time": 108.0,
+    "confidence": 0.08167845755815506,
+    "label": "Haemorhous purpureus_Purple Finch"
+  },
+  {
+    "common_name": "Mountain Chickadee",
+    "scientific_name": "Poecile gambeli",
+    "start_time": 105.0,
+    "end_time": 108.0,
+    "confidence": 0.041750773787498474,
+    "label": "Poecile gambeli_Mountain Chickadee"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 105.0,
+    "end_time": 108.0,
+    "confidence": 0.03919273242354393,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "Tufted Titmouse",
+    "scientific_name": "Baeolophus bicolor",
+    "start_time": 105.0,
+    "end_time": 108.0,
+    "confidence": 0.03770366311073303,
+    "label": "Baeolophus bicolor_Tufted Titmouse"
+  },
+  {
+    "common_name": "Northern Cardinal",
+    "scientific_name": "Cardinalis cardinalis",
+    "start_time": 105.0,
+    "end_time": 108.0,
+    "confidence": 0.030537787824869156,
+    "label": "Cardinalis cardinalis_Northern Cardinal"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 105.0,
+    "end_time": 108.0,
+    "confidence": 0.020402692258358,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "White-crowned Sparrow",
+    "scientific_name": "Zonotrichia leucophrys",
+    "start_time": 105.0,
+    "end_time": 108.0,
+    "confidence": 0.01483770553022623,
+    "label": "Zonotrichia leucophrys_White-crowned Sparrow"
+  },
+  {
+    "common_name": "Pine Grosbeak",
+    "scientific_name": "Pinicola enucleator",
+    "start_time": 105.0,
+    "end_time": 108.0,
+    "confidence": 0.013281458057463169,
+    "label": "Pinicola enucleator_Pine Grosbeak"
+  },
+  {
+    "common_name": "Common Grackle",
+    "scientific_name": "Quiscalus quiscula",
+    "start_time": 105.0,
+    "end_time": 108.0,
+    "confidence": 0.012457617558538914,
+    "label": "Quiscalus quiscula_Common Grackle"
+  },
+  {
+    "common_name": "Golden-crowned Sparrow",
+    "scientific_name": "Zonotrichia atricapilla",
+    "start_time": 105.0,
+    "end_time": 108.0,
+    "confidence": 0.012133119627833366,
+    "label": "Zonotrichia atricapilla_Golden-crowned Sparrow"
+  },
+  {
+    "common_name": "Western Tanager",
+    "scientific_name": "Piranga ludoviciana",
+    "start_time": 105.0,
+    "end_time": 108.0,
+    "confidence": 0.011944597586989403,
+    "label": "Piranga ludoviciana_Western Tanager"
+  },
+  {
+    "common_name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "start_time": 105.0,
+    "end_time": 108.0,
+    "confidence": 0.011575670912861824,
+    "label": "Cyanocitta cristata_Blue Jay"
+  },
+  {
+    "common_name": "Sooty Grouse",
+    "scientific_name": "Dendragapus fuliginosus",
+    "start_time": 105.0,
+    "end_time": 108.0,
+    "confidence": 0.011204224079847336,
+    "label": "Dendragapus fuliginosus_Sooty Grouse"
+  },
+  {
+    "common_name": "Song Sparrow",
+    "scientific_name": "Melospiza melodia",
+    "start_time": 105.0,
+    "end_time": 108.0,
+    "confidence": 0.01056011114269495,
+    "label": "Melospiza melodia_Song Sparrow"
+  },
+  {
+    "common_name": "Common Yellowthroat",
+    "scientific_name": "Geothlypis trichas",
+    "start_time": 105.0,
+    "end_time": 108.0,
+    "confidence": 0.010226699523627758,
+    "label": "Geothlypis trichas_Common Yellowthroat"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 108.0,
+    "end_time": 111.0,
+    "confidence": 0.03450495004653931,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "Tufted Titmouse",
+    "scientific_name": "Baeolophus bicolor",
+    "start_time": 108.0,
+    "end_time": 111.0,
+    "confidence": 0.029715487733483315,
+    "label": "Baeolophus bicolor_Tufted Titmouse"
+  },
+  {
+    "common_name": "White-breasted Nuthatch",
+    "scientific_name": "Sitta carolinensis",
+    "start_time": 108.0,
+    "end_time": 111.0,
+    "confidence": 0.023900602012872696,
+    "label": "Sitta carolinensis_White-breasted Nuthatch"
+  },
+  {
+    "common_name": "Northern Flicker",
+    "scientific_name": "Colaptes auratus",
+    "start_time": 108.0,
+    "end_time": 111.0,
+    "confidence": 0.02015572413802147,
+    "label": "Colaptes auratus_Northern Flicker"
+  },
+  {
+    "common_name": "Black-billed Magpie",
+    "scientific_name": "Pica hudsonia",
+    "start_time": 108.0,
+    "end_time": 111.0,
+    "confidence": 0.01942489668726921,
+    "label": "Pica hudsonia_Black-billed Magpie"
+  },
+  {
+    "common_name": "Engine",
+    "scientific_name": "Engine",
+    "start_time": 108.0,
+    "end_time": 111.0,
+    "confidence": 0.018365373834967613,
+    "label": "Engine_Engine"
+  },
+  {
+    "common_name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "start_time": 108.0,
+    "end_time": 111.0,
+    "confidence": 0.017055490985512733,
+    "label": "Cyanocitta cristata_Blue Jay"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 108.0,
+    "end_time": 111.0,
+    "confidence": 0.016020214185118675,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "Common Grackle",
+    "scientific_name": "Quiscalus quiscula",
+    "start_time": 108.0,
+    "end_time": 111.0,
+    "confidence": 0.013673590496182442,
+    "label": "Quiscalus quiscula_Common Grackle"
+  },
+  {
+    "common_name": "Gray Catbird",
+    "scientific_name": "Dumetella carolinensis",
+    "start_time": 108.0,
+    "end_time": 111.0,
+    "confidence": 0.011185023002326488,
+    "label": "Dumetella carolinensis_Gray Catbird"
+  },
+  {
+    "common_name": "Song Sparrow",
+    "scientific_name": "Melospiza melodia",
+    "start_time": 108.0,
+    "end_time": 111.0,
+    "confidence": 0.011169143952429295,
+    "label": "Melospiza melodia_Song Sparrow"
+  },
+  {
+    "common_name": "Engine",
+    "scientific_name": "Engine",
+    "start_time": 111.0,
+    "end_time": 114.0,
+    "confidence": 0.5168411731719971,
+    "label": "Engine_Engine"
+  },
+  {
+    "common_name": "Tufted Titmouse",
+    "scientific_name": "Baeolophus bicolor",
+    "start_time": 111.0,
+    "end_time": 114.0,
+    "confidence": 0.01905730366706848,
+    "label": "Baeolophus bicolor_Tufted Titmouse"
+  },
+  {
+    "common_name": "Black-capped Chickadee",
+    "scientific_name": "Poecile atricapillus",
+    "start_time": 111.0,
+    "end_time": 114.0,
+    "confidence": 0.012825928628444672,
+    "label": "Poecile atricapillus_Black-capped Chickadee"
+  },
+  {
+    "common_name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "start_time": 111.0,
+    "end_time": 114.0,
+    "confidence": 0.010976968333125114,
+    "label": "Cyanocitta cristata_Blue Jay"
+  },
+  {
+    "common_name": "Engine",
+    "scientific_name": "Engine",
+    "start_time": 114.0,
+    "end_time": 117.0,
+    "confidence": 0.24290917813777924,
+    "label": "Engine_Engine"
+  },
+  {
+    "common_name": "Human vocal",
+    "scientific_name": "Human vocal",
+    "start_time": 114.0,
+    "end_time": 117.0,
+    "confidence": 0.02164616622030735,
+    "label": "Human vocal_Human vocal"
+  },
+  {
+    "common_name": "Song Sparrow",
+    "scientific_name": "Melospiza melodia",
+    "start_time": 114.0,
+    "end_time": 117.0,
+    "confidence": 0.01854368858039379,
+    "label": "Melospiza melodia_Song Sparrow"
+  },
+  {
+    "common_name": "Pygmy Nuthatch",
+    "scientific_name": "Sitta pygmaea",
+    "start_time": 114.0,
+    "end_time": 117.0,
+    "confidence": 0.015051150694489479,
+    "label": "Sitta pygmaea_Pygmy Nuthatch"
+  },
+  {
+    "common_name": "European Goldfinch",
+    "scientific_name": "Carduelis carduelis",
+    "start_time": 114.0,
+    "end_time": 117.0,
+    "confidence": 0.014983158558607101,
+    "label": "Carduelis carduelis_European Goldfinch"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 114.0,
+    "end_time": 117.0,
+    "confidence": 0.012295729480683804,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "American Goldfinch",
+    "scientific_name": "Spinus tristis",
+    "start_time": 117.0,
+    "end_time": 120.0,
+    "confidence": 0.3923955261707306,
+    "label": "Spinus tristis_American Goldfinch"
+  },
+  {
+    "common_name": "European Greenfinch",
+    "scientific_name": "Chloris chloris",
+    "start_time": 117.0,
+    "end_time": 120.0,
+    "confidence": 0.07579881697893143,
+    "label": "Chloris chloris_European Greenfinch"
+  },
+  {
+    "common_name": "Pygmy Nuthatch",
+    "scientific_name": "Sitta pygmaea",
+    "start_time": 117.0,
+    "end_time": 120.0,
+    "confidence": 0.03280746564269066,
+    "label": "Sitta pygmaea_Pygmy Nuthatch"
+  },
+  {
+    "common_name": "Canada Goose",
+    "scientific_name": "Branta canadensis",
+    "start_time": 117.0,
+    "end_time": 120.0,
+    "confidence": 0.026414699852466583,
+    "label": "Branta canadensis_Canada Goose"
+  },
+  {
+    "common_name": "Downy Woodpecker",
+    "scientific_name": "Dryobates pubescens",
+    "start_time": 117.0,
+    "end_time": 120.0,
+    "confidence": 0.025910237804055214,
+    "label": "Dryobates pubescens_Downy Woodpecker"
+  },
+  {
+    "common_name": "Common Redpoll",
+    "scientific_name": "Acanthis flammea",
+    "start_time": 117.0,
+    "end_time": 120.0,
+    "confidence": 0.023666786029934883,
+    "label": "Acanthis flammea_Common Redpoll"
+  },
+  {
+    "common_name": "Tufted Titmouse",
+    "scientific_name": "Baeolophus bicolor",
+    "start_time": 117.0,
+    "end_time": 120.0,
+    "confidence": 0.021805675700306892,
+    "label": "Baeolophus bicolor_Tufted Titmouse"
+  },
+  {
+    "common_name": "Song Sparrow",
+    "scientific_name": "Melospiza melodia",
+    "start_time": 117.0,
+    "end_time": 120.0,
+    "confidence": 0.021004164591431618,
+    "label": "Melospiza melodia_Song Sparrow"
+  },
+  {
+    "common_name": "House Finch",
+    "scientific_name": "Haemorhous mexicanus",
+    "start_time": 117.0,
+    "end_time": 120.0,
+    "confidence": 0.016486141830682755,
+    "label": "Haemorhous mexicanus_House Finch"
+  },
+  {
+    "common_name": "Red-winged Blackbird",
+    "scientific_name": "Agelaius phoeniceus",
+    "start_time": 117.0,
+    "end_time": 120.0,
+    "confidence": 0.015449662692844868,
+    "label": "Agelaius phoeniceus_Red-winged Blackbird"
+  },
+  {
+    "common_name": "Blue Jay",
+    "scientific_name": "Cyanocitta cristata",
+    "start_time": 117.0,
+    "end_time": 120.0,
+    "confidence": 0.014997473917901516,
+    "label": "Cyanocitta cristata_Blue Jay"
+  },
+  {
+    "common_name": "Pine Siskin",
+    "scientific_name": "Spinus pinus",
+    "start_time": 117.0,
+    "end_time": 120.0,
+    "confidence": 0.012638330459594727,
+    "label": "Spinus pinus_Pine Siskin"
+  },
+  {
+    "common_name": "Purple Finch",
+    "scientific_name": "Haemorhous purpureus",
+    "start_time": 117.0,
+    "end_time": 120.0,
+    "confidence": 0.011414135806262493,
+    "label": "Haemorhous purpureus_Purple Finch"
+  },
+  {
+    "common_name": "Oriental Greenfinch",
+    "scientific_name": "Chloris sinica",
+    "start_time": 117.0,
+    "end_time": 120.0,
+    "confidence": 0.011126624420285225,
+    "label": "Chloris sinica_Oriental Greenfinch"
+  },
+  {
+    "common_name": "Northern Cardinal",
+    "scientific_name": "Cardinalis cardinalis",
+    "start_time": 117.0,
+    "end_time": 120.0,
+    "confidence": 0.010991228744387627,
+    "label": "Cardinalis cardinalis_Northern Cardinal"
+  },
+  {
+    "common_name": "American Crow",
+    "scientific_name": "Corvus brachyrhynchos",
+    "start_time": 117.0,
+    "end_time": 120.0,
+    "confidence": 0.010672013275325298,
+    "label": "Corvus brachyrhynchos_American Crow"
+  },
+  {
+    "common_name": "Red Crossbill",
+    "scientific_name": "Loxia curvirostra",
+    "start_time": 117.0,
+    "end_time": 120.0,
+    "confidence": 0.010467994958162308,
+    "label": "Loxia curvirostra_Red Crossbill"
+  },
+  {
+    "common_name": "Common Grackle",
+    "scientific_name": "Quiscalus quiscula",
+    "start_time": 117.0,
+    "end_time": 120.0,
+    "confidence": 0.010096762329339981,
+    "label": "Quiscalus quiscula_Common Grackle"
+  }
+]
