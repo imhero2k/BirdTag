@@ -42,7 +42,8 @@ def lambda_handler(event, context):
                 400, 'MISSING_PARAMETERS', 'No valid tag parameters provided',
                 {
                     'get_format': '?tag1=crow&count1=3&tag2=pigeon&count2=2',
-                    'post_format': '{"crow": 3, "pigeon": 2}'
+                    'post_format': '{"crow": 3, "pigeon": 2}',
+                    'note': 'Counts must be positive integers (> 0)'
                 }, headers
             )
         
@@ -62,6 +63,13 @@ def lambda_handler(event, context):
             'headers': headers,
             'body': json.dumps(response_data)
         }
+    
+    except ValueError as e:
+        # Handle validation errors (zero/negative counts)
+        return create_error_response(
+            400, 'INVALID_PARAMETERS', str(e),
+            {'note': 'All counts must be positive integers greater than 0'}, headers
+        )
         
     except Exception as e:
         print(f"Unexpected error in tag search: {str(e)}")
@@ -93,10 +101,18 @@ def parse_get_parameters(event):
             
             try:
                 count = int(count_value)
-                if count > 0:
-                    tag_requirements[tag_name] = count
-            except ValueError:
-                pass
+                
+                # Validate count is positive
+                if count <= 0:
+                    raise ValueError(f"Count for tag '{tag_name}' must be a positive integer greater than 0. Received: {count}")
+                
+                tag_requirements[tag_name] = count
+                
+            except ValueError as e:
+                if "must be a positive integer" in str(e):
+                    raise e  # Re-raise our custom validation error
+                else:
+                    raise ValueError(f"Invalid count value '{count_value}' for tag '{tag_name}'. Must be a positive integer.")
     
     return tag_requirements
 
@@ -112,14 +128,34 @@ def parse_post_parameters(event):
     if 'tags' in body:
         tags_dict = body['tags']
         for tag_name, count in tags_dict.items():
-            if isinstance(count, (int, str)) and str(count).isdigit():
-                tag_requirements[tag_name.lower()] = int(count)
+            validate_and_add_tag(tag_requirements, tag_name, count)
     else:
         for key, value in body.items():
-            if isinstance(value, (int, str)) and str(value).isdigit():
-                tag_requirements[key.lower()] = int(value)
+            validate_and_add_tag(tag_requirements, key, value)
     
     return tag_requirements
+
+def validate_and_add_tag(tag_requirements, tag_name, count_value):
+    """Helper function to validate and add tag with count validation"""
+    try:
+        # Convert to integer
+        if isinstance(count_value, str):
+            if not count_value.isdigit():
+                raise ValueError(f"Invalid count value '{count_value}' for tag '{tag_name}'. Must be a positive integer.")
+            count = int(count_value)
+        elif isinstance(count_value, int):
+            count = count_value
+        else:
+            raise ValueError(f"Invalid count type for tag '{tag_name}'. Must be a positive integer.")
+        
+        # Validate count is positive
+        if count <= 0:
+            raise ValueError(f"Count for tag '{tag_name}' must be a positive integer greater than 0. Received: {count}")
+        
+        tag_requirements[tag_name.lower()] = count
+        
+    except ValueError as e:
+        raise e  # Re-raise validation errors
 
 def search_by_tags_with_presigned_urls(tag_requirements):
     """
