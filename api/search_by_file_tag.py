@@ -74,7 +74,15 @@ def lambda_handler(event, context):
         # Step 1: Poll database until temp file processing is complete
         detected_tags = None
         temp_file_record = None
-        
+        try:
+            full_scan = table.scan()
+            print("---- DEBUG: Current DB Contents ----")
+            for item in full_scan.get('Items', []):
+                print(json.dumps(item, default=str))
+            print("---- END DB DUMP ----")
+        except Exception as e:
+            print(f"DEBUG ERROR: Failed to dump table contents: {e}")
+            
         print("Polling database for temp file processing completion...")
         for attempt in range(15):  # Poll for up to 30 seconds
             try:
