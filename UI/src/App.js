@@ -4,6 +4,7 @@ import Gallery from './Gallery';
 import Search from './Search';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
+import Notification from './Notification';
 
 function App({ signOut, user }) {
   const [page, setPage] = useState('upload');
@@ -16,6 +17,8 @@ function App({ signOut, user }) {
         return <Gallery />;
       case 'search':
         return <Search />;
+      case 'Notification':
+        return <Notification/>;
       default:
         return <Upload />;
     }
@@ -34,6 +37,8 @@ function App({ signOut, user }) {
           <button onClick={() => setPage('upload')}>Upload</button>
           <button onClick={() => setPage('gallery')}>Gallery</button>
           <button onClick={() => setPage('search')}>Search</button>
+          <button onClick={() => setPage('Notification')}>Notification</button>
+
         </div>
         <div>
           <span style={{ marginRight: '10px' }}>
