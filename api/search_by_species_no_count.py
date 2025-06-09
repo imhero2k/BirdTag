@@ -8,6 +8,7 @@ def lambda_handler(event, context):
     """
     Handle GET /search/by-species
     UPDATED: Works with existing database schema (original_s3_path, thumbnail_s3_path, result_s3_path)
+    UPDATED: Supports substring matching for audio files
     """
     
     headers = {
@@ -40,7 +41,8 @@ def lambda_handler(event, context):
                 400, 'MISSING_PARAMETERS', 'No valid species parameters provided',
                 {
                     'expected_format': '?species1=crow&species2=pigeon',
-                    'single_format': '?species=crow'
+                    'single_format': '?species=crow',
+                    'note': 'For audio files, substring matching is used (e.g., "Magpie" matches "Grallina cyanoleuca_Magpie-lark")'
                 }, headers
             )
         
@@ -99,7 +101,7 @@ def parse_species_parameters(event):
 def search_by_species_with_presigned_urls(species_list):
     """
     Search for files containing any of the specified species
-    UPDATED: Uses existing database schema with S3 paths
+    UPDATED: Uses existing database schema with S3 paths and supports audio substring matching
     """
     try:
         dynamodb = boto3.resource('dynamodb')
@@ -118,13 +120,13 @@ def search_by_species_with_presigned_urls(species_list):
         
         for item in items:
             file_tags = item.get('tags', {})
+            file_type = item.get('file_type', '')
             simple_tags = convert_dynamodb_tags(file_tags)
             
             # Check if file contains any of the required species (OR logic)
             contains_species = False
             for species in species_list:
-                species_count = simple_tags.get(species.lower(), 0)
-                if species_count >= 1:
+                if check_species_match(simple_tags, species, file_type):
                     contains_species = True
                     break
             
@@ -139,6 +141,33 @@ def search_by_species_with_presigned_urls(species_list):
     except Exception as e:
         print(f"Error in species search: {str(e)}")
         return []
+
+def check_species_match(simple_tags, species_query, file_type):
+    """
+    Check if a species matches, with different logic for audio vs other files
+    - For audio files: use substring matching on the part after underscore
+    - For other files: use exact matching
+    """
+    species_query_lower = species_query.lower()
+    
+    if file_type.startswith('audio'):
+        # For audio files: substring matching on part after underscore
+        for tag_name, tag_count in simple_tags.items():
+            if tag_count >= 1:
+                # Extract the part after underscore (common name)
+                if '_' in tag_name:
+                    common_name = tag_name.split('_', 1)[1].lower()
+                else:
+                    common_name = tag_name.lower()
+                
+                if species_query_lower in common_name:
+                    print(f"Audio substring match: '{species_query}' found in common name '{common_name}' from tag '{tag_name}'")
+                    return True
+        return False
+    else:
+        # For non-audio files: exact matching
+        species_count = simple_tags.get(species_query_lower, 0)
+        return species_count >= 1
 
 def generate_presigned_url_from_paths(item, s3_client):
     """Generate pre-signed URL by extracting S3 key from stored paths"""
@@ -209,13 +238,13 @@ def convert_dynamodb_tags(file_tags):
                 simple_tags[tag_name.lower()] = int(tag_value)
             elif isinstance(tag_value, dict):
                 if 'N' in tag_value:
-                    simple_tags[tag_name.lower()] = int(tag_value['N'])
+                    simple_tags[tag_name.lower()] = int(float(tag_value['N']))
                 elif 'S' in tag_value:
                     value = tag_value['S']
-                    simple_tags[tag_name.lower()] = int(value) if value.isdigit() else 0
+                    simple_tags[tag_name.lower()] = int(float(value)) if value.replace('.', '').isdigit() else 0
             elif isinstance(tag_value, (int, str)):
-                if isinstance(tag_value, str) and tag_value.isdigit():
-                    simple_tags[tag_name.lower()] = int(tag_value)
+                if isinstance(tag_value, str) and tag_value.replace('.', '').isdigit():
+                    simple_tags[tag_name.lower()] = int(float(tag_value))
                 elif isinstance(tag_value, int):
                     simple_tags[tag_name.lower()] = tag_value
         except (ValueError, KeyError):

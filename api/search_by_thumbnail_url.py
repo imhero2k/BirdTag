@@ -120,7 +120,7 @@ def search_by_thumbnail_and_generate_url(thumbnail_url):
 def convert_url_to_s3_path(url):
     """
     Convert various URL formats to S3 path format
-    Input: https://thumbnailbucket134.s3.amazonaws.com/thumbnails/file_thumb.jpg
+    Input: https://thumbnailbucket134.s3.us-east-1.amazonaws.com/thumbnails/file_thumb.jpg
     Output: s3://thumbnailbucket134/thumbnails/file_thumb.jpg
     """
     if not url:
@@ -131,13 +131,20 @@ def convert_url_to_s3_path(url):
         if url.startswith('s3://'):
             return url
         
-        # Handle HTTPS S3 URLs
+        # Handle HTTPS S3 URLs (both regional and generic)
         if 'amazonaws.com/' in url:
-            # Extract bucket and key
-            parts = url.split('.s3.amazonaws.com/', 1)
-            if len(parts) == 2:
-                bucket_part = parts[0].replace('https://', '').replace('http://', '')
-                key_part = parts[1]
+            # Remove protocol
+            url_without_protocol = url.replace('https://', '').replace('http://', '')
+            
+            # Handle regional URLs: bucket.s3.region.amazonaws.com/key
+            # Handle generic URLs: bucket.s3.amazonaws.com/key
+            if '.s3.' in url_without_protocol and '.amazonaws.com/' in url_without_protocol:
+                # Split at the first occurrence of .s3.
+                bucket_part = url_without_protocol.split('.s3.')[0]
+                
+                # Find the key part after amazonaws.com/
+                key_start = url_without_protocol.find('.amazonaws.com/') + len('.amazonaws.com/')
+                key_part = url_without_protocol[key_start:]
                 
                 # Remove query parameters from pre-signed URLs
                 if '?' in key_part:
