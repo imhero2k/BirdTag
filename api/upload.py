@@ -8,7 +8,9 @@ import re
 
 def lambda_handler(event, context):
     """
-    Simple function: Generate presigned URL for S3 upload
+    Generate presigned URL for S3 upload.
+    Handles upload authorization and URL generation.
+    Supports both regular and temporary uploads.
     """
     
     headers = {
@@ -39,6 +41,7 @@ def lambda_handler(event, context):
         # Extract and validate required fields
         file_name = body.get('fileName')
         file_type = body.get('fileType')
+        is_temporary = body.get('temporary', False)
         
         if not file_name:
             return create_error_response(
@@ -81,7 +84,7 @@ def lambda_handler(event, context):
         # Extract user information
         user_id = extract_user_info(event)
         
-        # Generate unique file identifiers
+        # Generate unique S3 key (for upload purposes only)
         timestamp = datetime.now(timezone.utc)
         timestamp_str = timestamp.strftime('%Y%m%d_%H%M%S')
         unique_id = str(uuid.uuid4())[:12]
@@ -90,9 +93,11 @@ def lambda_handler(event, context):
         clean_filename = re.sub(r'[^a-zA-Z0-9._-]', '_', file_name)
         file_extension = clean_filename.split('.')[-1] if '.' in clean_filename else 'unknown'
         
-        # Generate S3 key for upload
-        file_id = f"{timestamp_str}_{unique_id}"
-        s3_key = f"{file_id}.{file_extension}"
+        # Generate S3 key for upload - put temp files in temp/ folder
+        if is_temporary:
+            upload_key = f"temp/{timestamp_str}_{unique_id}.{file_extension}"
+        else:
+            upload_key = f"{timestamp_str}_{unique_id}.{file_extension}"
         
         # S3 configuration
         bucket_name = 'lambdatestbucket134'
@@ -105,13 +110,14 @@ def lambda_handler(event, context):
                 'put_object',
                 Params={
                     'Bucket': bucket_name,
-                    'Key': s3_key,
+                    'Key': upload_key,
                     'ContentType': file_type,
                     'Metadata': {
                         'original-filename': clean_filename,
                         'uploader': user_id,
                         'upload-timestamp': timestamp.isoformat(),
-                        'file-type': file_type
+                        'file-type': file_type,
+                        'is-temporary': str(is_temporary)
                     }
                 },
                 ExpiresIn=3600  # 1 hour
@@ -133,19 +139,20 @@ def lambda_handler(event, context):
                 }, headers
             )
         
-        # Return response with uploadUrl
+        # Return response
         response_data = {
-            'uploadUrl': presigned_url,  # for react
-            'fileId': file_id,
+            'uploadUrl': presigned_url,
             'bucket': bucket_name,
-            's3Key': s3_key,
+            's3Key': upload_key,  # For reference, but not the database ID
             'expiresIn': 3600,
+            'isTemporary': is_temporary,
             'metadata': {
                 'originalFilename': clean_filename,
                 'fileType': file_type,
                 'uploader': user_id,
                 'uploadTime': timestamp.isoformat()
-            }
+            },
+            'message': 'Upload URL generated successfully. File will be processed after upload.' if not is_temporary else 'Temporary upload URL generated. File will be processed and then deleted.'
         }
         
         return {

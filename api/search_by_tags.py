@@ -8,6 +8,7 @@ def lambda_handler(event, context):
     """
     Handle GET/POST /search/by-tags
     UPDATED: Extracts S3 keys from existing database paths and generates pre-signed URLs
+    UPDATED: Supports substring matching for audio files
     """
     
     headers = {
@@ -43,7 +44,7 @@ def lambda_handler(event, context):
                 {
                     'get_format': '?tag1=crow&count1=3&tag2=pigeon&count2=2',
                     'post_format': '{"crow": 3, "pigeon": 2}',
-                    'note': 'Counts must be positive integers (> 0)'
+                    'note': 'Counts must be positive integers (> 0). For audio files, substring matching is used on the common name (part after underscore).'
                 }, headers
             )
         
@@ -140,11 +141,11 @@ def validate_and_add_tag(tag_requirements, tag_name, count_value):
     try:
         # Convert to integer
         if isinstance(count_value, str):
-            if not count_value.isdigit():
+            if not count_value.replace('.', '').isdigit():
                 raise ValueError(f"Invalid count value '{count_value}' for tag '{tag_name}'. Must be a positive integer.")
+            count = int(float(count_value))
+        elif isinstance(count_value, (int, float)):
             count = int(count_value)
-        elif isinstance(count_value, int):
-            count = count_value
         else:
             raise ValueError(f"Invalid count type for tag '{tag_name}'. Must be a positive integer.")
         
@@ -160,6 +161,7 @@ def validate_and_add_tag(tag_requirements, tag_name, count_value):
 def search_by_tags_with_presigned_urls(tag_requirements):
     """
     Search by tags and generate fresh pre-signed URLs from existing S3 paths
+    UPDATED: Supports substring matching for audio files
     """
     try:
         dynamodb = boto3.resource('dynamodb')
@@ -178,14 +180,14 @@ def search_by_tags_with_presigned_urls(tag_requirements):
         
         for item in items:
             file_tags = item.get('tags', {})
+            file_type = item.get('file_type', '')
             simple_tags = convert_dynamodb_tags(file_tags)
             
             meets_requirements = True
             
             # Check if file meets all tag count requirements (AND operation)
             for required_tag, required_count in tag_requirements.items():
-                file_tag_count = simple_tags.get(required_tag.lower(), 0)
-                if file_tag_count < required_count:
+                if not check_tag_requirement(simple_tags, required_tag, required_count, file_type):
                     meets_requirements = False
                     break
             
@@ -200,6 +202,34 @@ def search_by_tags_with_presigned_urls(tag_requirements):
     except Exception as e:
         print(f"Error in tag search: {str(e)}")
         return []
+
+def check_tag_requirement(simple_tags, required_tag, required_count, file_type):
+    """
+    Check if a tag requirement is met, with different logic for audio vs other files
+    - For audio files: use substring matching on the part after underscore
+    - For other files: use exact matching
+    """
+    required_tag_lower = required_tag.lower()
+    
+    if file_type.startswith('audio'):
+        # For audio files: substring matching on part after underscore - sum counts of all matching tags
+        total_count = 0
+        for tag_name, tag_count in simple_tags.items():
+            # Extract the part after underscore (common name)
+            if '_' in tag_name:
+                common_name = tag_name.split('_', 1)[1].lower()
+            else:
+                common_name = tag_name.lower()
+            
+            if required_tag_lower in common_name:
+                total_count += tag_count
+                print(f"Audio substring match: '{required_tag}' found in common name '{common_name}' from tag '{tag_name}' with count {tag_count}")
+        
+        return total_count >= required_count
+    else:
+        # For non-audio files: exact matching
+        file_tag_count = simple_tags.get(required_tag_lower, 0)
+        return file_tag_count >= required_count
 
 def generate_presigned_url_from_paths(item, s3_client):
     """
@@ -281,13 +311,13 @@ def convert_dynamodb_tags(file_tags):
                 simple_tags[tag_name.lower()] = int(tag_value)
             elif isinstance(tag_value, dict):
                 if 'N' in tag_value:
-                    simple_tags[tag_name.lower()] = int(tag_value['N'])
+                    simple_tags[tag_name.lower()] = int(float(tag_value['N']))
                 elif 'S' in tag_value:
                     value = tag_value['S']
-                    simple_tags[tag_name.lower()] = int(value) if value.isdigit() else 0
+                    simple_tags[tag_name.lower()] = int(float(value)) if value.replace('.', '').isdigit() else 0
             elif isinstance(tag_value, (int, str)):
-                if isinstance(tag_value, str) and tag_value.isdigit():
-                    simple_tags[tag_name.lower()] = int(tag_value)
+                if isinstance(tag_value, str) and tag_value.replace('.', '').isdigit():
+                    simple_tags[tag_name.lower()] = int(float(tag_value))
                 elif isinstance(tag_value, int):
                     simple_tags[tag_name.lower()] = tag_value
         except (ValueError, KeyError):
