@@ -489,7 +489,7 @@ const Search = () => {
       // Step 4: Show results
       setResults(results.links || []);
       const birdTypes = Object.keys(results.detected_tags || {}).join(', ');
-      setFileUploadStatus(`✅ Found ${results.match_count || 0} files with similar birds: ${birdTypes}`);
+      setFileUploadStatus(`Found ${results.match_count || 0} files with similar birds: ${birdTypes}`);
     } catch (err) {
       setError(err.message);
       setFileUploadStatus('');
@@ -593,7 +593,7 @@ const Search = () => {
       <section style={{ marginBottom: '30px' }}>
         <h4>4. Upload File for Similar Tag Match</h4>
         <p style={{ fontSize: '0.9em', color: '#666', fontStyle: 'italic' }}>
-          📋 Your file is analyzed temporarily and not saved to your account
+          Your file is analyzed temporarily and not saved to your account
         </p>
         
         <input 
