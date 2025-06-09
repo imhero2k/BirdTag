@@ -730,7 +730,7 @@ const Search = () => {
           const urlArray = bulkUrls
             .split(',')
             .map(u => u.trim())
-            .filter(u => u.startsWith('http'));
+            .filter(u => u.startsWith('http') || u.startsWith('s3://'));
 
           const tagArray = bulkTags
             .filter(t => /^[a-zA-Z]+$/.test(t.name) && t.count > 0)
