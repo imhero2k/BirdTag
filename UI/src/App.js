@@ -8,6 +8,7 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import './App.css';
 import Notification from './Notification';
+import { Authenticator } from '@aws-amplify/ui-react';
 
 function App({ signOut, user }) {
   const [page, setPage] = useState('upload');
@@ -114,4 +115,6 @@ const formFields = {
 export default withAuthenticator(App, {
   signUpAttributes: ['given_name', 'family_name'],
   formFields,
+  initialAuthState: 'signIn'
+  
 });
