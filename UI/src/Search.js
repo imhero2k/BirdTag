@@ -235,8 +235,9 @@ const MediaThumbnail = ({ url, index, onMediaClick, width = 150 }) => {
   }
 };
 
-// Mini Gallery for thumbnail selection
-const ThumbnailSelector = ({ onSelectThumbnail, onClose }) => {
+
+// Fixed Mini Gallery for thumbnail selection with better image filtering
+const ThumbnailSelector = ({ onSelectThumbnail, onClose, showOnlyImages = false }) => {
   const [mediaItems, setMediaItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -272,7 +273,7 @@ const ThumbnailSelector = ({ onSelectThumbnail, onClose }) => {
       }
 
       const data = await res.json();
-      const allItems = transformGalleryData(data.gallery || {});
+      const allItems = transformGalleryData(data.gallery || {}, showOnlyImages);
       setMediaItems(allItems);
       setError('');
     } catch (err) {
@@ -283,21 +284,43 @@ const ThumbnailSelector = ({ onSelectThumbnail, onClose }) => {
     }
   };
 
-  const transformGalleryData = (gallery) => {
+  // FIXED: Better image filtering logic
+  const transformGalleryData = (gallery, showOnlyImages = false) => {
     const allItems = [];
     
+    // Process all categories to find items
     ['images', 'audio', 'video', 'other'].forEach(fileType => {
       if (gallery[fileType] && Array.isArray(gallery[fileType])) {
         gallery[fileType].forEach(item => {
           const tagsArray = transformTags(item.tags || {});
           
-          allItems.push({
+          const transformedItem = {
             url: item.url,
             file_type: item.file_type,
             file_id: item.file_id,
             tags: tagsArray,
             tagsObject: item.tags || {}
-          });
+          };
+          
+          // If showOnlyImages is true, filter by actual file type instead of category
+          if (showOnlyImages) {
+            const fileTypeStr = (item.file_type || '').toLowerCase();
+            const urlStr = (item.url || '').toLowerCase();
+            
+            // Check if it's actually an image by file type or URL
+            const isImage = fileTypeStr.startsWith('image/') || 
+                           urlStr.includes('.jpg') || urlStr.includes('.jpeg') || 
+                           urlStr.includes('.png') || urlStr.includes('.gif') || 
+                           urlStr.includes('.webp') || urlStr.includes('.bmp') ||
+                           urlStr.includes('/thumbnails/'); // Thumbnails are usually images
+            
+            if (isImage) {
+              allItems.push(transformedItem);
+            }
+          } else {
+            // Include all items if not filtering for images only
+            allItems.push(transformedItem);
+          }
         });
       }
     });
@@ -368,7 +391,12 @@ const ThumbnailSelector = ({ onSelectThumbnail, onClose }) => {
           borderBottom: '2px solid #eee',
           paddingBottom: '10px'
         }}>
-          <h3 style={{ margin: 0 }}>Select a Thumbnail for Reverse Lookup</h3>
+          <h3 style={{ margin: 0 }}>
+            {showOnlyImages 
+              ? 'Select an Image Thumbnail for Reverse Lookup' 
+              : 'Select a Thumbnail for Reverse Lookup'
+            }
+          </h3>
           <button 
             onClick={onClose}
             style={{
@@ -398,6 +426,18 @@ const ThumbnailSelector = ({ onSelectThumbnail, onClose }) => {
               borderRadius: '4px'
             }}
           />
+          {showOnlyImages && (
+            <div style={{
+              fontSize: '0.85em',
+              color: '#666',
+              marginTop: '8px',
+              fontStyle: 'italic'
+            }}>
+              📸 Showing images only (reverse lookup works with image thumbnails)
+              <br />
+              Found {filteredItems.length} image{filteredItems.length !== 1 ? 's' : ''}
+            </div>
+          )}
         </div>
 
         {/* Error */}
@@ -496,7 +536,10 @@ const ThumbnailSelector = ({ onSelectThumbnail, onClose }) => {
 
         {filteredItems.length === 0 && !loading && (
           <p style={{ textAlign: 'center', color: '#666' }}>
-            No matching files found.
+            {showOnlyImages 
+              ? 'No matching images found. Images might be categorized differently in the system.'
+              : 'No matching files found.'
+            }
           </p>
         )}
       </div>
@@ -860,14 +903,14 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
       <section style={{ marginBottom: '30px' }}>
         <h4>3. Reverse Lookup from Thumbnail URL</h4>
         <p style={{ fontSize: '0.9em', color: '#666', marginBottom: '12px' }}>
-          Find the original full-size image from any image URL. Accepts both original and thumbnail URLs - automatically converts as needed.
+          Find the original full-size image from any image URL.
         </p>
         
         <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
           <input
             value={thumbUrl}
             onChange={(e) => setThumbUrl(e.target.value)}
-            placeholder="Paste any image URL or select from gallery (automatically converts to thumbnail URL)"
+            placeholder="Paste any image URL or select from gallery"
             style={{ 
               flex: 1, 
               padding: '8px', 
