@@ -135,7 +135,7 @@ export default function BirdNotificationSignup() {
             <div className="flex items-center">
               <span className="text-2xl text-white mr-3"></span>
               <div>
-                <h1 className="text-2xl font-bold text-white">Bird Upload Notifications</h1>
+                <h1 className="text-2xl font-bold text-white">Subscribe to Notifications</h1>
                 <p className="text-indigo-100">Get notified when your favorite birds are spotted</p>
               </div>
             </div>
