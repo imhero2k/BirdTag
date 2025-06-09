@@ -7,7 +7,7 @@ from urllib.parse import unquote_plus
 def lambda_handler(event, context):
     """
     Handle GET /search/by-thumbnail
-    UPDATED: Works with existing database schema (thumbnail_s3_path)
+    UPDATED: Works with existing database schema (thumbnail_s3_path) and handles UUID prefixes
     """
     
     headers = {
@@ -89,7 +89,7 @@ def parse_thumbnail_parameter(event):
 def search_by_thumbnail_and_generate_url(thumbnail_url):
     """
     Find record by thumbnail URL and generate full-size image URL
-    UPDATED: Works with existing database schema
+    UPDATED: Works with existing database schema and handles UUID prefixes
     """
     try:
         # Extract S3 path from thumbnail URL
@@ -120,8 +120,8 @@ def search_by_thumbnail_and_generate_url(thumbnail_url):
 def convert_url_to_s3_path(url):
     """
     Convert various URL formats to S3 path format
-    Input: https://thumbnailbucket134.s3.us-east-1.amazonaws.com/thumbnails/file_thumb.jpg
-    Output: s3://thumbnailbucket134/thumbnails/file_thumb.jpg
+    Input: https://thumbnailbucket134.s3.amazonaws.com/thumbnails/crows_4.jpg
+    Output: s3://thumbnailbucket134/thumbnails/crows_4.jpg
     """
     if not url:
         return None
@@ -131,25 +131,24 @@ def convert_url_to_s3_path(url):
         if url.startswith('s3://'):
             return url
         
-        # Handle HTTPS S3 URLs (both regional and generic)
+        # Handle HTTPS S3 URLs
         if 'amazonaws.com/' in url:
-            # Remove protocol
-            url_without_protocol = url.replace('https://', '').replace('http://', '')
+            # Remove protocol and query parameters
+            url_clean = url.replace('https://', '').replace('http://', '').split('?')[0]
             
-            # Handle regional URLs: bucket.s3.region.amazonaws.com/key
-            # Handle generic URLs: bucket.s3.amazonaws.com/key
-            if '.s3.' in url_without_protocol and '.amazonaws.com/' in url_without_protocol:
-                # Split at the first occurrence of .s3.
-                bucket_part = url_without_protocol.split('.s3.')[0]
-                
-                # Find the key part after amazonaws.com/
-                key_start = url_without_protocol.find('.amazonaws.com/') + len('.amazonaws.com/')
-                key_part = url_without_protocol[key_start:]
-                
-                # Remove query parameters from pre-signed URLs
-                if '?' in key_part:
-                    key_part = key_part.split('?')[0]
-                
+            # Handle standard S3 URL format: bucket.s3.amazonaws.com/key
+            if '.s3.amazonaws.com/' in url_clean:
+                parts = url_clean.split('.s3.amazonaws.com/')
+                if len(parts) == 2:
+                    bucket = parts[0]
+                    key = parts[1]
+                    return f"s3://{bucket}/{key}"
+            
+            # Handle regional S3 URLs: bucket.s3.region.amazonaws.com/key  
+            elif '.s3.' in url_clean and '.amazonaws.com/' in url_clean:
+                bucket_part = url_clean.split('.s3.')[0]
+                key_start = url_clean.find('.amazonaws.com/') + len('.amazonaws.com/')
+                key_part = url_clean[key_start:]
                 return f"s3://{bucket_part}/{key_part}"
         
         return None
@@ -159,12 +158,15 @@ def convert_url_to_s3_path(url):
         return None
 
 def find_record_by_thumbnail_path(thumbnail_s3_path):
-    """Search database for record with matching thumbnail_s3_path"""
+    """
+    Search database for record with matching thumbnail_s3_path
+    UPDATED: Handles UUID prefixes in stored paths
+    """
     try:
         dynamodb = boto3.resource('dynamodb')
         table = dynamodb.Table('BirdMediaMetadata')
         
-        # Scan table to find matching thumbnail path
+        # First try exact match
         response = table.scan(
             FilterExpression='thumbnail_s3_path = :thumb_path',
             ExpressionAttributeValues={':thumb_path': thumbnail_s3_path}
@@ -181,8 +183,42 @@ def find_record_by_thumbnail_path(thumbnail_s3_path):
             items.extend(response['Items'])
         
         if items:
-            print(f"Found {len(items)} matching records")
+            print(f"Found {len(items)} matching records with exact path")
             return items[0]
+        
+        # If no exact match, try searching by filename (handling UUID prefix)
+        # Extract just the filename from the input path
+        if '/' in thumbnail_s3_path:
+            filename = thumbnail_s3_path.split('/')[-1]
+            print(f"No exact match found, searching for filename: {filename}")
+            
+            # Search for records where thumbnail_s3_path ends with the filename
+            response = table.scan(
+                FilterExpression='contains(thumbnail_s3_path, :filename)',
+                ExpressionAttributeValues={':filename': filename}
+            )
+            
+            items = response['Items']
+            
+            while 'LastEvaluatedKey' in response:
+                response = table.scan(
+                    FilterExpression='contains(thumbnail_s3_path, :filename)',
+                    ExpressionAttributeValues={':filename': filename},
+                    ExclusiveStartKey=response['LastEvaluatedKey']
+                )
+                items.extend(response['Items'])
+            
+            # Filter to ensure the filename actually ends with our target filename
+            # This prevents partial matches
+            matching_items = []
+            for item in items:
+                stored_path = item.get('thumbnail_s3_path', '')
+                if stored_path.endswith(filename):
+                    matching_items.append(item)
+            
+            if matching_items:
+                print(f"Found {len(matching_items)} matching records with filename match")
+                return matching_items[0]
         
         print("No matching records found")
         return None
