@@ -113,8 +113,8 @@ const formFields = {
 
 // Export with Authenticator
 export default withAuthenticator(App, {
-  signUpAttributes: ['given_name', 'family_name'],
+  ignUpAttributes: ['given_name', 'family_name'],
+  loginMechanisms: ['email'],
   formFields,
-  initialAuthState: 'signIn'
-  
+  initialAuthState: 'signIn',
 });
