@@ -102,7 +102,7 @@ export default function BirdNotificationSignup() {
       <div className="min-h-screen bg-gradient-to-br from-sky-50 to-indigo-100 flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl text-green-600">✓</span>
+            <span className="text-2xl text-green-600"></span>
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">All Set!</h2>
           <p className="text-gray-600 mb-6">
@@ -133,7 +133,7 @@ export default function BirdNotificationSignup() {
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-6">
             <div className="flex items-center">
-              <span className="text-2xl text-white mr-3">🔔</span>
+              <span className="text-2xl text-white mr-3"></span>
               <div>
                 <h1 className="text-2xl font-bold text-white">Bird Upload Notifications</h1>
                 <p className="text-indigo-100">Get notified when your favorite birds are spotted</p>
@@ -153,7 +153,7 @@ export default function BirdNotificationSignup() {
                 Email Address
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">✉</span>
+                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></span>
                 <input
                   type="email"
                   id="email"
@@ -246,10 +246,10 @@ export default function BirdNotificationSignup() {
         <div className="mt-8 bg-white rounded-lg shadow-md p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-3">How it works</h3>
           <div className="space-y-2 text-sm text-gray-600">
-            <p>• Select the bird species you're interested in</p>
-            <p>• Enter your email address</p>
-            <p>• Receive notifications whenever someone uploads photos of your selected species</p>
-            <p>• You can update your preferences anytime</p>
+            <p> Select the bird species you're interested in</p>
+            <p> Enter your email address</p>
+            <p> Receive notifications whenever someone uploads photos of your selected species</p>
+            <p> You can update your preferences anytime</p>
           </div>
         </div>
       </div>
