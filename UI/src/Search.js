@@ -235,19 +235,15 @@ const MediaThumbnail = ({ url, index, onMediaClick, width = 150 }) => {
   }
 };
 
-// Enhanced Search component with proper media handling
-const Search = () => {
+// Enhanced Search component with navigation to bulk tagging and delete files
+const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
   const [tags, setTags] = useState([{ tag: '', count: 1 }]);
   const [speciesList, setSpeciesList] = useState(['']);
   const [thumbUrl, setThumbUrl] = useState('');
   const [queryFile, setQueryFile] = useState(null);
-  const [deleteUrls, setDeleteUrls] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [bulkUrls, setBulkUrls] = useState('');
-  const [bulkOperation, setBulkOperation] = useState(1);
-  const [bulkTags, setBulkTags] = useState([{ name: '', count: 1 }]);
   const [fileUploadStatus, setFileUploadStatus] = useState('');
 
   const apiBase = 'https://5myucif3s8.execute-api.us-east-1.amazonaws.com/dev';
@@ -593,7 +589,7 @@ const Search = () => {
       <section style={{ marginBottom: '30px' }}>
         <h4>4. Upload File for Similar Tag Match</h4>
         <p style={{ fontSize: '0.9em', color: '#666', fontStyle: 'italic' }}>
-          Your file is analyzed temporarily and not saved to your account
+           Your file is analyzed temporarily and not saved to your account
         </p>
         
         <input 
@@ -637,143 +633,54 @@ const Search = () => {
       {/* Delete */}
       <section style={{ marginBottom: '30px' }}>
         <h4>5. Delete Files</h4>
-        <textarea
-          placeholder="Comma-separated S3 URLs"
-          value={deleteUrls}
-          onChange={(e) => setDeleteUrls(e.target.value)}
-          rows={3}
-          style={{ width: '100%', padding: '4px', marginBottom: '8px' }}
-        />
-        <button onClick={() => {
-          if (!deleteUrls.trim()) {
-            setError('Please enter URLs to delete');
-            return;
-          }
-          const urls = deleteUrls.split(',').map(u => u.trim()).filter(u => u);
-          if (urls.length === 0) {
-            setError('No valid URLs found');
-            return;
-          }
-          sendPost(`${apiBase}/delete`, { url: urls });
-        }} disabled={loading}>Delete</button>
+        <p style={{ fontSize: '0.9em', color: '#666', marginBottom: '12px' }}>
+          Select multiple media files from your gallery and delete them permanently.
+        </p>
+        
+        <button 
+          onClick={onNavigateToDeleteFiles}
+          style={{
+            padding: '12px 24px',
+            backgroundColor: '#f44336',
+            color: 'white',
+            border: 'none',
+            borderRadius: '6px',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            transition: 'background-color 0.2s'
+          }}
+          onMouseOver={(e) => e.target.style.backgroundColor = '#d32f2f'}
+          onMouseOut={(e) => e.target.style.backgroundColor = '#f44336'}
+        >
+          Open Delete Files Gallery
+        </button>
       </section>
 
-      {/* Manual Bulk Tagging */}
+      {/* Manual Bulk Tagging - Updated to navigation */}
       <section style={{ marginBottom: '30px' }}>
         <h4>6. Manual Bulk Tagging</h4>
-
-        <textarea
-          value={bulkUrls}
-          onChange={(e) => setBulkUrls(e.target.value)}
-          placeholder="Enter comma-separated S3 URLs"
-          rows={3}
-          style={{ width: '100%', padding: '4px', marginBottom: '8px' }}
-        />
-
-        <div style={{ margin: '8px 0' }}>
-          <label>
-            <input 
-              type="radio" 
-              value={1} 
-              checked={bulkOperation === 1} 
-              onChange={() => setBulkOperation(1)} 
-            />
-            Add Tags
-          </label>
-          <label style={{ marginLeft: 10 }}>
-            <input 
-              type="radio" 
-              value={0} 
-              checked={bulkOperation === 0} 
-              onChange={() => setBulkOperation(0)} 
-            />
-            Remove Tags
-          </label>
-        </div>
-
-        {bulkTags.map((t, i) => (
-          <div key={i} style={{ marginBottom: '8px' }}>
-            <input
-              type="text"
-              placeholder="Species name"
-              value={t.name}
-              onChange={(e) => {
-                const updated = [...bulkTags];
-                updated[i].name = e.target.value;
-                setBulkTags(updated);
-              }}
-              style={{ marginRight: 8, padding: '4px' }}
-            />
-            <input
-              type="number"
-              value={t.count}
-              onChange={(e) => {
-                const updated = [...bulkTags];
-                updated[i].count = parseInt(e.target.value) || 1;
-                setBulkTags(updated);
-              }}
-              style={{ width: 80, padding: '4px' }}
-              min="1"
-            />
-            {bulkTags.length > 1 && (
-              <button onClick={() => setBulkTags(bulkTags.filter((_, j) => j !== i))}>
-                Remove
-              </button>
-            )}
-          </div>
-        ))}
-
-        <button onClick={() => setBulkTags([...bulkTags, { name: '', count: 1 }])}>
-          + Add Tag
-        </button>
-        <button onClick={async () => {
-          const urlArray = bulkUrls
-            .split(',')
-            .map(u => u.trim())
-            .filter(u => u.startsWith('http') || u.startsWith('s3://'));
-
-          const tagArray = bulkTags
-            .filter(t => /^[a-zA-Z]+$/.test(t.name) && t.count > 0)
-            .map(t => `${t.name.trim()},${t.count}`);
-
-          if (!urlArray.length || !tagArray.length || (bulkOperation !== 0 && bulkOperation !== 1)) {
-            setError('Invalid input: Check URLs, tags, and operation.');
-            return;
-          }
-
-          try {
-            setLoading(true);
-            const { fetchAuthSession } = await import('@aws-amplify/auth');
-            const { tokens } = await fetchAuthSession();
-            const token = tokens?.idToken?.toString();
-
-            const response = await fetch(`${apiBase}/manual-bulk-tagging`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-              },
-              body: JSON.stringify({
-                url: urlArray,
-                operation: bulkOperation,
-                tags: tagArray,
-              }),
-            });
-
-            const json = await response.json();
-            if (!response.ok) throw new Error(json.error || 'Request failed');
-            setResults((json.modified_files || []).map(f => f.url));
-
-            console.log('Bulk tagging success:', json);
-            setError(''); // Clear any previous errors
-          } catch (err) {
-            console.error('Bulk tagging error:', err);
-            setError(err.message);
-          } finally {
-            setLoading(false);
-          }
-        }} style={{ marginLeft: 10 }} disabled={loading}>
-          Submit
+        <p style={{ fontSize: '0.9em', color: '#666', marginBottom: '12px' }}>
+          Select multiple media files from your gallery and add or remove tags in bulk.
+        </p>
+        
+        <button 
+          onClick={onNavigateToBulkTagging}
+          style={{
+            padding: '12px 24px',
+            backgroundColor: '#4caf50',
+            color: 'white',
+            border: 'none',
+            borderRadius: '6px',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            transition: 'background-color 0.2s'
+          }}
+          onMouseOver={(e) => e.target.style.backgroundColor = '#45a049'}
+          onMouseOut={(e) => e.target.style.backgroundColor = '#4caf50'}
+        >
+          Open Bulk Tagging Gallery
         </button>
       </section>
 

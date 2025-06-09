@@ -2,12 +2,29 @@ import React, { useState } from 'react';
 import Upload from './Upload';
 import Gallery from './Gallery';
 import Search from './Search';
+import ManualBulkTagging from './ManualBulkTagging';
+import DeleteFiles from './DeleteFiles'; // Add this import
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import Notification from './Notification';
 
 function App({ signOut, user }) {
   const [page, setPage] = useState('upload');
+
+  // Navigation function for bulk tagging
+  const handleNavigateToBulkTagging = () => {
+    setPage('bulk-tagging');
+  };
+
+  // Navigation function for delete files
+  const handleNavigateToDeleteFiles = () => {
+    setPage('delete-files');
+  };
+
+  // Navigation function to go back to search
+  const handleBackToSearch = () => {
+    setPage('search');
+  };
 
   const renderPage = () => {
     switch (page) {
@@ -16,7 +33,14 @@ function App({ signOut, user }) {
       case 'gallery':
         return <Gallery />;
       case 'search':
-        return <Search />;
+        return <Search 
+          onNavigateToBulkTagging={handleNavigateToBulkTagging}
+          onNavigateToDeleteFiles={handleNavigateToDeleteFiles}
+        />; // Pass both navigation functions
+      case 'bulk-tagging': // Add this case
+        return <ManualBulkTagging onBack={handleBackToSearch} />;
+      case 'delete-files': // Add this new case
+        return <DeleteFiles onBack={handleBackToSearch} />;
       case 'Notification':
         return <Notification/>;
       default:
@@ -37,8 +61,9 @@ function App({ signOut, user }) {
           <button onClick={() => setPage('upload')}>Upload</button>
           <button onClick={() => setPage('gallery')}>Gallery</button>
           <button onClick={() => setPage('search')}>Search</button>
+          <button onClick={() => setPage('bulk-tagging')}>Bulk Tagging</button> {/* Optional: Direct navigation */}
+          <button onClick={() => setPage('delete-files')}>Delete Files</button> {/* Optional: Direct navigation */}
           <button onClick={() => setPage('Notification')}>Notification</button>
-
         </div>
         <div>
           <span style={{ marginRight: '10px' }}>
