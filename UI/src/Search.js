@@ -433,7 +433,7 @@ const ThumbnailSelector = ({ onSelectThumbnail, onClose, showOnlyImages = false 
               marginTop: '8px',
               fontStyle: 'italic'
             }}>
-              📸 Showing images only (reverse lookup works with image thumbnails)
+              Showing images only (reverse lookup works with image thumbnails)
               <br />
               Found {filteredItems.length} image{filteredItems.length !== 1 ? 's' : ''}
             </div>
@@ -985,6 +985,7 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
         <ThumbnailSelector
           onSelectThumbnail={handleSelectThumbnail}
           onClose={() => setShowThumbnailSelector(false)}
+          showOnlyImages={true}
         />
       )}
 
