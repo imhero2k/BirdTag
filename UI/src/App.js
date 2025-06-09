@@ -3,9 +3,10 @@ import Upload from './Upload';
 import Gallery from './Gallery';
 import Search from './Search';
 import ManualBulkTagging from './ManualBulkTagging';
-import DeleteFiles from './DeleteFiles'; // Add this import
+import DeleteFiles from './DeleteFiles';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
+import './App.css';
 import Notification from './Notification';
 
 function App({ signOut, user }) {
@@ -36,10 +37,10 @@ function App({ signOut, user }) {
         return <Search 
           onNavigateToBulkTagging={handleNavigateToBulkTagging}
           onNavigateToDeleteFiles={handleNavigateToDeleteFiles}
-        />; // Pass both navigation functions
-      case 'bulk-tagging': // Add this case
+        />;
+      case 'bulk-tagging':
         return <ManualBulkTagging onBack={handleBackToSearch} />;
-      case 'delete-files': // Add this new case
+      case 'delete-files':
         return <DeleteFiles onBack={handleBackToSearch} />;
       case 'Notification':
         return <Notification/>;
@@ -61,8 +62,6 @@ function App({ signOut, user }) {
           <button onClick={() => setPage('upload')}>Upload</button>
           <button onClick={() => setPage('gallery')}>Gallery</button>
           <button onClick={() => setPage('search')}>Search</button>
-          <button onClick={() => setPage('bulk-tagging')}>Bulk Tagging</button> {/* Optional: Direct navigation */}
-          <button onClick={() => setPage('delete-files')}>Delete Files</button> {/* Optional: Direct navigation */}
           <button onClick={() => setPage('Notification')}>Notification</button>
         </div>
         <div>

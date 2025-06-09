@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Search.css';
 
 // Media thumbnail component that handles images, videos, and audio
 const MediaThumbnail = ({ url, index, onMediaClick, width = 150 }) => {
@@ -49,17 +50,9 @@ const MediaThumbnail = ({ url, index, onMediaClick, width = 150 }) => {
       src={url}
       alt={`thumbnail-${index}`}
       width={width}
-      style={{
-        cursor: 'pointer',
-        border: '1px solid #ccc',
-        borderRadius: '4px',
-        transition: 'transform 0.2s',
-        objectFit: 'cover',
-        height: width * 0.75 // 4:3 aspect ratio
-      }}
+      className="media-thumbnail media-thumbnail-image"
+      style={{ height: width * 0.75 }}
       onClick={() => onMediaClick(url)}
-      onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
-      onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
       onError={handleImageError}
     />
   );
@@ -70,52 +63,21 @@ const MediaThumbnail = ({ url, index, onMediaClick, width = 150 }) => {
     
     return (
       <div
-        style={{
-          width: width,
-          height: width * 0.75,
-          border: '1px solid #ccc',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          position: 'relative',
-          backgroundColor: '#f5f5f5',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          transition: 'transform 0.2s',
-          backgroundImage: 'linear-gradient(45deg, #f0f0f0 25%, transparent 25%), linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f0f0f0 75%), linear-gradient(-45deg, transparent 75%, #f0f0f0 75%)',
-          backgroundSize: '20px 20px',
-          backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px'
-        }}
+        className="media-placeholder media-placeholder-video"
+        style={{ width: width, height: width * 0.75 }}
         onClick={() => onMediaClick(originalUrl)}
-        onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
-        onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
       >
         {/* Video icon */}
         <svg width="48" height="48" viewBox="0 0 24 24" fill="#666">
           <path d="M8 5v14l11-7z"/>
         </svg>
-        <div style={{
-          fontSize: '12px',
-          color: '#666',
-          marginTop: '4px',
-          fontWeight: 'bold'
-        }}>
+        <div className="media-label media-label-video">
           VIDEO
         </div>
         
         {/* Try to show actual video thumbnail if available */}
         <video
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            borderRadius: '4px',
-            opacity: 0.8
-          }}
+          className="video-overlay"
           muted
           preload="metadata"
           onLoadedMetadata={(e) => {
@@ -134,55 +96,25 @@ const MediaThumbnail = ({ url, index, onMediaClick, width = 150 }) => {
     
     return (
       <div
-        style={{
-          width: width,
-          height: width * 0.75,
-          border: '1px solid #ccc',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          position: 'relative',
-          backgroundColor: '#f0f8ff',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          transition: 'transform 0.2s'
-        }}
+        className="media-placeholder media-placeholder-audio"
+        style={{ width: width, height: width * 0.75 }}
         onClick={() => onMediaClick(originalUrl)}
-        onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
-        onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
       >
         {/* Audio waveform icon */}
         <svg width="48" height="48" viewBox="0 0 24 24" fill="#4a90e2">
           <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
         </svg>
-        <div style={{
-          fontSize: '12px',
-          color: '#4a90e2',
-          marginTop: '4px',
-          fontWeight: 'bold'
-        }}>
+        <div className="media-label media-label-audio">
           AUDIO
         </div>
         
         {/* Audio waveform visualization */}
-        <div style={{
-          position: 'absolute',
-          bottom: '10px',
-          display: 'flex',
-          alignItems: 'end',
-          gap: '2px'
-        }}>
+        <div className="audio-waveform">
           {[12, 20, 8, 16, 24, 10, 18, 14, 22, 6, 16, 12].map((height, i) => (
             <div
               key={i}
-              style={{
-                width: '3px',
-                height: `${height}px`,
-                backgroundColor: '#4a90e2',
-                borderRadius: '1px',
-                opacity: 0.7
-              }}
+              className="waveform-bar"
+              style={{ height: `${height}px` }}
             />
           ))}
         </div>
@@ -192,32 +124,14 @@ const MediaThumbnail = ({ url, index, onMediaClick, width = 150 }) => {
 
   const renderUnknownThumbnail = () => (
     <div
-      style={{
-        width: width,
-        height: width * 0.75,
-        border: '1px solid #ccc',
-        borderRadius: '4px',
-        cursor: 'pointer',
-        backgroundColor: '#f5f5f5',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        transition: 'transform 0.2s'
-      }}
+      className="media-placeholder media-placeholder-unknown"
+      style={{ width: width, height: width * 0.75 }}
       onClick={() => onMediaClick(url)}
-      onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
-      onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
     >
       <svg width="48" height="48" viewBox="0 0 24 24" fill="#999">
         <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
       </svg>
-      <div style={{
-        fontSize: '12px',
-        color: '#999',
-        marginTop: '4px',
-        fontWeight: 'bold'
-      }}>
+      <div className="media-label media-label-unknown">
         FILE
       </div>
     </div>
@@ -234,7 +148,6 @@ const MediaThumbnail = ({ url, index, onMediaClick, width = 150 }) => {
     return renderUnknownThumbnail();
   }
 };
-
 
 // Fixed Mini Gallery for thumbnail selection with better image filtering
 const ThumbnailSelector = ({ onSelectThumbnail, onClose, showOnlyImages = false }) => {
@@ -360,38 +273,11 @@ const ThumbnailSelector = ({ onSelectThumbnail, onClose, showOnlyImages = false 
     : mediaItems;
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0,0,0,0.8)',
-      zIndex: 1000,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '20px'
-    }}>
-      <div style={{
-        backgroundColor: 'white',
-        borderRadius: '8px',
-        maxWidth: '900px',
-        maxHeight: '80vh',
-        width: '100%',
-        overflow: 'auto',
-        padding: '20px'
-      }}>
+    <div className="modal-overlay">
+      <div className="modal-content">
         {/* Header */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '20px',
-          borderBottom: '2px solid #eee',
-          paddingBottom: '10px'
-        }}>
-          <h3 style={{ margin: 0 }}>
+        <div className="modal-header">
+          <h3>
             {showOnlyImages 
               ? 'Select an Image Thumbnail for Reverse Lookup' 
               : 'Select a Thumbnail for Reverse Lookup'
@@ -399,40 +285,22 @@ const ThumbnailSelector = ({ onSelectThumbnail, onClose, showOnlyImages = false 
           </h3>
           <button 
             onClick={onClose}
-            style={{
-              padding: '8px 12px',
-              backgroundColor: '#f44336',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
+            className="btn btn-danger"
           >
             Close
           </button>
         </div>
 
         {/* Search */}
-        <div style={{ marginBottom: '20px' }}>
+        <div className="modal-search">
           <input
             type="text"
             placeholder="Filter by bird species..."
             value={searchTag}
             onChange={(e) => setSearchTag(e.target.value)}
-            style={{
-              padding: '8px',
-              width: '300px',
-              border: '1px solid #ddd',
-              borderRadius: '4px'
-            }}
           />
           {showOnlyImages && (
-            <div style={{
-              fontSize: '0.85em',
-              color: '#666',
-              marginTop: '8px',
-              fontStyle: 'italic'
-            }}>
+            <div className="modal-info">
               Showing images only (reverse lookup works with image thumbnails)
               <br />
               Found {filteredItems.length} image{filteredItems.length !== 1 ? 's' : ''}
@@ -442,57 +310,31 @@ const ThumbnailSelector = ({ onSelectThumbnail, onClose, showOnlyImages = false 
 
         {/* Error */}
         {error && (
-          <div style={{ color: 'red', marginBottom: '20px' }}>
+          <div className="error-display">
             {error}
           </div>
         )}
 
         {/* Loading */}
         {loading && (
-          <div style={{ color: '#1976d2', marginBottom: '20px' }}>
+          <div className="loading-display">
             Loading gallery...
           </div>
         )}
 
         {/* Thumbnails grid */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
-          gap: '15px',
-          maxHeight: '50vh',
-          overflow: 'auto'
-        }}>
+        <div className="thumbnails-grid">
           {filteredItems.map((item, index) => (
             <div 
               key={item.file_id || index}
-              style={{
-                border: '2px solid #ddd',
-                borderRadius: '6px',
-                padding: '8px',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                backgroundColor: '#fafafa'
-              }}
+              className="thumbnail-item"
               onClick={() => handleThumbnailClick(item.url)}
-              onMouseOver={(e) => {
-                e.currentTarget.style.borderColor = '#2196f3';
-                e.currentTarget.style.backgroundColor = '#e3f2fd';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.borderColor = '#ddd';
-                e.currentTarget.style.backgroundColor = '#fafafa';
-              }}
             >
               {/* Simple thumbnail */}
               <img
                 src={item.url}
                 alt="thumbnail"
-                style={{
-                  width: '100%',
-                  height: '120px',
-                  objectFit: 'cover',
-                  borderRadius: '4px'
-                }}
+                className="thumbnail-image"
                 onError={(e) => {
                   // If image fails, show a placeholder
                   e.target.style.display = 'none';
@@ -501,31 +343,18 @@ const ThumbnailSelector = ({ onSelectThumbnail, onClose, showOnlyImages = false 
               />
               
               {/* Fallback placeholder */}
-              <div style={{
-                display: 'none',
-                width: '100%',
-                height: '120px',
-                backgroundColor: '#f5f5f5',
-                borderRadius: '4px',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'column'
-              }}>
+              <div className="thumbnail-fallback">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="#999">
                   <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
                 </svg>
-                <span style={{ fontSize: '12px', color: '#999', marginTop: '4px' }}>
+                <span className="media-label media-label-unknown">
                   {item.file_type || 'FILE'}
                 </span>
               </div>
 
               {/* Tags */}
               {item.tags && item.tags.length > 0 && (
-                <div style={{
-                  marginTop: '8px',
-                  fontSize: '11px',
-                  color: '#666'
-                }}>
+                <div className="thumbnail-tags">
                   {item.tags.slice(0, 2).join(', ')}
                   {item.tags.length > 2 && '...'}
                 </div>
@@ -535,7 +364,7 @@ const ThumbnailSelector = ({ onSelectThumbnail, onClose, showOnlyImages = false 
         </div>
 
         {filteredItems.length === 0 && !loading && (
-          <p style={{ textAlign: 'center', color: '#666' }}>
+          <p className="no-results">
             {showOnlyImages 
               ? 'No matching images found. Images might be categorized differently in the system.'
               : 'No matching files found.'
@@ -807,7 +636,6 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
     }
   };
 
-
   const handleSelectThumbnail = (url) => {
     // Strip query parameters from presigned URLs
     const cleanUrl = url.split('?')[0];
@@ -827,55 +655,52 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
   };
 
   return (
-    <div style={{ padding: 20, maxWidth: '900px', margin: 'auto' }}>
-      <h2>BirdTag Query Panel</h2>
+    <div className="search-container">
+      <h2 className="search-main-title">BirdTag Queries</h2>
 
       {/* Error Display */}
       {error && (
-        <div style={{ 
-          color: 'red', 
-          backgroundColor: '#ffebee', 
-          padding: '10px', 
-          borderRadius: '4px', 
-          marginBottom: '20px',
-          border: '1px solid #ffcdd2'
-        }}>
+        <div className="error-display">
           {error}
         </div>
       )}
 
       {/* Tag + Count Search */}
-      <section style={{ marginBottom: '30px' }}>
+      <section className="search-section">
         <h4>1. Tag + Count Search</h4>
         {tags.map((t, i) => (
-          <div key={i} style={{ marginBottom: '8px' }}>
+          <div key={i} className="tag-input-row">
             <input
               placeholder="Tag (e.g., crow)"
               value={t.tag}
               onChange={(e) => handleTagChange(i, 'tag', e.target.value)}
-              style={{ marginRight: 8, padding: '4px' }}
+              className="tag-input"
             />
             <input
               type="number"
               value={t.count}
               onChange={(e) => handleTagChange(i, 'count', e.target.value)}
-              style={{ marginRight: 8, padding: '4px', width: '60px' }}
+              className="count-input"
               min="1"
             />
-            {tags.length > 1 && <button onClick={() => removeTagField(i)}>Remove</button>}
+            {tags.length > 1 && (
+              <button onClick={() => removeTagField(i)} className="btn btn-secondary btn-small">
+                Remove
+              </button>
+            )}
           </div>
         ))}
-        <button onClick={addTagField}>+ Add Tag</button>
-        <button onClick={runTagCountQuery} style={{ marginLeft: 10 }} disabled={loading}>
+        <button onClick={addTagField} className="btn btn-secondary">+ Add Tag</button>
+        <button onClick={runTagCountQuery} className="btn btn-primary btn-add" disabled={loading}>
           Search
         </button>
       </section>
 
       {/* Multi-Species */}
-      <section style={{ marginBottom: '30px' }}>
+      <section className="search-section">
         <h4>2. Search by Bird Species</h4>
         {speciesList.map((s, i) => (
-          <div key={i} style={{ marginBottom: '8px' }}>
+          <div key={i} className="tag-input-row">
             <input
               value={s}
               placeholder={`Species ${i + 1}`}
@@ -884,52 +709,44 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
                 updated[i] = e.target.value.toLowerCase();
                 setSpeciesList(updated);
               }}
-              style={{ marginRight: '8px', padding: '4px' }}
+              className="species-input"
             />
             {speciesList.length > 1 && (
-              <button onClick={() => setSpeciesList(speciesList.filter((_, index) => index !== i))}>
+              <button 
+                onClick={() => setSpeciesList(speciesList.filter((_, index) => index !== i))}
+                className="btn btn-secondary btn-small"
+              >
                 Remove
               </button>
             )}
           </div>
         ))}
-        <button onClick={() => setSpeciesList([...speciesList, ''])}>+ Add Species</button>
-        <button onClick={runSpeciesQuery} style={{ marginLeft: 10 }} disabled={loading}>
+        <button onClick={() => setSpeciesList([...speciesList, ''])} className="btn btn-secondary">
+          + Add Species
+        </button>
+        <button onClick={runSpeciesQuery} className="btn btn-primary btn-add" disabled={loading}>
           Search
         </button>
       </section>
 
       {/* Enhanced Reverse Lookup */}
-      <section style={{ marginBottom: '30px' }}>
+      <section className="search-section">
         <h4>3. Reverse Lookup from Thumbnail URL</h4>
-        <p style={{ fontSize: '0.9em', color: '#666', marginBottom: '12px' }}>
+        <p>
           Find the original full-size image from any image URL.
         </p>
         
-        <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
+        <div className="url-input-row">
           <input
             value={thumbUrl}
             onChange={(e) => setThumbUrl(e.target.value)}
             placeholder="Paste any image URL or select from gallery"
-            style={{ 
-              flex: 1, 
-              padding: '8px', 
-              border: '1px solid #ddd', 
-              borderRadius: '4px' 
-            }}
+            className="url-input"
           />
           
           <button 
             onClick={() => setShowThumbnailSelector(true)}
-            style={{
-              padding: '8px 16px',
-              backgroundColor: '#4caf50',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              whiteSpace: 'nowrap'
-            }}
+            className="btn btn-success"
           >
             Select from Gallery
           </button>
@@ -937,14 +754,7 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
         
         {/* Show converted URL if it was modified */}
         {thumbUrl && thumbUrl.includes('/media/images/') && (
-          <div style={{
-            fontSize: '0.8em',
-            color: '#666',
-            marginBottom: '8px',
-            padding: '6px',
-            backgroundColor: '#f5f5f5',
-            borderRadius: '4px'
-          }}>
+          <div className="converted-url-display">
             Will search using thumbnail URL: {thumbUrl.replace('/media/images/', '/media/thumbnails/')}
           </div>
         )}
@@ -967,14 +777,7 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
             sendGet(`${apiBase}/search/by-thumbnail-url?thumbnail_url=${encodeURIComponent(cleanUrl)}`);
           }} 
           disabled={loading}
-          style={{
-            padding: '8px 16px',
-            backgroundColor: '#2196f3',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer'
-          }}
+          className="btn btn-primary"
         >
           Find Full Image
         </button>
@@ -990,9 +793,9 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
       )}
 
       {/* File Match */}
-      <section style={{ marginBottom: '30px' }}>
+      <section className="search-section">
         <h4>4. Upload File for Similar Tag Match</h4>
-        <p style={{ fontSize: '0.9em', color: '#666', fontStyle: 'italic' }}>
+        <p className="italic">
            Your file is analyzed temporarily and not saved to your account
         </p>
         
@@ -1001,33 +804,27 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
           onChange={(e) => setQueryFile(e.target.files[0])}
           accept="image/*,video/*,audio/*"
           disabled={loading}
-          style={{ marginBottom: '8px' }}
+          className="file-input"
         />
         
         <button 
           onClick={runFileQuery}
           disabled={loading || !queryFile}
-          style={{ marginLeft: 10 }}
+          className="btn btn-primary btn-add"
         >
           {loading ? 'Processing...' : 'Find Similar Birds'}
         </button>
         
         {/* Show upload status */}
         {fileUploadStatus && (
-          <p style={{ 
-            marginTop: 10, 
-            padding: 8, 
-            backgroundColor: loading ? '#e3f2fd' : '#e8f5e8',
-            borderRadius: 4,
-            fontSize: '0.9em'
-          }}>
+          <p className={`upload-status ${loading ? 'loading' : 'success'}`}>
             {fileUploadStatus}
           </p>
         )}
         
         {/* File info */}
         {queryFile && (
-          <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
+          <p className="file-info">
             Selected: {queryFile.name} ({(queryFile.size / 1024 / 1024).toFixed(1)} MB)
             {queryFile.type.startsWith('video/') && ' - Videos may take 20-30 seconds to process'}
           </p>
@@ -1035,69 +832,39 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
       </section>
 
       {/* Delete */}
-      <section style={{ marginBottom: '30px' }}>
+      <section className="search-section">
         <h4>5. Delete Files</h4>
-        <p style={{ fontSize: '0.9em', color: '#666', marginBottom: '12px' }}>
+        <p>
           Select multiple media files from your gallery and delete them permanently.
         </p>
         
         <button 
           onClick={onNavigateToDeleteFiles}
-          style={{
-            padding: '12px 24px',
-            backgroundColor: '#f44336',
-            color: 'white',
-            border: 'none',
-            borderRadius: '6px',
-            fontSize: '16px',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            transition: 'background-color 0.2s'
-          }}
-          onMouseOver={(e) => e.target.style.backgroundColor = '#d32f2f'}
-          onMouseOut={(e) => e.target.style.backgroundColor = '#f44336'}
+          className="btn btn-danger btn-large"
         >
           Open Delete Files Gallery
         </button>
       </section>
 
       {/* Manual Bulk Tagging - Updated to navigation */}
-      <section style={{ marginBottom: '30px' }}>
+      <section className="search-section">
         <h4>6. Manual Bulk Tagging</h4>
-        <p style={{ fontSize: '0.9em', color: '#666', marginBottom: '12px' }}>
+        <p>
           Select multiple media files from your gallery and add or remove tags in bulk.
         </p>
         
         <button 
           onClick={onNavigateToBulkTagging}
-          style={{
-            padding: '12px 24px',
-            backgroundColor: '#4caf50',
-            color: 'white',
-            border: 'none',
-            borderRadius: '6px',
-            fontSize: '16px',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            transition: 'background-color 0.2s'
-          }}
-          onMouseOver={(e) => e.target.style.backgroundColor = '#45a049'}
-          onMouseOut={(e) => e.target.style.backgroundColor = '#4caf50'}
+          className="btn btn-success btn-large"
         >
           Open Bulk Tagging Gallery
         </button>
       </section>
 
       {/* Enhanced Results Display */}
-      <section style={{ marginTop: 30 }}>
+      <section className="results-section">
         {loading && (
-          <div style={{ 
-            color: '#1976d2', 
-            backgroundColor: '#e3f2fd', 
-            padding: '10px', 
-            borderRadius: '4px', 
-            marginBottom: '20px'
-          }}>
+          <div className="loading-display">
             Loading...
           </div>
         )}
@@ -1105,25 +872,16 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
         {results.length > 0 && (
           <div>
             <h4>Results ({results.length} found)</h4>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
+            <div className="results-grid">
               {results.map((mediaUrl, i) => (
-                <div key={i} style={{ position: 'relative' }}>
+                <div key={i} className="result-item">
                   <MediaThumbnail
                     url={mediaUrl}
                     index={i}
                     onMediaClick={handleMediaClick}
                     width={150}
                   />
-                  <div style={{
-                    position: 'absolute',
-                    bottom: '4px',
-                    right: '4px',
-                    backgroundColor: 'rgba(0,0,0,0.7)',
-                    color: 'white',
-                    padding: '2px 6px',
-                    fontSize: '12px',
-                    borderRadius: '3px'
-                  }}>
+                  <div className="result-index">
                     #{i + 1}
                   </div>
                 </div>
