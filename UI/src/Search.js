@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Media thumbnail component that handles images, videos, and audio
 const MediaThumbnail = ({ url, index, onMediaClick, width = 150 }) => {
@@ -235,6 +235,275 @@ const MediaThumbnail = ({ url, index, onMediaClick, width = 150 }) => {
   }
 };
 
+// Mini Gallery for thumbnail selection
+const ThumbnailSelector = ({ onSelectThumbnail, onClose }) => {
+  const [mediaItems, setMediaItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [searchTag, setSearchTag] = useState('');
+
+  const apiBase = 'https://5myucif3s8.execute-api.us-east-1.amazonaws.com/dev';
+
+  useEffect(() => {
+    fetchGallery();
+  }, []);
+
+  const fetchGallery = async () => {
+    setLoading(true);
+    try {
+      const { fetchAuthSession } = await import('aws-amplify/auth');
+      const { tokens } = await fetchAuthSession();
+      const idToken = tokens?.idToken?.toString();
+
+      if (!idToken) {
+        throw new Error('Authentication token not available');
+      }
+
+      const res = await fetch(`${apiBase}/show-gallery`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error(`Fetch failed: ${res.status}`);
+      }
+
+      const data = await res.json();
+      const allItems = transformGalleryData(data.gallery || {});
+      setMediaItems(allItems);
+      setError('');
+    } catch (err) {
+      console.error('Error fetching gallery:', err);
+      setError('Failed to load gallery.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const transformGalleryData = (gallery) => {
+    const allItems = [];
+    
+    ['images', 'audio', 'video', 'other'].forEach(fileType => {
+      if (gallery[fileType] && Array.isArray(gallery[fileType])) {
+        gallery[fileType].forEach(item => {
+          const tagsArray = transformTags(item.tags || {});
+          
+          allItems.push({
+            url: item.url,
+            file_type: item.file_type,
+            file_id: item.file_id,
+            tags: tagsArray,
+            tagsObject: item.tags || {}
+          });
+        });
+      }
+    });
+    
+    return allItems;
+  };
+
+  const transformTags = (tagsObject) => {
+    if (!tagsObject || typeof tagsObject !== 'object') {
+      return [];
+    }
+    
+    return Object.entries(tagsObject).map(([species, count]) => {
+      return count > 1 ? `${species} (${count})` : species;
+    });
+  };
+
+  const handleThumbnailClick = (url) => {
+    onSelectThumbnail(url);
+    onClose();
+  };
+
+  const filteredItems = searchTag
+    ? mediaItems.filter((item) => {
+        const searchLower = searchTag.toLowerCase();
+        
+        const matchesDisplayTags = item.tags?.some(tag =>
+          tag.toLowerCase().includes(searchLower)
+        );
+        
+        const matchesOriginalTags = Object.keys(item.tagsObject || {}).some(species =>
+          species.toLowerCase().includes(searchLower)
+        );
+        
+        return matchesDisplayTags || matchesOriginalTags;
+      })
+    : mediaItems;
+
+  return (
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0,0,0,0.8)',
+      zIndex: 1000,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '20px'
+    }}>
+      <div style={{
+        backgroundColor: 'white',
+        borderRadius: '8px',
+        maxWidth: '900px',
+        maxHeight: '80vh',
+        width: '100%',
+        overflow: 'auto',
+        padding: '20px'
+      }}>
+        {/* Header */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '20px',
+          borderBottom: '2px solid #eee',
+          paddingBottom: '10px'
+        }}>
+          <h3 style={{ margin: 0 }}>Select a Thumbnail for Reverse Lookup</h3>
+          <button 
+            onClick={onClose}
+            style={{
+              padding: '8px 12px',
+              backgroundColor: '#f44336',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            Close
+          </button>
+        </div>
+
+        {/* Search */}
+        <div style={{ marginBottom: '20px' }}>
+          <input
+            type="text"
+            placeholder="Filter by bird species..."
+            value={searchTag}
+            onChange={(e) => setSearchTag(e.target.value)}
+            style={{
+              padding: '8px',
+              width: '300px',
+              border: '1px solid #ddd',
+              borderRadius: '4px'
+            }}
+          />
+        </div>
+
+        {/* Error */}
+        {error && (
+          <div style={{ color: 'red', marginBottom: '20px' }}>
+            {error}
+          </div>
+        )}
+
+        {/* Loading */}
+        {loading && (
+          <div style={{ color: '#1976d2', marginBottom: '20px' }}>
+            Loading gallery...
+          </div>
+        )}
+
+        {/* Thumbnails grid */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
+          gap: '15px',
+          maxHeight: '50vh',
+          overflow: 'auto'
+        }}>
+          {filteredItems.map((item, index) => (
+            <div 
+              key={item.file_id || index}
+              style={{
+                border: '2px solid #ddd',
+                borderRadius: '6px',
+                padding: '8px',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                backgroundColor: '#fafafa'
+              }}
+              onClick={() => handleThumbnailClick(item.url)}
+              onMouseOver={(e) => {
+                e.currentTarget.style.borderColor = '#2196f3';
+                e.currentTarget.style.backgroundColor = '#e3f2fd';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.borderColor = '#ddd';
+                e.currentTarget.style.backgroundColor = '#fafafa';
+              }}
+            >
+              {/* Simple thumbnail */}
+              <img
+                src={item.url}
+                alt="thumbnail"
+                style={{
+                  width: '100%',
+                  height: '120px',
+                  objectFit: 'cover',
+                  borderRadius: '4px'
+                }}
+                onError={(e) => {
+                  // If image fails, show a placeholder
+                  e.target.style.display = 'none';
+                  e.target.nextElementSibling.style.display = 'flex';
+                }}
+              />
+              
+              {/* Fallback placeholder */}
+              <div style={{
+                display: 'none',
+                width: '100%',
+                height: '120px',
+                backgroundColor: '#f5f5f5',
+                borderRadius: '4px',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column'
+              }}>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="#999">
+                  <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+                </svg>
+                <span style={{ fontSize: '12px', color: '#999', marginTop: '4px' }}>
+                  {item.file_type || 'FILE'}
+                </span>
+              </div>
+
+              {/* Tags */}
+              {item.tags && item.tags.length > 0 && (
+                <div style={{
+                  marginTop: '8px',
+                  fontSize: '11px',
+                  color: '#666'
+                }}>
+                  {item.tags.slice(0, 2).join(', ')}
+                  {item.tags.length > 2 && '...'}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {filteredItems.length === 0 && !loading && (
+          <p style={{ textAlign: 'center', color: '#666' }}>
+            No matching files found.
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};
+
 // Enhanced Search component with navigation to bulk tagging and delete files
 const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
   const [tags, setTags] = useState([{ tag: '', count: 1 }]);
@@ -245,6 +514,7 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [fileUploadStatus, setFileUploadStatus] = useState('');
+  const [showThumbnailSelector, setShowThumbnailSelector] = useState(false);
 
   const apiBase = 'https://5myucif3s8.execute-api.us-east-1.amazonaws.com/dev';
 
@@ -494,6 +764,25 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
     }
   };
 
+
+  const handleSelectThumbnail = (url) => {
+    // Strip query parameters from presigned URLs
+    const cleanUrl = url.split('?')[0];
+    
+    // UPDATED: Handle cross-bucket conversion
+    let thumbnailUrl = cleanUrl;
+    if (cleanUrl.includes('/media/images/')) {
+      // Extract filename from original URL
+      const filename = cleanUrl.split('/').pop();
+      // Create thumbnail URL in different bucket
+      thumbnailUrl = `https://thumbnailbucket134.s3.amazonaws.com/thumbnails/${filename}`;
+    }
+    
+    setThumbUrl(thumbnailUrl);
+    // Automatically run the reverse lookup with thumbnail URL
+    sendGet(`${apiBase}/search/by-thumbnail-url?thumbnail_url=${encodeURIComponent(thumbnailUrl)}`);
+  };
+
   return (
     <div style={{ padding: 20, maxWidth: '900px', margin: 'auto' }}>
       <h2>BirdTag Query Panel</h2>
@@ -567,23 +856,94 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
         </button>
       </section>
 
-      {/* Reverse Lookup */}
+      {/* Enhanced Reverse Lookup */}
       <section style={{ marginBottom: '30px' }}>
         <h4>3. Reverse Lookup from Thumbnail URL</h4>
-        <input
-          value={thumbUrl}
-          onChange={(e) => setThumbUrl(e.target.value)}
-          placeholder="Paste thumbnail S3 URL"
-          style={{ width: '100%', padding: '4px', marginBottom: '8px' }}
-        />
-        <button onClick={() => {
-          if (!thumbUrl.trim()) {
-            setError('Please enter a thumbnail URL');
-            return;
-          }
-          sendGet(`${apiBase}/search/by-thumbnail-url?thumbnail_url=${encodeURIComponent(thumbUrl)}`);
-        }} disabled={loading}>Find Full Image</button>
+        <p style={{ fontSize: '0.9em', color: '#666', marginBottom: '12px' }}>
+          Find the original full-size image from any image URL. Accepts both original and thumbnail URLs - automatically converts as needed.
+        </p>
+        
+        <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
+          <input
+            value={thumbUrl}
+            onChange={(e) => setThumbUrl(e.target.value)}
+            placeholder="Paste any image URL or select from gallery (automatically converts to thumbnail URL)"
+            style={{ 
+              flex: 1, 
+              padding: '8px', 
+              border: '1px solid #ddd', 
+              borderRadius: '4px' 
+            }}
+          />
+          
+          <button 
+            onClick={() => setShowThumbnailSelector(true)}
+            style={{
+              padding: '8px 16px',
+              backgroundColor: '#4caf50',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap'
+            }}
+          >
+            Select from Gallery
+          </button>
+        </div>
+        
+        {/* Show converted URL if it was modified */}
+        {thumbUrl && thumbUrl.includes('/media/images/') && (
+          <div style={{
+            fontSize: '0.8em',
+            color: '#666',
+            marginBottom: '8px',
+            padding: '6px',
+            backgroundColor: '#f5f5f5',
+            borderRadius: '4px'
+          }}>
+            Will search using thumbnail URL: {thumbUrl.replace('/media/images/', '/media/thumbnails/')}
+          </div>
+        )}
+        
+        <button 
+          onClick={() => {
+            if (!thumbUrl.trim()) {
+              setError('Please enter a thumbnail URL or select from gallery');
+              return;
+            }
+            // Strip query parameters from presigned URLs
+            let cleanUrl = thumbUrl.split('?')[0];
+            
+            // Convert original image URL to thumbnail URL if needed
+            if (cleanUrl.includes('/media/images/')) {
+              const filename = cleanUrl.split('/').pop();
+              cleanUrl = `https://thumbnailbucket134.s3.amazonaws.com/thumbnails/${filename}`;
+            }
+            
+            sendGet(`${apiBase}/search/by-thumbnail-url?thumbnail_url=${encodeURIComponent(cleanUrl)}`);
+          }} 
+          disabled={loading}
+          style={{
+            padding: '8px 16px',
+            backgroundColor: '#2196f3',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
+          Find Full Image
+        </button>
       </section>
+
+      {/* Thumbnail Selector Modal */}
+      {showThumbnailSelector && (
+        <ThumbnailSelector
+          onSelectThumbnail={handleSelectThumbnail}
+          onClose={() => setShowThumbnailSelector(false)}
+        />
+      )}
 
       {/* File Match */}
       <section style={{ marginBottom: '30px' }}>
