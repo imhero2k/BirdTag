@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkbirdtag_ui=self.webpackChunkbirdtag_ui||[]).push([[644,922],{2922:(e,s,t)=>{t.d(s,{fetchAuthSession:()=>h.fetchAuthSession});var h=t(7644)},7644:(e,s,t)=>{t.d(s,{fetchAuthSession:()=>h.$});t(7841);var h=t(9731);t(4228)}}]);
