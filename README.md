@@ -103,7 +103,7 @@ Think of it as a **cloud-powered bird detective** that:
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-username/BirdTag.git
+   git clone https://github.com/imhero2k/BirdTag.git
    cd BirdTag
    ```
 
@@ -195,37 +195,13 @@ python test_integration.py
 - **Audio Quality**: Poor audio recordings might affect detection accuracy
 - **Browser Compatibility**: IE11 users, we're sorry (but not really)
 
-## 🤝 Contributing: Join the Flock
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
 ### Code Style
 - Follow PEP 8 for Python code
 - Use ESLint for JavaScript/React code
 - Write meaningful commit messages
 - Add tests for new features
 
-## 📄 License: The Legal Stuff
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments: The Thank You Section
-
-- **Monash Birdy Buddies** - For the inspiration and real-world use case
-- **AWS** - For providing the amazing serverless infrastructure
-- **BirdNET Team** - For the audio detection models
-- **Ultralytics** - For the YOLO-based image detection
-- **All the birds** - For being awesome and photogenic
-
-## 📞 Support: When Things Go Wrong
-
-- **Issues**: [GitHub Issues](https://github.com/your-username/BirdTag/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-username/BirdTag/discussions)
-- **Email**: birdtag-support@monash.edu
 
 ## 🎯 Roadmap: What's Next?
 
