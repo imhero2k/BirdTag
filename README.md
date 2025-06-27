@@ -7,6 +7,18 @@
 [![Python](https://img.shields.io/badge/Python-3.9+-green?style=for-the-badge&logo=python)](https://python.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
+## 🌐 Live Demo
+
+**🚀 Try BirdTag Now:** [https://main.d3lfkm32f4kpkz.amplifyapp.com/](https://main.d3lfkm32f4kpkz.amplifyapp.com/)
+
+## 📹 Demo Video
+
+Watch BirdTag in action! See how our AI-powered platform identifies birds, manages media, and provides advanced search capabilities.
+
+![BirdTag Demo](UI/public/Project001-ezgif.com-video-speed.mp4)
+
+*Click the video above to see BirdTag's features in action*
+
 ## 🎯 What's This All About?
 
 BirdTag is a **serverless media storage system** that's basically like Instagram for birds, but smarter. Built for the Monash Birdy Buddies (MBB) - a group of researchers who are absolutely obsessed with our avian overlords. 
@@ -200,8 +212,6 @@ python test_integration.py
 - Use ESLint for JavaScript/React code
 - Write meaningful commit messages
 - Add tests for new features
-
-
 
 ## 🎯 Roadmap: What's Next?
 
