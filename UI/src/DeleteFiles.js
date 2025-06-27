@@ -423,7 +423,7 @@ const DeleteFiles = ({ onBack }) => {
           'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          url: urlArray
+          urls: urlArray
         }),
       });
 

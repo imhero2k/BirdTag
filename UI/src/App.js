@@ -4,6 +4,7 @@ import Gallery from './Gallery';
 import Search from './Search';
 import ManualBulkTagging from './ManualBulkTagging';
 import DeleteFiles from './DeleteFiles';
+import Home from './Home';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import './App.css';
@@ -11,7 +12,7 @@ import Notification from './Notification';
 import { Authenticator } from '@aws-amplify/ui-react';
 
 function App({ signOut, user }) {
-  const [page, setPage] = useState('upload');
+  const [page, setPage] = useState('home');
 
   // Navigation function for bulk tagging
   const handleNavigateToBulkTagging = () => {
@@ -28,8 +29,15 @@ function App({ signOut, user }) {
     setPage('search');
   };
 
+  // Navigation function for home page
+  const handleNavigate = (pageName) => {
+    setPage(pageName);
+  };
+
   const renderPage = () => {
     switch (page) {
+      case 'home':
+        return <Home onNavigate={handleNavigate} />;
       case 'upload':
         return <Upload />;
       case 'gallery':
@@ -46,7 +54,7 @@ function App({ signOut, user }) {
       case 'Notification':
         return <Notification/>;
       default:
-        return <Upload />;
+        return <Home onNavigate={handleNavigate} />;
     }
   };
 
@@ -60,6 +68,7 @@ function App({ signOut, user }) {
         alignItems: 'center', padding: '10px'
       }}>
         <div>
+          <button onClick={() => setPage('home')}>🏠 Home</button>
           <button onClick={() => setPage('upload')}>Upload</button>
           <button onClick={() => setPage('gallery')}>Gallery</button>
           <button onClick={() => setPage('search')}>Search</button>
