@@ -11,13 +11,6 @@
 
 **🚀 Try BirdTag Now:** [https://main.d3lfkm32f4kpkz.amplifyapp.com/](https://main.d3lfkm32f4kpkz.amplifyapp.com/)
 
-## 📹 Demo Video
-
-Watch BirdTag in action! See how our AI-powered platform identifies birds, manages media, and provides advanced search capabilities.
-
-![BirdTag Demo](UI/public/Project001-ezgif.com-video-speed.mp4)
-
-*Click the video above to see BirdTag's features in action*
 
 ## 🎯 What's This All About?
 
