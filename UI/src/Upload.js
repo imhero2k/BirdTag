@@ -55,7 +55,7 @@ const Upload = () => {
       const idToken = tokens?.idToken?.toString();
 
       // 3. Get presigned upload URL
-      const uploadRes = await fetch('https://5myucif3s8.execute-api.us-east-1.amazonaws.com/dev/upload', {
+      const uploadRes = await fetch('https://wwckspda9g.execute-api.ap-southeast-2.amazonaws.com/dev/upload', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

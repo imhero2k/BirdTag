@@ -1,0 +1,7 @@
+# Node modules & build artifacts
+UI/node_modules/
+UI/build/
+
+# Python caches
+__pycache__/
+*.py[cod]
