@@ -9,7 +9,7 @@
 
 ## 🌐 Live Demo
 
-**🚀 Try BirdTag Now:** [https://main.d3lfkm32f4kpkz.amplifyapp.com/](https://main.d3lfkm32f4kpkz.amplifyapp.com/)
+**🚀 Try BirdTag Now:** [[https://main.d3lfkm32f4kpkz.amplifyapp.com/](https://main.d3lfkm32f4kpkz.amplifyapp.com](https://main.dk5uku1shfes0.amplifyapp.com/)/)
 
 
 ## 🎯 What's This All About?
