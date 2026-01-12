@@ -144,6 +144,7 @@ def lambda_handler(event, context):
             'uploadUrl': presigned_url,
             'bucket': bucket_name,
             's3Key': upload_key,  # For reference, but not the database ID
+            'fileId': f"{timestamp_str}_{unique_id}",  # Add file ID for search API
             'expiresIn': 3600,
             'isTemporary': is_temporary,
             'metadata': {

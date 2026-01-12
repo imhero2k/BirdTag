@@ -201,39 +201,29 @@ const ThumbnailSelector = ({ onSelectThumbnail, onClose, showOnlyImages = false 
   const transformGalleryData = (gallery, showOnlyImages = false) => {
     const allItems = [];
     
-    // Process all categories to find items
+    // Process all file types
     ['images', 'audio', 'video', 'other'].forEach(fileType => {
       if (gallery[fileType] && Array.isArray(gallery[fileType])) {
         gallery[fileType].forEach(item => {
+          // If showOnlyImages is true, only include image files
+          if (showOnlyImages) {
+            const fileTypeLower = item.file_type?.toLowerCase() || '';
+            if (!fileTypeLower.startsWith('image/')) {
+              return; // Skip non-image files
+            }
+          }
+          
+          // Transform tags from object format {crow: 2, pigeon: 1} to array format ["crow (2)", "pigeon (1)"]
           const tagsArray = transformTags(item.tags || {});
           
-          const transformedItem = {
+          allItems.push({
             url: item.url,
             file_type: item.file_type,
             file_id: item.file_id,
+            upload_date: item.upload_date,
             tags: tagsArray,
-            tagsObject: item.tags || {}
-          };
-          
-          // If showOnlyImages is true, filter by actual file type instead of category
-          if (showOnlyImages) {
-            const fileTypeStr = (item.file_type || '').toLowerCase();
-            const urlStr = (item.url || '').toLowerCase();
-            
-            // Check if it's actually an image by file type or URL
-            const isImage = fileTypeStr.startsWith('image/') || 
-                           urlStr.includes('.jpg') || urlStr.includes('.jpeg') || 
-                           urlStr.includes('.png') || urlStr.includes('.gif') || 
-                           urlStr.includes('.webp') || urlStr.includes('.bmp') ||
-                           urlStr.includes('/thumbnails/'); // Thumbnails are usually images
-            
-            if (isImage) {
-              allItems.push(transformedItem);
-            }
-          } else {
-            // Include all items if not filtering for images only
-            allItems.push(transformedItem);
-          }
+            tagsObject: item.tags || {} // Keep original for filtering
+          });
         });
       }
     });
@@ -241,6 +231,7 @@ const ThumbnailSelector = ({ onSelectThumbnail, onClose, showOnlyImages = false 
     return allItems;
   };
 
+  // Convert tags object to array format for display
   const transformTags = (tagsObject) => {
     if (!tagsObject || typeof tagsObject !== 'object') {
       return [];
@@ -256,14 +247,18 @@ const ThumbnailSelector = ({ onSelectThumbnail, onClose, showOnlyImages = false 
     onClose();
   };
 
+  // Filter items based on search tag
   const filteredItems = searchTag
     ? mediaItems.filter((item) => {
+        // Search in both the display tags and original tags object
         const searchLower = searchTag.toLowerCase();
         
+        // Check display tags
         const matchesDisplayTags = item.tags?.some(tag =>
           tag.toLowerCase().includes(searchLower)
         );
         
+        // Check original tags object keys
         const matchesOriginalTags = Object.keys(item.tagsObject || {}).some(species =>
           species.toLowerCase().includes(searchLower)
         );
@@ -273,110 +268,71 @@ const ThumbnailSelector = ({ onSelectThumbnail, onClose, showOnlyImages = false 
     : mediaItems;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        {/* Header */}
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h3>
-            {showOnlyImages 
-              ? 'Select an Image Thumbnail for Reverse Lookup' 
-              : 'Select a Thumbnail for Reverse Lookup'
-            }
-          </h3>
-          <button 
-            onClick={onClose}
-            className="btn btn-danger"
-          >
-            Close
-          </button>
+          <h3>Select Image from Gallery</h3>
+          <button onClick={onClose} className="modal-close">×</button>
         </div>
-
-        {/* Search */}
+        
         <div className="modal-search">
           <input
             type="text"
-            placeholder="Filter by bird species..."
+            placeholder="Search by bird species..."
             value={searchTag}
             onChange={(e) => setSearchTag(e.target.value)}
           />
-          {showOnlyImages && (
-            <div className="modal-info">
-              Showing images only (reverse lookup works with image thumbnails)
-              <br />
-              Found {filteredItems.length} image{filteredItems.length !== 1 ? 's' : ''}
-            </div>
-          )}
         </div>
-
-        {/* Error */}
-        {error && (
-          <div className="error-display">
-            {error}
+        
+        <div className="modal-info">
+          {filteredItems.length} images found
+        </div>
+        
+        {loading ? (
+          <div className="loading-display">Loading gallery...</div>
+        ) : error ? (
+          <div className="error-display">{error}</div>
+        ) : filteredItems.length === 0 ? (
+          <div className="no-results">
+            {searchTag ? 'No images match your search.' : 'No images found in gallery.'}
           </div>
-        )}
-
-        {/* Loading */}
-        {loading && (
-          <div className="loading-display">
-            Loading gallery...
-          </div>
-        )}
-
-        {/* Thumbnails grid */}
-        <div className="thumbnails-grid">
-          {filteredItems.map((item, index) => (
-            <div 
-              key={item.file_id || index}
-              className="thumbnail-item"
-              onClick={() => handleThumbnailClick(item.url)}
-            >
-              {/* Simple thumbnail */}
-              <img
-                src={item.url}
-                alt="thumbnail"
-                className="thumbnail-image"
-                onError={(e) => {
-                  // If image fails, show a placeholder
-                  e.target.style.display = 'none';
-                  e.target.nextElementSibling.style.display = 'flex';
-                }}
-              />
-              
-              {/* Fallback placeholder */}
-              <div className="thumbnail-fallback">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="#999">
-                  <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
-                </svg>
-                <span className="media-label media-label-unknown">
-                  {item.file_type || 'FILE'}
-                </span>
-              </div>
-
-              {/* Tags */}
-              {item.tags && item.tags.length > 0 && (
-                <div className="thumbnail-tags">
-                  {item.tags.slice(0, 2).join(', ')}
-                  {item.tags.length > 2 && '...'}
+        ) : (
+          <div className="thumbnails-grid">
+            {filteredItems.map((item, index) => (
+              <div
+                key={index}
+                className="thumbnail-item"
+                onClick={() => handleThumbnailClick(item.url)}
+              >
+                <img
+                  src={item.url}
+                  alt={`thumbnail-${index}`}
+                  className="thumbnail-image"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
+                />
+                <div className="thumbnail-fallback">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="#999">
+                    <path d="M21,19V5c0,-1.1 -0.9,-2 -2,-2H5c-1.1,0 -2,0.9 -2,2v14c0,1.1 0.9,2 2,2h14c1.1,0 2,-0.9 2,-2zM8.5,13.5l2.5,3.01L14.5,12l4.5,6H5l3.5,-4.5z"/>
+                  </svg>
                 </div>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {filteredItems.length === 0 && !loading && (
-          <p className="no-results">
-            {showOnlyImages 
-              ? 'No matching images found. Images might be categorized differently in the system.'
-              : 'No matching files found.'
-            }
-          </p>
+                {item.tags && item.tags.length > 0 && (
+                  <div className="thumbnail-tags">
+                    {item.tags.slice(0, 2).join(', ')}
+                    {item.tags.length > 2 && '...'}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </div>
   );
 };
 
-// Enhanced Search component with navigation to bulk tagging and delete files
 const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
   const [tags, setTags] = useState([{ tag: '', count: 1 }]);
   const [speciesList, setSpeciesList] = useState(['']);
@@ -387,6 +343,8 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
   const [error, setError] = useState('');
   const [fileUploadStatus, setFileUploadStatus] = useState('');
   const [showThumbnailSelector, setShowThumbnailSelector] = useState(false);
+  const [selectedResults, setSelectedResults] = useState(new Set());
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const apiBase = 'https://5myucif3s8.execute-api.us-east-1.amazonaws.com/dev';
 
@@ -566,6 +524,7 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
       const { fetchAuthSession } = await import('@aws-amplify/auth');
       const { tokens } = await fetchAuthSession();
       const token = tokens?.idToken?.toString();
+      
       // Step 1: Get temporary upload URL
       setFileUploadStatus('Getting upload URL...');
       const uploadResponse = await fetch(`${apiBase}/upload`, {
@@ -577,58 +536,57 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
         body: JSON.stringify({
           fileName: queryFile.name,
           fileType: queryFile.type,
-          temporary: true  // IMPORTANT: This makes it temporary
+          temporary: true  // This ensures the file goes to temp/ folder
         })
       });
+
       if (!uploadResponse.ok) {
-        const error = await uploadResponse.json();
-        throw new Error(error.error || 'Failed to get upload URL');
+        throw new Error(`Upload request failed: ${uploadResponse.status}`);
       }
+
       const uploadData = await uploadResponse.json();
-      console.log('Upload response data:', uploadData);
-      
-      // Verify we have the required field for search
-      if (!uploadData.s3Key) {
-        throw new Error('Upload response missing s3Key');
+      if (!uploadData.uploadUrl) {
+        throw new Error('No upload URL received');
       }
-      
+
       // Step 2: Upload file to S3
-      setFileUploadStatus('Uploading file for analysis...');
-      const s3Response = await fetch(uploadData.uploadUrl, {
+      setFileUploadStatus('Uploading file...');
+      const uploadResult = await fetch(uploadData.uploadUrl, {
         method: 'PUT',
-        headers: { 'Content-Type': queryFile.type },
+        headers: {
+          'Content-Type': queryFile.type,
+        },
         body: queryFile
       });
-      if (!s3Response.ok) {
-        throw new Error('Failed to upload file');
+
+      if (!uploadResult.ok) {
+        throw new Error('File upload failed');
       }
-      
-      // Step 3: Search for matching files
-      setFileUploadStatus('Detecting birds and finding matches... (this may take up to 30 seconds)');
-      
-      // The /search/by-file-tag endpoint only expects s3Key
-      const searchPayload = { s3Key: uploadData.s3Key };
-      
-      console.log('Search payload:', searchPayload);
-      
+
+      // Step 3: Search by file using the correct endpoint
+      setFileUploadStatus('Analyzing file...');
       const searchResponse = await fetch(`${apiBase}/search/by-file-tag`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(searchPayload)
+        body: JSON.stringify({
+          fileId: uploadData.fileId,
+          s3Key: uploadData.s3Key
+        })
       });
+
       if (!searchResponse.ok) {
-        const errorData = await searchResponse.json();
-        throw new Error(errorData.error || 'Search failed');
+        const errorText = await searchResponse.text();
+        throw new Error(`Search failed: ${searchResponse.status}: ${errorText}`);
       }
-      const results = await searchResponse.json();
-      // Step 4: Show results
-      setResults(results.links || []);
-      const birdTypes = Object.keys(results.detected_tags || {}).join(', ');
-      setFileUploadStatus(`Found ${results.match_count || 0} files with similar birds: ${birdTypes}`);
+
+      const searchData = await searchResponse.json();
+      setResults(searchData.links || []);
+      setFileUploadStatus('Analysis complete!');
     } catch (err) {
+      console.error('File query error:', err);
       setError(err.message);
       setFileUploadStatus('');
     } finally {
@@ -636,27 +594,92 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
     }
   };
 
-  const handleSelectThumbnail = (url) => {
-    // Strip query parameters from presigned URLs
-    const cleanUrl = url.split('?')[0];
-    
-    // UPDATED: Handle cross-bucket conversion
-    let thumbnailUrl = cleanUrl;
-    if (cleanUrl.includes('/media/images/')) {
-      // Extract filename from original URL
-      const filename = cleanUrl.split('/').pop();
-      // Create thumbnail URL in different bucket
-      thumbnailUrl = `https://thumbnailbucket134.s3.amazonaws.com/thumbnails/${filename}`;
-    }
-    
+  const handleSelectThumbnail = (thumbnailUrl) => {
+    setShowThumbnailSelector(false);
     setThumbUrl(thumbnailUrl);
     // Automatically run the reverse lookup with thumbnail URL
     sendGet(`${apiBase}/search/by-thumbnail-url?thumbnail_url=${encodeURIComponent(thumbnailUrl)}`);
   };
 
+  const handleSelectResult = (mediaUrl) => {
+    const newSelected = new Set(selectedResults);
+    if (newSelected.has(mediaUrl)) {
+      newSelected.delete(mediaUrl);
+    } else {
+      newSelected.add(mediaUrl);
+    }
+    setSelectedResults(newSelected);
+  };
+
+  const handleSelectAllResults = () => {
+    if (selectedResults.size === results.length) {
+      setSelectedResults(new Set());
+    } else {
+      setSelectedResults(new Set(results));
+    }
+  };
+
+  const handleDeleteSelectedResults = async () => {
+    if (selectedResults.size === 0) {
+      setError('Please select at least one file to delete');
+      return;
+    }
+
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete ${selectedResults.size} file(s)? This action cannot be undone.`
+    );
+
+    if (!confirmDelete) {
+      return;
+    }
+
+    setIsDeleting(true);
+    setError('');
+
+    try {
+      const { fetchAuthSession } = await import('@aws-amplify/auth');
+      const { tokens } = await fetchAuthSession();
+      const token = tokens?.idToken?.toString();
+
+      const urlArray = Array.from(selectedResults);
+
+      const response = await fetch(`${apiBase}/delete`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          urls: urlArray
+        }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || 'Delete request failed');
+      }
+
+      // Remove deleted files from results
+      const remainingResults = results.filter(url => !selectedResults.has(url));
+      setResults(remainingResults);
+      setSelectedResults(new Set());
+      
+      alert(`Successfully deleted ${urlArray.length} files`);
+
+    } catch (err) {
+      console.error('Delete error:', err);
+      setError(err.message);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   return (
     <div className="search-container">
-      <h2 className="search-main-title">BirdTag Queries</h2>
+      <div className="search-header">
+        <h2>🔍 Advanced Search</h2>
+        <p>Find bird media using multiple search methods</p>
+      </div>
 
       {/* Error Display */}
       {error && (
@@ -665,123 +688,213 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
         </div>
       )}
 
-      {/* Tag + Count Search */}
-      <section className="search-section">
-        <h4>1. Tag + Count Search</h4>
-        {tags.map((t, i) => (
-          <div key={i} className="tag-input-row">
-            <input
-              placeholder="Tag (e.g., crow)"
-              value={t.tag}
-              onChange={(e) => handleTagChange(i, 'tag', e.target.value)}
-              className="tag-input"
-            />
-            <input
-              type="number"
-              value={t.count}
-              onChange={(e) => handleTagChange(i, 'count', e.target.value)}
-              className="count-input"
-              min="1"
-            />
-            {tags.length > 1 && (
-              <button onClick={() => removeTagField(i)} className="btn btn-secondary btn-small">
-                Remove
-              </button>
-            )}
+      <div className="search-grid">
+        {/* Tag + Count Search */}
+        <div className="search-card">
+          <div className="card-header">
+            <h3>1. Tag + Count Search</h3>
+            <p>Search by bird species and count</p>
           </div>
-        ))}
-        <button onClick={addTagField} className="btn btn-secondary">+ Add Tag</button>
-        <button onClick={runTagCountQuery} className="btn btn-primary btn-add" disabled={loading}>
-          Search
-        </button>
-      </section>
-
-      {/* Multi-Species */}
-      <section className="search-section">
-        <h4>2. Search by Bird Species</h4>
-        {speciesList.map((s, i) => (
-          <div key={i} className="tag-input-row">
-            <input
-              value={s}
-              placeholder={`Species ${i + 1}`}
-              onChange={(e) => {
-                const updated = [...speciesList];
-                updated[i] = e.target.value.toLowerCase();
-                setSpeciesList(updated);
-              }}
-              className="species-input"
-            />
-            {speciesList.length > 1 && (
-              <button 
-                onClick={() => setSpeciesList(speciesList.filter((_, index) => index !== i))}
-                className="btn btn-secondary btn-small"
-              >
-                Remove
+          <div className="card-content">
+            {tags.map((t, i) => (
+              <div key={i} className="tag-input-row">
+                <input
+                  placeholder="Tag (e.g., crow)"
+                  value={t.tag}
+                  onChange={(e) => handleTagChange(i, 'tag', e.target.value)}
+                  className="tag-input"
+                />
+                <input
+                  type="number"
+                  value={t.count}
+                  onChange={(e) => handleTagChange(i, 'count', e.target.value)}
+                  className="count-input"
+                  min="1"
+                />
+                {tags.length > 1 && (
+                  <button onClick={() => removeTagField(i)} className="btn btn-secondary btn-small">
+                    Remove
+                  </button>
+                )}
+              </div>
+            ))}
+            <div className="button-group">
+              <button onClick={addTagField} className="btn btn-secondary">+ Add Tag</button>
+              <button onClick={runTagCountQuery} className="btn btn-primary" disabled={loading}>
+                Search
               </button>
-            )}
+            </div>
           </div>
-        ))}
-        <button onClick={() => setSpeciesList([...speciesList, ''])} className="btn btn-secondary">
-          + Add Species
-        </button>
-        <button onClick={runSpeciesQuery} className="btn btn-primary btn-add" disabled={loading}>
-          Search
-        </button>
-      </section>
-
-      {/* Enhanced Reverse Lookup */}
-      <section className="search-section">
-        <h4>3. Reverse Lookup from Thumbnail URL</h4>
-        <p>
-          Find the original full-size image from any image URL.
-        </p>
-        
-        <div className="url-input-row">
-          <input
-            value={thumbUrl}
-            onChange={(e) => setThumbUrl(e.target.value)}
-            placeholder="Paste any image URL or select from gallery"
-            className="url-input"
-          />
-          
-          <button 
-            onClick={() => setShowThumbnailSelector(true)}
-            className="btn btn-success"
-          >
-            Select from Gallery
-          </button>
         </div>
-        
-        {/* Show converted URL if it was modified */}
-        {thumbUrl && thumbUrl.includes('/media/images/') && (
-          <div className="converted-url-display">
-            Will search using thumbnail URL: {thumbUrl.replace('/media/images/', '/media/thumbnails/')}
+
+        {/* Multi-Species */}
+        <div className="search-card">
+          <div className="card-header">
+            <h3>2. Search by Bird Species</h3>
+            <p>Find media by specific bird species</p>
           </div>
-        )}
-        
-        <button 
-          onClick={() => {
-            if (!thumbUrl.trim()) {
-              setError('Please enter a thumbnail URL or select from gallery');
-              return;
-            }
-            // Strip query parameters from presigned URLs
-            let cleanUrl = thumbUrl.split('?')[0];
+          <div className="card-content">
+            {speciesList.map((s, i) => (
+              <div key={i} className="tag-input-row">
+                <input
+                  value={s}
+                  placeholder={`Species ${i + 1}`}
+                  onChange={(e) => {
+                    const updated = [...speciesList];
+                    updated[i] = e.target.value.toLowerCase();
+                    setSpeciesList(updated);
+                  }}
+                  className="species-input"
+                />
+                {speciesList.length > 1 && (
+                  <button 
+                    onClick={() => setSpeciesList(speciesList.filter((_, index) => index !== i))}
+                    className="btn btn-secondary btn-small"
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+            ))}
+            <div className="button-group">
+              <button onClick={() => setSpeciesList([...speciesList, ''])} className="btn btn-secondary">
+                + Add Species
+              </button>
+              <button onClick={runSpeciesQuery} className="btn btn-primary" disabled={loading}>
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Enhanced Reverse Lookup */}
+        <div className="search-card">
+          <div className="card-header">
+            <h3>3. Reverse Lookup</h3>
+            <p>Find original image from thumbnail URL</p>
+          </div>
+          <div className="card-content">
+            <div className="url-input-row">
+              <input
+                value={thumbUrl}
+                onChange={(e) => setThumbUrl(e.target.value)}
+                placeholder="Paste image URL or select from gallery"
+                className="url-input"
+              />
+              <button 
+                onClick={() => setShowThumbnailSelector(true)}
+                className="btn btn-success"
+              >
+                Select from Gallery
+              </button>
+            </div>
             
-            // Convert original image URL to thumbnail URL if needed
-            if (cleanUrl.includes('/media/images/')) {
-              const filename = cleanUrl.split('/').pop();
-              cleanUrl = `https://thumbnailbucket134.s3.amazonaws.com/thumbnails/${filename}`;
-            }
+            {thumbUrl && thumbUrl.includes('/media/images/') && (
+              <div className="converted-url-display">
+                Will search using thumbnail URL: {thumbUrl.replace('/media/images/', '/media/thumbnails/')}
+              </div>
+            )}
             
-            sendGet(`${apiBase}/search/by-thumbnail-url?thumbnail_url=${encodeURIComponent(cleanUrl)}`);
-          }} 
-          disabled={loading}
-          className="btn btn-primary"
-        >
-          Find Full Image
-        </button>
-      </section>
+            <button 
+              onClick={() => {
+                if (!thumbUrl.trim()) {
+                  setError('Please enter a thumbnail URL or select from gallery');
+                  return;
+                }
+                let cleanUrl = thumbUrl.split('?')[0];
+                
+                if (cleanUrl.includes('/media/images/')) {
+                  const filename = cleanUrl.split('/').pop();
+                  cleanUrl = `https://thumbnailbucket134.s3.amazonaws.com/thumbnails/${filename}`;
+                }
+                
+                sendGet(`${apiBase}/search/by-thumbnail-url?thumbnail_url=${encodeURIComponent(cleanUrl)}`);
+              }} 
+              disabled={loading}
+              className="btn btn-primary"
+            >
+              Find Full Image
+            </button>
+          </div>
+        </div>
+
+        {/* File Match */}
+        <div className="search-card">
+          <div className="card-header">
+            <h3>4. Upload File for Similar Match</h3>
+            <p>Find similar birds by uploading a file</p>
+          </div>
+          <div className="card-content">
+            <div className="file-input-container">
+              <input 
+                type="file" 
+                onChange={(e) => setQueryFile(e.target.files[0])}
+                accept="image/*,video/*,audio/*"
+                disabled={loading}
+                className="file-input-hidden"
+                id="file-upload"
+              />
+              <label htmlFor="file-upload" className="file-input-label">
+                {queryFile ? (
+                  <div className="file-selected">
+                    <span className="file-name">{queryFile.name}</span>
+                    <span className="file-size">({(queryFile.size / 1024 / 1024).toFixed(1)} MB)</span>
+                    {queryFile.type.startsWith('video/') && (
+                      <span className="file-note"> - Videos may take 20-30 seconds to process</span>
+                    )}
+                  </div>
+                ) : (
+                  <div className="file-placeholder">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M19,20H4C2.89,20 2,19.1 2,18V6C2,4.89 2.89,4 4,4H10L12,6H19A2,2 0 0,1 21,8H21L4,8V18L6.14,10H23.21L20.93,18.5C20.7,19.37 19.92,20 19,20Z"/>
+                    </svg>
+                    <span>Click to select a file</span>
+                    <small>Supports images, videos, and audio files</small>
+                  </div>
+                )}
+              </label>
+            </div>
+            
+            <button 
+              onClick={runFileQuery}
+              disabled={loading || !queryFile}
+              className="btn btn-primary"
+            >
+              {loading ? 'Processing...' : 'Find Similar Birds'}
+            </button>
+            
+            {fileUploadStatus && (
+              <p className={`upload-status ${loading ? 'loading' : 'success'}`}>
+                {fileUploadStatus}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Management Tools */}
+        <div className="search-card management-card">
+          <div className="card-header">
+            <h3>5. Management Tools</h3>
+            <p>Bulk operations and file management</p>
+          </div>
+          <div className="card-content">
+            <div className="management-buttons">
+              <button 
+                onClick={onNavigateToDeleteFiles}
+                className="btn btn-danger"
+              >
+                🗑️ Delete Files
+              </button>
+              <button 
+                onClick={onNavigateToBulkTagging}
+                className="btn btn-success"
+              >
+                🏷️ Bulk Tagging
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Thumbnail Selector Modal */}
       {showThumbnailSelector && (
@@ -792,104 +905,64 @@ const Search = ({ onNavigateToBulkTagging, onNavigateToDeleteFiles }) => {
         />
       )}
 
-      {/* File Match */}
-      <section className="search-section">
-        <h4>4. Upload File for Similar Tag Match</h4>
-        <p className="italic">
-           Your file is analyzed temporarily and not saved to your account
-        </p>
-        
-        <input 
-          type="file" 
-          onChange={(e) => setQueryFile(e.target.files[0])}
-          accept="image/*,video/*,audio/*"
-          disabled={loading}
-          className="file-input"
-        />
-        
-        <button 
-          onClick={runFileQuery}
-          disabled={loading || !queryFile}
-          className="btn btn-primary btn-add"
-        >
-          {loading ? 'Processing...' : 'Find Similar Birds'}
-        </button>
-        
-        {/* Show upload status */}
-        {fileUploadStatus && (
-          <p className={`upload-status ${loading ? 'loading' : 'success'}`}>
-            {fileUploadStatus}
-          </p>
-        )}
-        
-        {/* File info */}
-        {queryFile && (
-          <p className="file-info">
-            Selected: {queryFile.name} ({(queryFile.size / 1024 / 1024).toFixed(1)} MB)
-            {queryFile.type.startsWith('video/') && ' - Videos may take 20-30 seconds to process'}
-          </p>
-        )}
-      </section>
-
-      {/* Delete */}
-      <section className="search-section">
-        <h4>5. Delete Files</h4>
-        <p>
-          Select multiple media files from your gallery and delete them permanently.
-        </p>
-        
-        <button 
-          onClick={onNavigateToDeleteFiles}
-          className="btn btn-danger btn-large"
-        >
-          Open Delete Files Gallery
-        </button>
-      </section>
-
-      {/* Manual Bulk Tagging - Updated to navigation */}
-      <section className="search-section">
-        <h4>6. Manual Bulk Tagging</h4>
-        <p>
-          Select multiple media files from your gallery and add or remove tags in bulk.
-        </p>
-        
-        <button 
-          onClick={onNavigateToBulkTagging}
-          className="btn btn-success btn-large"
-        >
-          Open Bulk Tagging Gallery
-        </button>
-      </section>
-
       {/* Enhanced Results Display */}
-      <section className="results-section">
-        {loading && (
-          <div className="loading-display">
-            Loading...
-          </div>
-        )}
-        
-        {results.length > 0 && (
-          <div>
-            <h4>Results ({results.length} found)</h4>
-            <div className="results-grid">
-              {results.map((mediaUrl, i) => (
-                <div key={i} className="result-item">
-                  <MediaThumbnail
-                    url={mediaUrl}
-                    index={i}
-                    onMediaClick={handleMediaClick}
-                    width={150}
-                  />
-                  <div className="result-index">
-                    #{i + 1}
-                  </div>
-                </div>
-              ))}
+      {loading && (
+        <div className="loading-display">
+          <div className="loading-spinner"></div>
+          <p>Searching...</p>
+        </div>
+      )}
+      
+      {results.length > 0 && (
+        <div className="results-section">
+          <div className="results-header">
+            <h3>Results ({results.length} found)</h3>
+            <div className="results-actions">
+              <button 
+                onClick={handleSelectAllResults}
+                className="btn btn-secondary btn-small"
+              >
+                {selectedResults.size === results.length ? 'Deselect All' : 'Select All'}
+              </button>
+              {selectedResults.size > 0 && (
+                <button 
+                  onClick={handleDeleteSelectedResults}
+                  disabled={isDeleting}
+                  className="btn btn-danger btn-small"
+                >
+                  {isDeleting ? 'Deleting...' : `Delete Selected (${selectedResults.size})`}
+                </button>
+              )}
             </div>
           </div>
-        )}
-      </section>
+          <div className="results-grid">
+            {results.map((mediaUrl, i) => (
+              <div 
+                key={i} 
+                className={`result-item ${selectedResults.has(mediaUrl) ? 'selected' : ''}`}
+              >
+                <div className="result-selection">
+                  <input
+                    type="checkbox"
+                    checked={selectedResults.has(mediaUrl)}
+                    onChange={() => handleSelectResult(mediaUrl)}
+                    className="result-checkbox"
+                  />
+                </div>
+                <MediaThumbnail
+                  url={mediaUrl}
+                  index={i}
+                  onMediaClick={handleMediaClick}
+                  width={150}
+                />
+                <div className="result-index">
+                  #{i + 1}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,7 +1,6 @@
-
-
 import React, { useState } from 'react';
 import { fetchAuthSession } from 'aws-amplify/auth';
+import './Upload.css';
 
 const supportedTypes = [
   'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp',
@@ -22,6 +21,7 @@ const Upload = () => {
   const [message, setMessage] = useState('');
   const [progress, setProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
+  const [dragActive, setDragActive] = useState(false);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -30,14 +30,37 @@ const Upload = () => {
     setMessage('');
   };
 
+  const handleDrag = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      const file = e.dataTransfer.files[0];
+      setSelectedFile(file);
+      setProgress(0);
+      setMessage('');
+    }
+  };
+
   const handleUpload = async () => {
     if (!selectedFile) {
-      setMessage('Please select a file.');
+      setMessage('Please select a file to upload.');
       return;
     }
 
     if (!supportedTypes.includes(selectedFile.type)) {
-      setMessage('Unsupported file type.');
+      setMessage('Unsupported file type. Please upload images, videos, or audio files.');
       return;
     }
 
@@ -98,48 +121,124 @@ const Upload = () => {
         xhr.send(selectedFile);
       });
 
-      setMessage('Upload successful!');
+      setMessage('Upload successful! Your file has been processed.');
       setSelectedFile(null);
+      setProgress(0);
     } catch (error) {
       console.error('Upload failed:', error);
-      setMessage('Upload failed. Check console for details.');
+      setMessage('Upload failed. Please try again.');
     } finally {
       setIsUploading(false);
     }
   };
 
+  const getFileIcon = (fileType) => {
+    if (fileType.startsWith('image/')) return '🖼️';
+    if (fileType.startsWith('video/')) return '🎥';
+    if (fileType.startsWith('audio/')) return '🎵';
+    return '📄';
+  };
+
+  const formatFileSize = (bytes) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
   return (
-    <div>
-      <h2>Upload File</h2>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload} disabled={isUploading} style={{ marginLeft: '10px' }}>
-        {isUploading ? 'Uploading...' : 'Upload'}
-      </button>
+    <div className="upload-container">
+      <div className="upload-header">
+        <h2>📤 Upload Media</h2>
+        <p>Upload images, videos, or audio files for bird recognition and analysis</p>
+      </div>
 
-      {progress > 0 && (
-        <div style={{ marginTop: '20px' }}>
-          <div style={{
-            width: '100%',
-            maxWidth: '400px',
-            height: '20px',
-            backgroundColor: '#e0e0e0',
-            borderRadius: '10px',
-            overflow: 'hidden',
-            boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.2)',
-            marginBottom: '8px'
-          }}>
-            <div style={{
-              height: '100%',
-              width: `${progress}%`,
-              backgroundColor: progress === 100 ? '#4caf50' : '#2196f3',
-              transition: 'width 0.2s ease-in-out'
-            }} />
-          </div>
-          <p>{progress}%</p>
+      <div className="upload-area">
+        <div 
+          className={`drop-zone ${dragActive ? 'drag-active' : ''} ${selectedFile ? 'file-selected' : ''}`}
+          onDragEnter={handleDrag}
+          onDragLeave={handleDrag}
+          onDragOver={handleDrag}
+          onDrop={handleDrop}
+        >
+          {!selectedFile ? (
+            <div className="drop-zone-content">
+              <div className="upload-icon">📁</div>
+              <h3>Drag & Drop your file here</h3>
+              <p>or</p>
+              <label className="file-input-label">
+                Choose File
+                <input 
+                  type="file" 
+                  onChange={handleFileChange}
+                  accept={supportedTypes.join(',')}
+                  style={{ display: 'none' }}
+                />
+              </label>
+              <div className="supported-formats">
+                <p>Supported formats:</p>
+                <div className="format-tags">
+                  <span>Images: JPG, PNG, GIF, WebP</span>
+                  <span>Videos: MP4, MOV, AVI</span>
+                  <span>Audio: MP3, WAV, OGG, M4A</span>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="file-info">
+              <div className="file-icon">{getFileIcon(selectedFile.type)}</div>
+              <div className="file-details">
+                <h4>{selectedFile.name}</h4>
+                <p>{formatFileSize(selectedFile.size)} • {selectedFile.type}</p>
+              </div>
+              <button 
+                className="remove-file-btn"
+                onClick={() => setSelectedFile(null)}
+              >
+                ✕
+              </button>
+            </div>
+          )}
         </div>
-      )}
 
-      {message && <p style={{ marginTop: '10px' }}>{message}</p>}
+        {selectedFile && (
+          <div className="upload-actions">
+            <button 
+              className="upload-btn"
+              onClick={handleUpload} 
+              disabled={isUploading}
+            >
+              {isUploading ? (
+                <>
+                  <span className="spinner"></span>
+                  Uploading...
+                </>
+              ) : (
+                'Upload File'
+              )}
+            </button>
+          </div>
+        )}
+
+        {progress > 0 && (
+          <div className="progress-container">
+            <div className="progress-bar">
+              <div 
+                className="progress-fill"
+                style={{ width: `${progress}%` }}
+              ></div>
+            </div>
+            <span className="progress-text">{progress}%</span>
+          </div>
+        )}
+
+        {message && (
+          <div className={`message ${message.includes('successful') ? 'success' : 'error'}`}>
+            {message}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
